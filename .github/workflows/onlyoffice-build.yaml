@@ -18,16 +18,13 @@ jobs:
           useradd -m builder
           chown -R builder:builder .
 
-      - name: Install build dependencies
+      - name: Install dependencies and build
         run: |
           pacman -Syu --noconfirm
           pacman -S --noconfirm base-devel gtk3 gstreamer gst-plugins-base-libs \
             libxss nss nspr desktop-file-utils hicolor-icon-theme wget unzip git
-
-      - name: Build ONLYOFFICE package
-        run: |
           cd onlyoffice
-          sudo -u builder makepkg --noconfirm
+          makepkg --noconfirm
 
       - name: Upload built package
         uses: actions/upload-artifact@v4
