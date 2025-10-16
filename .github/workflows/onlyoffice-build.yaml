@@ -1,11 +1,7 @@
-name: Build ONLYOFFICE PKGBUILD
+name: Build ONLYOFFICE
 
 on:
   workflow_dispatch:
-
-permissions:
-  contents: write  # Разрешение на запись в репозиторий (для создания релиза и тега)
-  actions: write   # Разрешение на взаимодействие с Actions
 
 jobs:
   build:
@@ -17,51 +13,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-
-      - name: Setup non-root user
-        run: |
-          pacman -Syu --noconfirm
-          pacman -S --noconfirm sudo
-          useradd -m builder
-          chown -R builder:builder .
-          echo "builder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/builder
+          fetch-depth: 0  # Полный клон для работы с Git тегами
 
       - name: Install dependencies and build
         run: |
-          sudo -u builder bash -c '
-            sudo pacman -Syu --noconfirm
-            sudo pacman -S --noconfirm base-devel gtk3 gstreamer gst-plugins-base-libs \
-              libxss nss nspr desktop-file-utils hicolor-icon-theme wget unzip git libarchive
-            cd onlyoffice || { echo "Directory onlyoffice not found"; exit 1; }
-            makepkg --noconfirm
-          '
-
-      - name: Prepare package for release
-        run: |
-          pkgname=$(grep "^pkgname=" onlyoffice/PKGBUILD | cut -d= -f2)
-          pkgver=$(grep "^pkgver=" onlyoffice/PKGBUILD | cut -d= -f2)
-          pkgrel=$(grep "^pkgrel=" onlyoffice/PKGBUILD | cut -d= -f2)
-          arch=$(grep "^arch=" onlyoffice/PKGBUILD | cut -d= -f2 | tr -d "\(\'\)" | cut -d" " -f1)
-          cp onlyoffice/${pkgname}-${pkgver}-${pkgrel}-${arch}.pkg.tar.zst onlyoffice.pkg.tar.zst
-          ls -la onlyoffice.pkg.tar.zst || { echo "Package not found"; exit 1; }
-          echo "PKGVER=$pkgver" >> $GITHUB_ENV
-          echo "PKGREL=$pkgrel" >> $GITHUB_ENV
+          pacman -Syu --noconfirm
+          pacman -S --noconfirm base-devel gtk3 gstreamer gst-plugins-base-libs \
+            libxss nss nspr desktop-file-utils hicolor-icon-theme wget unzip git libarchive
+          cd onlyoffice
+          makepkg --noconfirm
 
       - name: Create Git tag
         run: |
+          pkgver=$(grep "^pkgver=" PKGBUILD | cut -d= -f2)
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git tag -a "v${{ env.PKGVER }}" -m "Release v${{ env.PKGVER }}"
-          git push origin "v${{ env.PKGVER }}"
+          git tag -a "v${pkgver}" -m "Release v${pkgver}"
+          git push origin "v${pkgver}"
 
-      - name: Create and Publish Release
+      - name: Publish Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ env.PKGVER }}
-          name: ONLYOFFICE ${{ env.PKGVER }}-${{ env.PKGREL }}
-          draft: false
-          prerelease: false
-          files: onlyoffice.pkg.tar.zst
+          name: ONLYOFFICE v${{ env.PKGVER }}
+          files: onlyoffice-9.1.0-1-x86_64.pkg.tar.zst
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PKGVER: $(grep "^pkgver=" onlyoffice/PKGBUILD | cut -d= -f2)
