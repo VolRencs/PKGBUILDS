@@ -31,8 +31,23 @@ jobs:
             makepkg --noconfirm
           '
 
-      - name: Upload built package
-        uses: actions/upload-artifact@v4
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: onlyoffice-pkg
-          path: onlyoffice/*.pkg.tar.zst
+          tag_name: v${{ github.run_id }}-${{ github.run_number }}
+          release_name: ONLYOFFICE Release ${{ github.run_id }}-${{ github.run_number }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: onlyoffice/*.pkg.tar.zst
+          asset_name: onlyoffice.pkg.tar.zst
+          asset_content_type: application/zstd
