@@ -15,17 +15,27 @@ jobs:
         with:
           fetch-depth: 0  # Полный клон для работы с Git тегами
 
-      - name: Install dependencies and build
+      - name: Setup non-root user
         run: |
           pacman -Syu --noconfirm
-          pacman -S --noconfirm base-devel gtk3 gstreamer gst-plugins-base-libs \
-            libxss nss nspr desktop-file-utils hicolor-icon-theme wget unzip git libarchive
-          cd onlyoffice
-          makepkg --noconfirm
+          pacman -S --noconfirm sudo
+          useradd -m builder
+          chown -R builder:builder .
+          echo "builder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/builder
+
+      - name: Install dependencies and build
+        run: |
+          sudo -u builder bash -c '
+            sudo pacman -Syu --noconfirm
+            sudo pacman -S --noconfirm base-devel gtk3 gstreamer gst-plugins-base-libs \
+              libxss nss nspr desktop-file-utils hicolor-icon-theme wget unzip git libarchive
+            cd onlyoffice || { echo "Directory onlyoffice not found"; exit 1; }
+            makepkg --noconfirm
+          '
 
       - name: Create Git tag
         run: |
-          pkgver=$(grep "^pkgver=" PKGBUILD | cut -d= -f2)
+          pkgver=$(grep "^pkgver=" onlyoffice/PKGBUILD | cut -d= -f2)
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git tag -a "v${pkgver}" -m "Release v${pkgver}"
@@ -36,7 +46,7 @@ jobs:
         with:
           tag_name: v${{ env.PKGVER }}
           name: ONLYOFFICE v${{ env.PKGVER }}
-          files: onlyoffice-9.1.0-1-x86_64.pkg.tar.zst
+          files: onlyoffice/onlyoffice-9.1.0-1-x86_64.pkg.tar.zst
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PKGVER: $(grep "^pkgver=" onlyoffice/PKGBUILD | cut -d= -f2)
