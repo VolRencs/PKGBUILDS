@@ -1,6 +1,4 @@
-# Maintainer: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
-# Contributor: Ionut Biru <ibiru@archlinux.org>
-# Contributor: Jakub Schmidtke <sjakub@gmail.com>
+# Maintainer: VolRen <VolRencs@proton.me>
 
 pkgname=firefox
 pkgver=144.0
