@@ -1,33 +1,39 @@
-name: Build ONLYOFFICE PKGBUILD
+name: Build ONLYOFFICE
 
 on:
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    container:
-      image: archlinux:latest
+    runs-on: archlinux/archlinux:base
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup non-root user
-        run: |
-          useradd -m builder
-          chown -R builder:builder .
-
-      - name: Install dependencies and build
+      - name: Update system and install dependencies
         run: |
           pacman -Syu --noconfirm
           pacman -S --noconfirm base-devel gtk3 gstreamer gst-plugins-base-libs \
             libxss nss nspr desktop-file-utils hicolor-icon-theme wget unzip git
-          cd onlyoffice
-          makepkg --noconfirm
+
+      - name: Create non-root builder user
+        run: |
+          useradd -m builder
+          mkdir -p /home/builder/src
+          chown -R builder:builder /home/builder/src
+
+      - name: Copy PKGBUILD for builder
+        run: |
+          cp -r $GITHUB_WORKSPACE/onlyoffice /home/builder/src/
+          chown -R builder:builder /home/builder/src/onlyoffice
+
+      - name: Build ONLYOFFICE package
+        run: |
+          su builder -c "cd /home/builder/src/onlyoffice && makepkg --noconfirm"
 
       - name: Upload built package
         uses: actions/upload-artifact@v4
         with:
           name: onlyoffice-pkg
-          path: '*.pkg.tar.zst'
+          path: /home/builder/src/onlyoffice/*.pkg.tar.zst
