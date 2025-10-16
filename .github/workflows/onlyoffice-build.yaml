@@ -1,39 +1,38 @@
-name: Build ONLYOFFICE
+name: Build ONLYOFFICE PKGBUILD
 
 on:
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: archlinux/archlinux:base
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Update system and install dependencies
+      - name: Setup non-root user
         run: |
           pacman -Syu --noconfirm
-          pacman -S --noconfirm base-devel gtk3 gstreamer gst-plugins-base-libs \
-            libxss nss nspr desktop-file-utils hicolor-icon-theme wget unzip git
-
-      - name: Create non-root builder user
-        run: |
+          pacman -S --noconfirm sudo
           useradd -m builder
-          mkdir -p /home/builder/src
-          chown -R builder:builder /home/builder/src
+          chown -R builder:builder .
+          echo "builder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/builder
 
-      - name: Copy PKGBUILD for builder
+      - name: Install dependencies and build
         run: |
-          cp -r $GITHUB_WORKSPACE/onlyoffice /home/builder/src/
-          chown -R builder:builder /home/builder/src/onlyoffice
-
-      - name: Build ONLYOFFICE package
-        run: |
-          su builder -c "cd /home/builder/src/onlyoffice && makepkg --noconfirm"
+          sudo -u builder bash -c '
+            sudo pacman -Syu --noconfirm
+            sudo pacman -S --noconfirm base-devel gtk3 gstreamer gst-plugins-base-libs \
+              libxss nss nspr desktop-file-utils hicolor-icon-theme wget unzip git
+            cd onlyoffice || { echo "Directory onlyoffice not found"; exit 1; }
+            makepkg --noconfirm
+          '
 
       - name: Upload built package
         uses: actions/upload-artifact@v4
         with:
           name: onlyoffice-pkg
-          path: /home/builder/src/onlyoffice/*.pkg.tar.zst
+          path: onlyoffice/*.pkg.tar.zst
