@@ -1,7 +1,11 @@
-name: Build ONLYOFFICE PKGBUILD
+name: Build and Release ONLYOFFICE PKGBUILD
 
 on:
   workflow_dispatch:
+
+permissions:
+  contents: write  # Разрешение на запись в репозиторий (для создания релиза)
+  actions: write   # Разрешение на взаимодействие с Actions
 
 jobs:
   build:
@@ -26,29 +30,29 @@ jobs:
           sudo -u builder bash -c '
             sudo pacman -Syu --noconfirm
             sudo pacman -S --noconfirm base-devel gtk3 gstreamer gst-plugins-base-libs \
-              libxss nss nspr desktop-file-utils hicolor-icon-theme wget unzip git
+              libxss nss nspr desktop-file-utils hicolor-icon-theme wget unzip git libarchive
             cd onlyoffice || { echo "Directory onlyoffice not found"; exit 1; }
             makepkg --noconfirm
           '
-      
-      - name: Prepare package for release
-              run: |
-                pkgname=$(grep "^pkgname=" onlyoffice/PKGBUILD | cut -d= -f2)
-                pkgver=$(grep "^pkgver=" onlyoffice/PKGBUILD | cut -d= -f2)
-                pkgrel=$(grep "^pkgrel=" onlyoffice/PKGBUILD | cut -d= -f2)
-                arch=$(grep "^arch=" onlyoffice/PKGBUILD | cut -d= -f2 | tr -d "\(\'\)" | cut -d" " -f1)
-                cp onlyoffice/${pkgname}-${pkgver}-${pkgrel}-${arch}.pkg.tar.zst onlyoffice.pkg.tar.zst
-                ls -la onlyoffice.pkg.tar.zst || { echo "Package not found"; exit 1; }
 
-            - name: Create and Publish Release
-              uses: softprops/action-gh-release@v2
-              with:
-                tag_name: v${{ env.PKGVER }}
-                name: ONLYOFFICE ${{ env.PKGVER }}-${{ env.PKGREL }}
-                draft: false
-                prerelease: false
-                files: onlyoffice.pkg.tar.zst
-              env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                PKGVER: $(grep "^pkgver=" onlyoffice/PKGBUILD | cut -d= -f2)
-                PKGREL: $(grep "^pkgrel=" onlyoffice/PKGBUILD | cut -d= -f2)
+      - name: Prepare package for release
+        run: |
+          pkgname=$(grep "^pkgname=" onlyoffice/PKGBUILD | cut -d= -f2)
+          pkgver=$(grep "^pkgver=" onlyoffice/PKGBUILD | cut -d= -f2)
+          pkgrel=$(grep "^pkgrel=" onlyoffice/PKGBUILD | cut -d= -f2)
+          arch=$(grep "^arch=" onlyoffice/PKGBUILD | cut -d= -f2 | tr -d "\(\'\)" | cut -d" " -f1)
+          cp onlyoffice/${pkgname}-${pkgver}-${pkgrel}-${arch}.pkg.tar.zst onlyoffice.pkg.tar.zst
+          ls -la onlyoffice.pkg.tar.zst || { echo "Package not found"; exit 1; }
+
+      - name: Create and Publish Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ env.PKGVER }}
+          name: ONLYOFFICE ${{ env.PKGVER }}-${{ env.PKGREL }}
+          draft: false
+          prerelease: false
+          files: onlyoffice.pkg.tar.zst
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PKGVER: $(grep "^pkgver=" onlyoffice/PKGBUILD | cut -d= -f2)
+          PKGREL: $(grep "^pkgrel=" onlyoffice/PKGBUILD | cut -d= -f2)
