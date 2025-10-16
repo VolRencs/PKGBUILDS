@@ -27,7 +27,7 @@ jobs:
       - name: Build ONLYOFFICE package
         run: |
           cd onlyoffice
-          sudo -u builder makepkg -s --noconfirm
+          sudo -u builder makepkg --noconfirm
 
       - name: Upload built package
         uses: actions/upload-artifact@v4
