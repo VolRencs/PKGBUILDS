@@ -1,10 +1,10 @@
-name: Build and Release ONLYOFFICE PKGBUILD
+name: Build ONLYOFFICE PKGBUILD
 
 on:
   workflow_dispatch:
 
 permissions:
-  contents: write  # Разрешение на запись в репозиторий (для создания релиза)
+  contents: write  # Разрешение на запись в репозиторий (для создания релиза и тега)
   actions: write   # Разрешение на взаимодействие с Actions
 
 jobs:
@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup non-root user
         run: |
@@ -43,6 +45,15 @@ jobs:
           arch=$(grep "^arch=" onlyoffice/PKGBUILD | cut -d= -f2 | tr -d "\(\'\)" | cut -d" " -f1)
           cp onlyoffice/${pkgname}-${pkgver}-${pkgrel}-${arch}.pkg.tar.zst onlyoffice.pkg.tar.zst
           ls -la onlyoffice.pkg.tar.zst || { echo "Package not found"; exit 1; }
+          echo "PKGVER=$pkgver" >> $GITHUB_ENV
+          echo "PKGREL=$pkgrel" >> $GITHUB_ENV
+
+      - name: Create Git tag
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git tag -a "v${{ env.PKGVER }}" -m "Release v${{ env.PKGVER }}"
+          git push origin "v${{ env.PKGVER }}"
 
       - name: Create and Publish Release
         uses: softprops/action-gh-release@v2
@@ -54,5 +65,3 @@ jobs:
           files: onlyoffice.pkg.tar.zst
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PKGVER: $(grep "^pkgver=" onlyoffice/PKGBUILD | cut -d= -f2)
-          PKGREL: $(grep "^pkgrel=" onlyoffice/PKGBUILD | cut -d= -f2)
