@@ -13,11 +13,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Extract PKGVER
-        run: |
-          pkgver=$(grep "^pkgver=" onlyoffice/PKGBUILD | cut -d= -f2)
-          echo "PKGVER=$pkgver" >> $GITHUB_ENV
-
       - name: Build package in container
         run: |
           docker run --rm -v $(pwd):/workspace -w /workspace archlinux:latest bash -c '
@@ -33,12 +28,19 @@ jobs:
             "
           '
 
-      - name: Create Git tag
+      - name: Fix permissions for Git
         run: |
+          sudo chown -R $(whoami) .git
+          ls -la .git/config
+
+      - name: Extract PKGVER and create Git tag
+        run: |
+          pkgver=$(grep "^pkgver=" onlyoffice/PKGBUILD | cut -d= -f2)
+          echo "PKGVER=$pkgver" >> $GITHUB_ENV
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git tag -a "v${{ env.PKGVER }}" -m "Release v${{ env.PKGVER }}"
-          git push origin "v${{ env.PKGVER }}"
+          git tag -a "v${pkgver}" -m "Release v${pkgver}"
+          git push origin "v${pkgver}"
 
       - name: Publish Release
         uses: softprops/action-gh-release@v2
