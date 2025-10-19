@@ -1,0 +1,51 @@
+name: Build Vesktop
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build package in container
+        run: |
+          docker run --rm -v $(pwd):/workspace -w /workspace archlinux:latest bash -c '
+            pacman -Syu --noconfirm &&
+            pacman -S --noconfirm sudo base-devel gtk3 alsa-lib nss pnpm nodejs npm
+            useradd -m builder &&
+            chown -R builder:builder /workspace &&
+            echo "builder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/builder &&
+            sudo -u builder bash -c "
+              cd vesktop || { echo \"Directory vesktop not found\"; exit 1; }
+              makepkg --noconfirm
+            "
+          '
+
+      - name: Fix permissions for Git
+        run: |
+          sudo chown -R $(whoami) .git
+          ls -la .git/config
+
+      - name: Extract PKGVER and create Git tag
+        run: |
+          pkgver=$(grep "^pkgver=" vesktop/PKGBUILD | cut -d= -f2)
+          echo "PKGVER=$pkgver" >> $GITHUB_ENV
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git tag -a "v${pkgver}" -m "Release v${pkgver}"
+          git push origin "v${pkgver}"
+
+      - name: Publish Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ env.PKGVER }}
+          name: Vesktop v${{ env.PKGVER }}
+          files: vesktop/vesktop-1.6.0-1-x86_64.pkg.tar.zst
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
