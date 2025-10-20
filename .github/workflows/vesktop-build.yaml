@@ -38,7 +38,7 @@ jobs:
           echo "PKGVER=$pkgver" >> $GITHUB_ENV
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git tag -a "v${pkgver}" -m "Release v${pkgver}"
+          git tag -a "v${pkgver}-{pkgrel}" -m "Release v${pkgver}-{pkgrel}"
           git push origin "v${pkgver}"
 
       - name: Publish Release
