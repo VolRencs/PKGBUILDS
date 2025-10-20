@@ -27,6 +27,8 @@ pkgbase = onlyoffice
 	options = !strip
 	options = !emptydirs
 	source = onlyoffice-desktopeditors-x86_64-9.1.0.deb::https://github.com/ONLYOFFICE/DesktopEditors/releases/download/v9.1.0/onlyoffice-desktopeditors_amd64.deb
+	source = onlyoffice.svg
 	sha256sums = 0f7e84ee16024c9f4bc3d5e707c9f13063090c946133e2be6ef8ae33dbaece19
+	sha256sums = 0efe15ee5ae7c01fd5cb3198bc849371ebc12ce48e0e595118724b182c765ec6
 
 pkgname = onlyoffice
