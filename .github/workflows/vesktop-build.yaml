@@ -15,9 +15,7 @@ jobs:
 
       - name: Build package in container
         run: |
-          docker run --rm \
-            -v $GITHUB_WORKSPACE:/workspace \
-            -w $GITHUB_WORKSPACE \
+          docker run --rm -v $(pwd):/workspace -w /workspace archlinux:latest bash -c '
             archlinux:latest bash -c '
             pacman -Syu --noconfirm &&
             pacman -S --noconfirm sudo base-devel gtk3 alsa-lib nss pnpm nodejs npm
