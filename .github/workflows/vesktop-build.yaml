@@ -35,11 +35,17 @@ jobs:
       - name: Extract PKGVER and create Git tag
         run: |
           pkgver=$(grep "^pkgver=" vesktop/PKGBUILD | cut -d= -f2)
+          pkgrel=$(grep "^pkgrel=" vesktop/PKGBUILD | cut -d= -f2)
           echo "PKGVER=$pkgver" >> $GITHUB_ENV
+          echo "PKGREL=$pkgrel" >> $GITHUB_ENV
+
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git tag -a "v${pkgver}-{pkgrel}" -m "Release v${pkgver}-{pkgrel}"
-          git push origin "v${pkgver}"
+
+          tag="v${pkgver}-${pkgrel}"
+          git tag -a "$tag" -m "Release $tag"
+          git push origin "$tag"
+
 
       - name: Publish Release
         uses: softprops/action-gh-release@v2
