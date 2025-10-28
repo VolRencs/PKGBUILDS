@@ -2,7 +2,7 @@
 
 pkgname=vesktop
 pkgver=1.6.1
-pkgrel=2
+pkgrel=1
 pkgdesc="A standalone Electron-based Discord app with Vencord & improved Linux support"
 arch=('x86_64')
 url="https://github.com/Vencord/Vesktop"
