@@ -46,6 +46,6 @@ jobs:
         with:
           tag_name: v${{ env.PKGVER }}
           name: Vesktop v${{ env.PKGVER }}
-          files: vesktop/vesktop-1.6.0-2-x86_64.pkg.tar.zst
+          files: vesktop/vesktop-1.6.1-1-x86_64.pkg.tar.zst
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
