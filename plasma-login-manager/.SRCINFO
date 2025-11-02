@@ -34,8 +34,8 @@ pkgbase = plasma-login-manager
 	source = plasmalogin-greeter
 	source = plasmalogin-autologin
 	sha256sums = c952d9c48268c700c8b071157791acce00b7f2a37081886c961935f8276f29dd
-	sha256sums = d7394292a65ae463926c2c3d2cb4e67bbfeb20995450c8e4c92fe5a28e7c4254
-	sha256sums = 3406bce46be8450e28ddbccfbcd0e1f8fa585d57da8833ff7294cf3aee84bb46
-	sha256sums = 1a84cf752782b03b53f66188013bf7e4af4f5e6feb7266bfe58c3faaa20777b4
+	sha256sums = f347d0fbf9f093c5ca933d28a73b9030eff3054d7ced6ed436fb96156452655b
+	sha256sums = 3fb9a8adce255d37d21a5f596ba8c7456d0a6507406f6363267ff8e891551eb6
+	sha256sums = cedd4c8cc468388835c30c4c6c42de9717ce7211339e2c58de4baf3b2c2142ab
 
 pkgname = plasma-login-manager
