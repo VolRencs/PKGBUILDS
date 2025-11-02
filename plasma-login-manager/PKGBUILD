@@ -36,9 +36,9 @@ makedepends=(extra-cmake-modules
 source=(git+https://invent.kde.org/plasma/plasma-login-manager#commit=$_commit
         plasmalogin{,-greeter,-autologin})
 sha256sums=('c952d9c48268c700c8b071157791acce00b7f2a37081886c961935f8276f29dd'
-            'SKIP'
-            'SKIP'
-            'SKIP')
+            '1101fff5d0a53105668e54862f6ed5475322953ad512184e93eae1e80131fea5'
+            'bbab5ad9ef318042cafc5bd02fd8dc69cb1c9bda6dcd2c9fce7aa85754a5067e'
+            'f9e6e8e81fbb7952bd3e72d650517d2edb5deaacaf04d16487b34297f8bf65dd')
 
 build() {
   cmake -B build -S $pkgname \
