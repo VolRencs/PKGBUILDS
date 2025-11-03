@@ -19,7 +19,6 @@ depends=(
   'libdatachannel'
   'pciutils'
   'mbedtls'
-  'qt6-svg'
 )
 
 makedepends=(
@@ -63,7 +62,7 @@ build() {
     -DENABLE_AJA=OFF \
     \
     -DENABLE_SCRIPTING=OFF \
-    -DOBS_VERSION_OVERRIDE="$pkgver-minimal" \
+    -DOBS_VERSION_OVERRIDE="$pkgver" \
     -DCALM_DEPRECATION=ON \
     -Wno-dev
 
