@@ -43,7 +43,19 @@ sha256sums=('48d744037c553eea8f9b76bf46f6dcac753e52871f49b2c1a2580757f723a1b7')
 build() {
   export CXXFLAGS+=" -Wno-error=deprecated-declarations"
 
+
   QT_VERSION=$(pacman -Q qt6-base | awk '{print $2}' | cut -d- -f1)
+  QT_GUI_PRIVATE_DIR="/usr/include/qt6/QtGui/${QT_VERSION}/QtGui"
+
+  cat > FixQtGuiPrivate.cmake << 'EOF'
+if(NOT TARGET Qt6::GuiPrivate)
+    add_library(Qt6::GuiPrivate INTERFACE IMPORTED)
+    set_target_properties(Qt6::GuiPrivate PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${QT_GUI_PRIVATE_DIR}"
+        INTERFACE_LINK_LIBRARIES "Qt6::Gui"
+    )
+endif()
+EOF
 
   cmake -B build -S "$pkgname-$pkgver-sources" \
     -DCMAKE_BUILD_TYPE=Release \
@@ -67,8 +79,7 @@ build() {
     -DENABLE_SCRIPTING=OFF \
     -DOBS_VERSION_OVERRIDE="$pkgver" \
     -DCALM_DEPRECATION=ON \
-    \
-    -DQt6Gui_PRIVATE_INCLUDE_DIRS="/usr/include/qt6/QtGui/${QT_VERSION}/QtGui" \
+    -DCMAKE_PROJECT_INCLUDE="${PWD}/FixQtGuiPrivate.cmake" \
     -Wno-dev
 
   cmake --build build --target all -j$(nproc)
