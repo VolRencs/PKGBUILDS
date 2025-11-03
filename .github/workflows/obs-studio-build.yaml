@@ -18,7 +18,7 @@ jobs:
         run: |
           docker run --rm -v $(pwd):/workspace -w /workspace archlinux:latest bash -c '
             pacman -Syu --noconfirm &&
-            pacman -S --noconfirm sudo base-devel ffmpeg qt6-svg pipewirernnoise libxcomposite libxinerama libxkbcommon-x11 libdatachannel pciutils \
+            pacman -S --noconfirm sudo base-devel ffmpeg qt6-svg pipewire rnnoise libxcomposite libxinerama libxkbcommon-x11 libdatachannel pciutils \
             cmake extra-cmake-modules ffnvcodec-headers nlohmann-json simde uthash &&
             useradd -m builder &&
             chown -R builder:builder /workspace &&
