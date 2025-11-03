@@ -19,6 +19,8 @@ depends=(
   'desktop-file-utils'
   'hicolor-icon-theme'
   'mbedtls'
+  'qt6-base'
+  'qt6-svg'
 )
 
 optdepends=(
