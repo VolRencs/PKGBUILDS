@@ -43,6 +43,8 @@ sha256sums=('48d744037c553eea8f9b76bf46f6dcac753e52871f49b2c1a2580757f723a1b7')
 build() {
   export CXXFLAGS+=" -Wno-error=deprecated-declarations"
 
+  QT_VERSION=$(pacman -Q qt6-base | awk '{print $2}' | cut -d- -f1)
+
   cmake -B build -S "$pkgname-$pkgver-sources" \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -65,6 +67,8 @@ build() {
     -DENABLE_SCRIPTING=OFF \
     -DOBS_VERSION_OVERRIDE="$pkgver" \
     -DCALM_DEPRECATION=ON \
+    \
+    -DQt6Gui_PRIVATE_INCLUDE_DIRS="/usr/include/qt6/QtGui/${QT_VERSION}/QtGui" \
     -Wno-dev
 
   cmake --build build --target all -j$(nproc)
