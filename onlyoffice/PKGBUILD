@@ -18,6 +18,7 @@ depends=(
   'nspr'
   'desktop-file-utils'
   'hicolor-icon-theme'
+  'mbedtls'
 )
 
 optdepends=(
