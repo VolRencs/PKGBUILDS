@@ -18,7 +18,6 @@ depends=(
   'libdatachannel'
   'pciutils'
   'mbedtls'
-  'vulkan-headers'
   'qt6-svg'
 )
 
@@ -29,6 +28,7 @@ makedepends=(
   'nlohmann-json'
   'simde'
   'uthash'
+  'vulkan-headers'
 )
 
 optdepends=(
@@ -40,19 +40,22 @@ source=(
 )
 sha256sums=('48d744037c553eea8f9b76bf46f6dcac753e52871f49b2c1a2580757f723a1b7')
 
+prepare() {
+  cd "$pkgname-$pkgver-sources"
+
+  sed -i 's/Qt::GuiPrivate/Qt::Gui/g' \
+    frontend/cmake/os-linux.cmake \
+    frontend/plugins/*/CMakeLists.txt
+}
+
 build() {
   export CXXFLAGS+=" -Wno-error=deprecated-declarations"
 
   cmake -B build -S "$pkgname-$pkgver-sources" \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    \
-    -DENABLE_PIPEWIRE=ON \
-    -DENABLE_PULSEAUDIO=OFF \
-    -DENABLE_ALSA=OFF \
-    -DENABLE_JACK=OFF \
+    -DENABLE_JACK=ON \
     -DENABLE_SNDIO=OFF \
-    \
     -DENABLE_BROWSER=OFF \
     -DENABLE_VST=OFF \
     -DENABLE_VLC=OFF \
@@ -64,7 +67,6 @@ build() {
     \
     -DENABLE_SCRIPTING=OFF \
     -DOBS_VERSION_OVERRIDE="$pkgver" \
-    -DCALM_DEPRECATION=ON  \
     -Wno-dev
 
   cmake --build build --target all -j$(nproc)
