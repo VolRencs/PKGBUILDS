@@ -1,0 +1,27 @@
+pkgbase = obs-studio
+	pkgdesc = Free and open source software for video recording and live streaming (minimal PipeWire build)
+	pkgver = 32.0.2
+	pkgrel = 1
+	url = https://obsproject.com
+	arch = x86_64
+	license = GPL2
+	makedepends = cmake
+	makedepends = extra-cmake-modules
+	makedepends = ffnvcodec-headers
+	makedepends = nlohmann-json
+	makedepends = simde
+	makedepends = uthash
+	depends = ffmpeg
+	depends = qt6-svg
+	depends = pipewire
+	depends = rnnoise
+	depends = libxcomposite
+	depends = libxinerama
+	depends = libxkbcommon-x11
+	depends = libdatachannel
+	depends = pciutils
+	optdepends = v4l2loopback-dkms: virtual camera support
+	source = obs-studio-32.0.2.tar.gz::https://github.com/obsproject/obs-studio/releases/download/32.0.2/OBS-Studio-32.0.2-Sources.tar.gz
+	sha256sums = 48d744037c553eea8f9b76bf46f6dcac753e52871f49b2c1a2580757f723a1b7
+
+pkgname = obs-studio

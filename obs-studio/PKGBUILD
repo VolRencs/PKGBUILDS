@@ -1,0 +1,73 @@
+# Maintainer: VolRen <VolRencs@proton.me>
+
+pkgname=obs-studio
+pkgver=32.0.2
+pkgrel=1
+pkgdesc="Free and open source software for video recording and live streaming (minimal PipeWire build)"
+arch=('x86_64')
+url="https://obsproject.com"
+license=('GPL2')
+
+depends=(
+  'ffmpeg'
+  'qt6-svg'
+  'pipewire'
+  'rnnoise'
+  'libxcomposite'
+  'libxinerama'
+  'libxkbcommon-x11'
+  'libdatachannel'
+  'pciutils'
+)
+
+makedepends=(
+  'cmake'
+  'extra-cmake-modules'
+  'ffnvcodec-headers'
+  'nlohmann-json'
+  'simde'
+  'uthash'
+)
+
+optdepends=(
+  'v4l2loopback-dkms: virtual camera support'
+)
+
+source=(
+  "$pkgname-$pkgver.tar.gz::https://github.com/obsproject/obs-studio/releases/download/$pkgver/OBS-Studio-$pkgver-Sources.tar.gz"
+)
+sha256sums=('48d744037c553eea8f9b76bf46f6dcac753e52871f49b2c1a2580757f723a1b7')
+
+build() {
+  export CXXFLAGS+=" -Wno-error=deprecated-declarations"
+
+  cmake -B build -S "$pkgname-$pkgver-sources" \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    \
+    -DENABLE_PIPEWIRE=ON \
+    -DENABLE_PULSEAUDIO=OFF \
+    -DENABLE_ALSA=OFF \
+    -DENABLE_JACK=OFF \
+    -DENABLE_SNDIO=OFF \
+    \
+    -DENABLE_BROWSER=OFF \
+    -DENABLE_VST=OFF \
+    -DENABLE_VLC=OFF \
+    -DENABLE_LIBFDK=OFF \
+    -DENABLE_WEBRTC=ON \
+    -DENABLE_WEBSOCKET=OFF \
+    -DENABLE_NEW_MPEGTS_OUTPUT=OFF \
+    -DENABLE_AJA=OFF \
+    \
+    -DENABLE_SCRIPTING=OFF \
+    -DOBS_VERSION_OVERRIDE="$pkgver-minimal" \
+    -DCALM_DEPRECATION=ON \
+    -Wno-dev
+
+  cmake --build build --target all -j$(nproc)
+}
+
+package() {
+  DESTDIR="$pkgdir" cmake --install build
+}
