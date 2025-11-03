@@ -18,9 +18,7 @@ depends=(
   'libdatachannel'
   'pciutils'
   'mbedtls'
-  'qt6-base'
-  'qt6-declarative'
-  'qt6-tools'
+  'vulkan-headers'
   'qt6-svg'
 )
 
