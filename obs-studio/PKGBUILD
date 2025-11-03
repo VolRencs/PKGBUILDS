@@ -18,6 +18,8 @@ depends=(
   'libxkbcommon-x11'
   'libdatachannel'
   'pciutils'
+  'mbedtls'
+  'qt6-svg'
 )
 
 makedepends=(
