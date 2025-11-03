@@ -18,10 +18,9 @@ jobs:
           docker run --rm -v $(pwd):/workspace -w /workspace archlinux:latest bash -c '
             pacman -Syu --noconfirm && \
             pacman -S --noconfirm sudo base-devel \
-                ffmpeg jansson libxinerama libxkbcommon-x11 mbedtls rnnoise pciutils \
-                qt6-svg curl jack pipewire libxcomposite libdatachannel uthash simde qrcodegencpp-cmake \
-                cmake libfdk-aac x264 swig python luajit sndio nlohmann-json \
-                ffnvcodec-headers websocketpp asio extra-cmake-modules gtk-update-icon-cache && 
+                ffmpeg pipewire rnnoise libxcomposite libxinerama libxkbcommon-x11 \
+                libdatachannel pciutils mbedtls vulkan-headers qt6-svg \
+                cmake extra-cmake-modules ffnvcodec-headers nlohmann-json simde uthash && \
             useradd -m builder && \
             echo "builder ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/builder && \
             chmod 440 /etc/sudoers.d/builder && \

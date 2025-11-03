@@ -1,46 +1,73 @@
-# Maintainer: Jonathan Steel <jsteel at archlinux.org>
-# Contributor: Benjamin Klettbach <b.klettbach@gmail.com>
-# Contributor: Maciek Marciniak <mm2pl at kotmisia.pl>
+# Maintainer: VolRen <VolRencs@proton.me>
 
 pkgname=obs-studio
-pkgver=32.0.1
-pkgrel=2
-pkgdesc="Free, open source software for live streaming and recording"
+pkgver=32.0.2
+pkgrel=1
+pkgdesc="Free and open source software for video recording and live streaming (minimal PipeWire build)"
 arch=('x86_64')
 url="https://obsproject.com"
 license=('GPL2')
-depends=('ffmpeg' 'jansson' 'libxinerama' 'libxkbcommon-x11' 'mbedtls' 'rnnoise' 'pciutils'
-         'qt6-svg' 'curl' 'jack' 'gtk-update-icon-cache' 'pipewire' 'libxcomposite'
-         'libdatachannel' 'uthash' 'simde' 'qrcodegencpp-cmake')
-makedepends=('cmake' 'libfdk-aac' 'x264' 'swig' 'python' 'luajit' 'sndio' 'nlohmann-json'
-             'ffnvcodec-headers' 'websocketpp' 'asio' 'extra-cmake-modules')
-optdepends=('libfdk-aac: FDK AAC codec support'
-            'libva-intel-driver: hardware encoding'
-            'libva-mesa-driver: hardware encoding'
-            'luajit: scripting support'
-            'python: scripting support'
-            'sndio: Sndio input client'
-            'v4l2loopback-dkms: virtual camera support')
-source=($pkgname-$pkgver.tar.gz::https://github.com/obsproject/obs-studio/releases/download/$pkgver/OBS-Studio-$pkgver-Sources.tar.gz)
-sha256sums=('72b19fcc970f9b066b512326a3377526e1efb0ca1eb92cf89af26a1167f2fe35')
+
+depends=(
+  'ffmpeg'
+  'pipewire'
+  'rnnoise'
+  'libxcomposite'
+  'libxinerama'
+  'libxkbcommon-x11'
+  'libdatachannel'
+  'pciutils'
+  'mbedtls'
+  'vulkan-headers'
+  'qt6-svg'
+)
+
+makedepends=(
+  'cmake'
+  'extra-cmake-modules'
+  'ffnvcodec-headers'
+  'nlohmann-json'
+  'simde'
+  'uthash'
+)
+
+optdepends=(
+  'v4l2loopback-dkms: virtual camera support'
+)
+
+source=(
+  "$pkgname-$pkgver.tar.gz::https://github.com/obsproject/obs-studio/releases/download/$pkgver/OBS-Studio-$pkgver-Sources.tar.gz"
+)
+sha256sums=('48d744037c553eea8f9b76bf46f6dcac753e52871f49b2c1a2580757f723a1b7')
 
 build() {
   export CXXFLAGS+=" -Wno-error=deprecated-declarations"
-  cmake -B build -S $pkgname-$pkgver-sources \
-    -DCMAKE_INSTALL_PREFIX="/usr" \
+
+  cmake -B build -S "$pkgname-$pkgver-sources" \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    \
+    -DENABLE_PIPEWIRE=ON \
+    -DENABLE_PULSEAUDIO=OFF \
+    -DENABLE_ALSA=OFF \
+    -DENABLE_JACK=OFF \
+    -DENABLE_SNDIO=OFF \
+    \
     -DENABLE_BROWSER=OFF \
-    -DENABLE_VST=ON \
+    -DENABLE_VST=OFF \
     -DENABLE_VLC=OFF \
+    -DENABLE_LIBFDK=OFF \
+    -DENABLE_WEBRTC=ON \
+    -DENABLE_WEBSOCKET=OFF \
     -DENABLE_NEW_MPEGTS_OUTPUT=OFF \
     -DENABLE_AJA=OFF \
-    -DENABLE_JACK=ON \
-    -DENABLE_LIBFDK=ON \
-    -DENABLE_WEBRTC=ON \
+    \
+    -DENABLE_SCRIPTING=OFF \
     -DOBS_VERSION_OVERRIDE="$pkgver" \
     -DCALM_DEPRECATION=ON \
-    -DENABLE_WEBSOCKET=ON \
     -Wno-dev
-  cmake --build build
+
+  cmake --build build --target all -j$(nproc)
 }
 
 package() {
