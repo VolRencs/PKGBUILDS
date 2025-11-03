@@ -10,7 +10,6 @@ license=('GPL2')
 
 depends=(
   'ffmpeg'
-  'qt6-svg'
   'pipewire'
   'rnnoise'
   'libxcomposite'
@@ -19,6 +18,10 @@ depends=(
   'libdatachannel'
   'pciutils'
   'mbedtls'
+  'qt6-base'
+  'qt6-declarative'
+  'qt6-tools'
+  'qt6-svg'
 )
 
 makedepends=(

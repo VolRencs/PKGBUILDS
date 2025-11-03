@@ -19,7 +19,7 @@ jobs:
           docker run --rm -v $(pwd):/workspace -w /workspace archlinux:latest bash -c '
             pacman -Syu --noconfirm &&
             pacman -S --noconfirm sudo base-devel ffmpeg qt6-svg pipewire rnnoise libxcomposite libxinerama libxkbcommon-x11 libdatachannel pciutils \
-            cmake extra-cmake-modules ffnvcodec-headers nlohmann-json simde uthash mbedtls qt6-svg &&
+            cmake extra-cmake-modules ffnvcodec-headers nlohmann-json simde uthash mbedtls qt6-svg qt6-declarative qt6-base qt6-tools &&
             useradd -m builder &&
             chown -R builder:builder /workspace &&
             echo "builder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/builder &&
