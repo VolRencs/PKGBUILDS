@@ -3,7 +3,7 @@
 pkgname=obs-studio
 pkgver=32.0.2
 pkgrel=1
-pkgdesc="Free and open source software for video recording and live streaming (minimal PipeWire build)"
+pkgdesc="Free and open source software for video recording and live streaming"
 arch=('x86_64')
 url="https://obsproject.com"
 license=('GPL2')
@@ -64,7 +64,6 @@ build() {
     -DENABLE_WEBSOCKET=OFF \
     -DENABLE_NEW_MPEGTS_OUTPUT=OFF \
     -DENABLE_AJA=OFF \
-    \
     -DENABLE_SCRIPTING=OFF \
     -DOBS_VERSION_OVERRIDE="$pkgver" \
     -Wno-dev

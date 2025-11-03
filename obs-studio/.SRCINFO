@@ -1,5 +1,5 @@
 pkgbase = obs-studio
-	pkgdesc = Free and open source software for video recording and live streaming (minimal PipeWire build)
+	pkgdesc = Free and open source software for video recording and live streaming
 	pkgver = 32.0.2
 	pkgrel = 1
 	url = https://obsproject.com
