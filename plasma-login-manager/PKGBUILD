@@ -2,9 +2,9 @@
 # Maintainer: VolRen <VolRencs@proton.me>
 
 pkgname=plasma-login-manager
-pkgver=6.5.git20251030
+pkgver=6.5.git20251104
 pkgrel=1
-_commit=4e4a6f0e89d11b4002e01ddb87404eeac2faf8ae
+_commit=c9a89bbcea7204978a82aad0366f8834552768d2
 arch=(x86_64)
 pkgdesc='Plasma Login Manager'
 url='https://kde.org/plasma-desktop/'
@@ -35,7 +35,7 @@ makedepends=(extra-cmake-modules
              git)
 source=(git+https://invent.kde.org/plasma/plasma-login-manager#commit=$_commit
         plasmalogin{,-greeter,-autologin})
-sha256sums=('c952d9c48268c700c8b071157791acce00b7f2a37081886c961935f8276f29dd'
+sha256sums=('0a811ca5169d8d78b85e772aa6181a3c14090e782a18916b5d2be4e3d934bd63'
             '1101fff5d0a53105668e54862f6ed5475322953ad512184e93eae1e80131fea5'
             'bbab5ad9ef318042cafc5bd02fd8dc69cb1c9bda6dcd2c9fce7aa85754a5067e'
             'f9e6e8e81fbb7952bd3e72d650517d2edb5deaacaf04d16487b34297f8bf65dd')
