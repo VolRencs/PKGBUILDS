@@ -24,8 +24,8 @@ pkgbase = dragon
 	depends = qt6-multimedia
 	depends = qt6-multimedia-ffmpeg
 	source = https://download.kde.org/stable/release-service/25.08.2/src/dragon-25.08.2.tar.xz
-	source = https://invent.kde.org/multimedia/dragon/-/merge_requests/60.patch
+	source = https://invent.kde.org/multimedia/dragon/-/commit/70c0d96afd7f03a3c4012631e9df96d43c06e401.patch
 	sha256sums = 01434359e9c6fe4a97f1f9203e517b382aa923746b47ce6b252b36df0b818ae8
-	sha256sums = 5c9193716ab3200423081e41e2c070e1504d958daad4a853de17774c0260fa6e
+	sha256sums = 85b1cc9d365dc520a833bd3f24d3fcd93e7b6b1687147fee7610fdae4d642236
 
 pkgname = dragon

@@ -28,12 +28,12 @@ makedepends=(extra-cmake-modules)
 groups=(kde-applications
         kde-multimedia)
 source=(https://download.kde.org/stable/release-service/$pkgver/src/$pkgname-$pkgver.tar.xz
-        https://invent.kde.org/multimedia/dragon/-/merge_requests/60.patch)
+        https://invent.kde.org/multimedia/dragon/-/commit/70c0d96afd7f03a3c4012631e9df96d43c06e401.patch)
 sha256sums=('01434359e9c6fe4a97f1f9203e517b382aa923746b47ce6b252b36df0b818ae8'
-            '5c9193716ab3200423081e41e2c070e1504d958daad4a853de17774c0260fa6e')
+            '85b1cc9d365dc520a833bd3f24d3fcd93e7b6b1687147fee7610fdae4d642236')
 
 prepare() {
-  patch -d $pkgname-$pkgver -p1 < 60.patch
+  patch -d $pkgname-$pkgver -p1 < 70c0d96afd7f03a3c4012631e9df96d43c06e401.patch
 }
 
 build() { 
