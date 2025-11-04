@@ -1,0 +1,48 @@
+# Maintainer: Antonio Rojas <arojas@archlinux.org> 
+# Maintainer: Felix Yan <felixonmars@archlinux.org>
+# Contributor: Andrea Scarpino <andrea@archlinux.org>
+
+pkgname=dragon
+pkgver=25.08.2
+pkgrel=3
+pkgdesc='A multimedia player where the focus is on simplicity, instead of features'
+arch=(x86_64)
+url='https://apps.kde.org/dragonplayer/'
+license=(GPL-2.0-or-later)
+depends=(ffmpeg
+         gcc-libs
+         glibc
+         kconfig
+         kcoreaddons
+         kcrash
+         ki18n
+         kio
+         kirigami
+         kservice
+         kwindowsystem
+         qt6-base
+         qt6-declarative
+         qt6-multimedia
+         qt6-multimedia-ffmpeg)
+makedepends=(extra-cmake-modules)
+groups=(kde-applications
+        kde-multimedia)
+source=(https://download.kde.org/stable/release-service/$pkgver/src/$pkgname-$pkgver.tar.xz
+        https://invent.kde.org/multimedia/dragon/-/merge_requests/60.patch)
+sha256sums=('01434359e9c6fe4a97f1f9203e517b382aa923746b47ce6b252b36df0b818ae8'
+            '5c9193716ab3200423081e41e2c070e1504d958daad4a853de17774c0260fa6e')
+
+prepare() {
+  patch -d $pkgname-$pkgver -p1 < 60.patch
+}
+
+build() { 
+  cmake -B build -S $pkgname-$pkgver \
+    -DBUILD_TESTING=OFF
+  cmake --build build
+}
+
+package() {
+  DESTDIR="$pkgdir" cmake --install build
+}
+
