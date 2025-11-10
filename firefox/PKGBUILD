@@ -90,13 +90,12 @@ sha256sums=('eac4722ed259008d73006c4894c18d2871702c661d14e27505812351df62806b'
 _google_api_key=AIzaSyDwr302FpOSkGRpLlUpPThNTDPbXcIn_FM
 
 prepare() {
-  mkdir mozbuild
   cd firefox-$pkgver
   patch -Np1 -i ../0001-Install-under-remoting-name.patch
   patch -Np1 -i ../ffmpeg8-fix.patch
   echo -n "$_google_api_key" >google-api-key
 
-  cat >../mozconfig <<END
+  cat >mozconfig <<END
 ac_add_options --enable-application=browser
 mk_add_options MOZ_OBJDIR=${PWD@Q}/obj
 ac_add_options --prefix=/usr
