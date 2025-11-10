@@ -1,6 +1,6 @@
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/COPYING.LGPLv2.1 firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/COPYING.LGPLv2.1
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/COPYING.LGPLv2.1	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/COPYING.LGPLv2.1	2025-10-12 14:30:04.836690614 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/COPYING.LGPLv2.1 firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/COPYING.LGPLv2.1
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/COPYING.LGPLv2.1	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/COPYING.LGPLv2.1	2025-11-04 19:34:00.239917717 -0500
 @@ -0,0 +1,504 @@
 +                  GNU LESSER GENERAL PUBLIC LICENSE
 +                       Version 2.1, February 1999
@@ -506,9 +506,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/COPYI
 +That's all there is to it!
 +
 +
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/avcodec.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/avcodec.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/avcodec.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/avcodec.h	2025-10-12 14:30:08.627225283 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/avcodec.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/avcodec.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/avcodec.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/avcodec.h	2025-11-04 19:34:00.240235558 -0500
 @@ -0,0 +1,2986 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -3496,9 +3496,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + */
 +
 +#endif /* AVCODEC_AVCODEC_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/avdct.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/avdct.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/avdct.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/avdct.h	2025-10-12 14:30:08.628425554 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/avdct.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/avdct.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/avdct.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/avdct.h	2025-11-04 19:34:00.240952028 -0500
 @@ -0,0 +1,89 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -3589,9 +3589,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 +const AVClass* avcodec_dct_get_class(void);
 +
 +#endif /* AVCODEC_AVDCT_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/bsf.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/bsf.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/bsf.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/bsf.h	2025-10-12 14:30:08.628526996 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/bsf.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/bsf.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/bsf.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/bsf.h	2025-11-04 19:34:00.241088415 -0500
 @@ -0,0 +1,338 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -3931,9 +3931,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + */
 +
 +#endif  // AVCODEC_BSF_H
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_desc.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_desc.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_desc.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_desc.h	2025-10-12 14:30:08.628823986 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_desc.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_desc.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_desc.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_desc.h	2025-11-04 19:34:00.241238177 -0500
 @@ -0,0 +1,137 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -4072,9 +4072,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + */
 +
 +#endif  // AVCODEC_CODEC_DESC_H
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec.h	2025-10-12 14:30:08.628656580 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec.h	2025-11-04 19:34:00.241346812 -0500
 @@ -0,0 +1,373 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -4449,9 +4449,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + */
 +
 +#endif /* AVCODEC_CODEC_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_id.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_id.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_id.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_id.h	2025-10-12 14:30:08.629021518 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_id.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_id.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_id.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_id.h	2025-11-04 19:34:00.241502275 -0500
 @@ -0,0 +1,694 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -5147,9 +5147,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + */
 +
 +#endif  // AVCODEC_CODEC_ID_H
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_par.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_par.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_par.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_par.h	2025-10-12 14:30:08.629271920 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_par.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_par.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_par.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/codec_par.h	2025-11-04 19:34:00.241701852 -0500
 @@ -0,0 +1,253 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -5404,9 +5404,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + */
 +
 +#endif  // AVCODEC_CODEC_PAR_H
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/defs.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/defs.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/defs.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/defs.h	2025-10-12 14:30:08.629509288 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/defs.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/defs.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/defs.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/defs.h	2025-11-04 19:34:00.241837337 -0500
 @@ -0,0 +1,376 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -5784,9 +5784,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 +unsigned int av_xiphlacing(unsigned char* s, unsigned int v);
 +
 +#endif  // AVCODEC_DEFS_H
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/packet.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/packet.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/packet.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/packet.h	2025-10-12 14:30:08.630068693 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/packet.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/packet.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/packet.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/packet.h	2025-11-04 19:34:00.241991268 -0500
 @@ -0,0 +1,909 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -6697,9 +6697,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + */
 +
 +#endif  // AVCODEC_PACKET_H
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/vdpau.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/vdpau.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/vdpau.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/vdpau.h	2025-10-12 14:30:08.630489426 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/vdpau.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/vdpau.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/vdpau.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/vdpau.h	2025-11-04 19:34:00.242241810 -0500
 @@ -0,0 +1,140 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -6841,9 +6841,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 +/** @} */
 +
 +#endif /* AVCODEC_VDPAU_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/version.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/version.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/version.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/version.h	2025-10-12 14:30:08.630557324 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/version.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/version.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/version.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/version.h	2025-11-04 19:34:00.242416680 -0500
 @@ -0,0 +1,48 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -6893,9 +6893,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 +#define LIBAVCODEC_IDENT "Lavc" AV_STRINGIFY(LIBAVCODEC_VERSION)
 +
 +#endif /* AVCODEC_VERSION_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/version_major.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/version_major.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/version_major.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/version_major.h	2025-10-12 14:30:08.630622607 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/version_major.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/version_major.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/version_major.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavcodec/version_major.h	2025-11-04 19:34:00.242514565 -0500
 @@ -0,0 +1,59 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -6956,9 +6956,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 +#define FF_CODEC_SONIC_DEC (LIBAVCODEC_VERSION_MAJOR < 63)
 +
 +#endif /* AVCODEC_VERSION_MAJOR_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/attributes.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/attributes.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/attributes.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/attributes.h	2025-10-12 14:30:08.631174638 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/attributes.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/attributes.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/attributes.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/attributes.h	2025-11-04 19:34:00.242695526 -0500
 @@ -0,0 +1,180 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -7140,9 +7140,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 +#endif
 +
 +#endif /* AVUTIL_ATTRIBUTES_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/avconfig.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/avconfig.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/avconfig.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/avconfig.h	2025-10-12 14:30:04.840852231 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/avconfig.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/avconfig.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/avconfig.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/avconfig.h	2025-11-04 19:34:00.242783342 -0500
 @@ -0,0 +1,6 @@
 +/* Generated by ffmpeg configure */
 +#ifndef AVUTIL_AVCONFIG_H
@@ -7150,9 +7150,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 +#define AV_HAVE_BIGENDIAN 0
 +#define AV_HAVE_FAST_UNALIGNED 1
 +#endif /* AVUTIL_AVCONFIG_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/avutil.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/avutil.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/avutil.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/avutil.h	2025-10-12 14:30:08.631548233 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/avutil.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/avutil.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/avutil.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/avutil.h	2025-11-04 19:34:00.242874393 -0500
 @@ -0,0 +1,368 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -7522,9 +7522,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + */
 +
 +#endif /* AVUTIL_AVUTIL_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/buffer.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/buffer.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/buffer.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/buffer.h	2025-10-12 14:30:08.631996839 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/buffer.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/buffer.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/buffer.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/buffer.h	2025-11-04 19:34:00.243021321 -0500
 @@ -0,0 +1,328 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -7854,9 +7854,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + */
 +
 +#endif /* AVUTIL_BUFFER_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/channel_layout.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/channel_layout.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/channel_layout.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/channel_layout.h	2025-10-12 14:30:08.632283900 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/channel_layout.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/channel_layout.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/channel_layout.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/channel_layout.h	2025-11-04 19:34:00.243175682 -0500
 @@ -0,0 +1,837 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -8695,9 +8695,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + */
 +
 +#endif /* AVUTIL_CHANNEL_LAYOUT_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/common.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/common.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/common.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/common.h	2025-10-12 14:30:08.632642747 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/common.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/common.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/common.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/common.h	2025-11-04 19:34:00.243444539 -0500
 @@ -0,0 +1,605 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -9304,9 +9304,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 +  }
 +
 +#endif /* AVUTIL_COMMON_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/cpu.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/cpu.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/cpu.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/cpu.h	2025-10-12 14:30:08.632943414 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/cpu.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/cpu.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/cpu.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/cpu.h	2025-11-04 19:34:00.243634557 -0500
 @@ -0,0 +1,171 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -9479,9 +9479,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 +size_t av_cpu_max_align(void);
 +
 +#endif /* AVUTIL_CPU_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/dict.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/dict.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/dict.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/dict.h	2025-10-12 14:30:08.633345342 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/dict.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/dict.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/dict.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/dict.h	2025-11-04 19:34:00.243762358 -0500
 @@ -0,0 +1,266 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -9749,9 +9749,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + */
 +
 +#endif /* AVUTIL_DICT_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/error.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/error.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/error.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/error.h	2025-10-12 14:30:08.633835756 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/error.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/error.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/error.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/error.h	2025-11-04 19:34:00.243898846 -0500
 @@ -0,0 +1,163 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -9916,9 +9916,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + */
 +
 +#endif /* AVUTIL_ERROR_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/frame.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/frame.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/frame.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/frame.h	2025-10-12 14:30:08.634551686 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/frame.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/frame.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/frame.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/frame.h	2025-11-04 19:34:00.244016277 -0500
 @@ -0,0 +1,1167 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -11087,9 +11087,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + */
 +
 +#endif /* AVUTIL_FRAME_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext_drm.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext_drm.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext_drm.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext_drm.h	2025-10-12 14:30:08.635861677 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext_drm.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext_drm.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext_drm.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext_drm.h	2025-11-04 19:34:00.244367329 -0500
 @@ -0,0 +1,173 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -11264,9 +11264,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 +} AVDRMDeviceContext;
 +
 +#endif /* AVUTIL_HWCONTEXT_DRM_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext.h	2025-10-12 14:30:08.635330365 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext.h	2025-11-04 19:34:00.244489530 -0500
 @@ -0,0 +1,601 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -11869,9 +11869,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 +                                  AVBufferRef* source_frame_ctx, int flags);
 +
 +#endif /* AVUTIL_HWCONTEXT_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext_vaapi.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext_vaapi.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext_vaapi.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext_vaapi.h	2025-10-12 14:30:08.636302077 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext_vaapi.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext_vaapi.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext_vaapi.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/hwcontext_vaapi.h	2025-11-04 19:34:00.244695358 -0500
 @@ -0,0 +1,121 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -11994,9 +11994,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 +} AVVAAPIHWConfig;
 +
 +#endif /* AVUTIL_HWCONTEXT_VAAPI_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/intfloat.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/intfloat.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/intfloat.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/intfloat.h	2025-10-12 14:30:08.636934410 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/intfloat.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/intfloat.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/intfloat.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/intfloat.h	2025-11-04 19:34:00.244810505 -0500
 @@ -0,0 +1,78 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -12076,9 +12076,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 +}
 +
 +#endif /* AVUTIL_INTFLOAT_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/log.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/log.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/log.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/log.h	2025-10-12 14:30:08.637282596 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/log.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/log.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/log.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/log.h	2025-11-04 19:34:00.244910915 -0500
 @@ -0,0 +1,433 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -12513,9 +12513,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + */
 +
 +#endif /* AVUTIL_LOG_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/lzo.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/lzo.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/lzo.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/lzo.h	2025-10-12 14:30:08.637462365 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/lzo.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/lzo.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/lzo.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/lzo.h	2025-11-04 19:34:00.245074924 -0500
 @@ -0,0 +1,71 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -12588,9 +12588,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + */
 +
 +#endif /* AVUTIL_LZO_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/macros.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/macros.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/macros.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/macros.h	2025-10-12 14:30:08.637533199 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/macros.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/macros.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/macros.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/macros.h	2025-11-04 19:34:00.245187837 -0500
 @@ -0,0 +1,91 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -12683,9 +12683,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 +#define FFALIGN(x, a) (((x) + (a) - 1) & ~((a) - 1))
 +
 +#endif /* AVUTIL_MACROS_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/mathematics.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/mathematics.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/mathematics.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/mathematics.h	2025-10-12 14:30:08.637709571 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/mathematics.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/mathematics.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/mathematics.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/mathematics.h	2025-11-04 19:34:00.245292765 -0500
 @@ -0,0 +1,310 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -12997,9 +12997,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + */
 +
 +#endif /* AVUTIL_MATHEMATICS_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/mem.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/mem.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/mem.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/mem.h	2025-10-12 14:30:08.637889601 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/mem.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/mem.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/mem.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/mem.h	2025-11-04 19:34:00.245439973 -0500
 @@ -0,0 +1,615 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -13616,9 +13616,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + */
 +
 +#endif /* AVUTIL_MEM_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/pixfmt.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/pixfmt.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/pixfmt.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/pixfmt.h	2025-10-12 14:30:08.639079475 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/pixfmt.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/pixfmt.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/pixfmt.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/pixfmt.h	2025-11-04 19:34:00.245633137 -0500
 @@ -0,0 +1,1038 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -14658,9 +14658,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 +};
 +
 +#endif /* AVUTIL_PIXFMT_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/rational.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/rational.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/rational.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/rational.h	2025-10-12 14:30:08.639400881 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/rational.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/rational.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/rational.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/rational.h	2025-11-04 19:34:00.245975963 -0500
 @@ -0,0 +1,231 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -14893,9 +14893,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + */
 +
 +#endif /* AVUTIL_RATIONAL_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/samplefmt.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/samplefmt.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/samplefmt.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/samplefmt.h	2025-10-12 14:30:08.639804562 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/samplefmt.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/samplefmt.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/samplefmt.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/samplefmt.h	2025-11-04 19:34:00.246103294 -0500
 @@ -0,0 +1,279 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -15176,9 +15176,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + * @}
 + */
 +#endif /* AVUTIL_SAMPLEFMT_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/version.h firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/version.h
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/version.h	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/version.h	2025-10-12 14:30:08.641036575 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/version.h firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/version.h
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/version.h	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/include/libavutil/version.h	2025-11-04 19:34:00.246241554 -0500
 @@ -0,0 +1,123 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -15303,9 +15303,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/include/libav
 + */
 +
 +#endif /* AVUTIL_VERSION_H */
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/moz.build firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/moz.build
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/moz.build	1969-12-31 19:00:00.000000000 -0500
-+++ firefox-144.0/dom/media/platforms/ffmpeg/ffmpeg62/moz.build	2025-10-12 14:30:08.641336721 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/moz.build firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/moz.build
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/moz.build	1969-12-31 19:00:00.000000000 -0500
++++ firefox-145.0/dom/media/platforms/ffmpeg/ffmpeg62/moz.build	2025-11-04 19:34:00.246375717 -0500
 @@ -0,0 +1,55 @@
 +# -*- Mode: python; indent-tabs-mode: nil; tab-width: 40 -*-
 +# vim: set filetype=python:
@@ -15362,9 +15362,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/ffmpeg62/moz.build fir
 +]
 +
 +FINAL_LIBRARY = "xul"
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/FFmpegLibWrapper.cpp firefox-144.0/dom/media/platforms/ffmpeg/FFmpegLibWrapper.cpp
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/FFmpegLibWrapper.cpp	2025-10-03 09:17:57.000000000 -0400
-+++ firefox-144.0/dom/media/platforms/ffmpeg/FFmpegLibWrapper.cpp	2025-10-12 14:49:53.071674726 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/FFmpegLibWrapper.cpp firefox-145.0/dom/media/platforms/ffmpeg/FFmpegLibWrapper.cpp
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/FFmpegLibWrapper.cpp	2025-10-31 09:10:34.000000000 -0400
++++ firefox-145.0/dom/media/platforms/ffmpeg/FFmpegLibWrapper.cpp	2025-11-04 19:34:00.246483892 -0500
 @@ -81,6 +81,7 @@ FFmpegLibWrapper::LinkResult FFmpegLibWr
      AV_FUNC_59 = 1 << 6,
      AV_FUNC_60 = 1 << 7,
@@ -15606,9 +15606,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/FFmpegLibWrapper.cpp f
  #endif
  
    AV_FUNC_OPTION(av_tx_init, AV_FUNC_AVUTIL_ALL)
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/FFmpegRuntimeLinker.cpp firefox-144.0/dom/media/platforms/ffmpeg/FFmpegRuntimeLinker.cpp
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/FFmpegRuntimeLinker.cpp	2025-10-03 09:17:57.000000000 -0400
-+++ firefox-144.0/dom/media/platforms/ffmpeg/FFmpegRuntimeLinker.cpp	2025-10-12 14:38:06.635984951 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/FFmpegRuntimeLinker.cpp firefox-145.0/dom/media/platforms/ffmpeg/FFmpegRuntimeLinker.cpp
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/FFmpegRuntimeLinker.cpp	2025-10-31 09:10:34.000000000 -0400
++++ firefox-145.0/dom/media/platforms/ffmpeg/FFmpegRuntimeLinker.cpp	2025-11-04 19:39:51.180050012 -0500
 @@ -35,6 +35,7 @@ static FFmpegLibWrapper sLibAV;
  static const char* sLibs[] = {
  // clang-format off
@@ -15645,20 +15645,19 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/FFmpegRuntimeLinker.cp
      default:
        module = nullptr;
    }
-@@ -245,8 +253,8 @@ already_AddRefed<PlatformEncoderModule>
-     case 60:
-       module = FFmpegEncoderModule<60>::Create(&sLibAV);
+@@ -248,6 +256,9 @@ already_AddRefed<PlatformEncoderModule>
+     case 61:
+       module = FFmpegEncoderModule<61>::Create(&sLibAV);
        break;
--    case 61:
--      module = FFmpegEncoderModule<61>::Create(&sLibAV);
 +    case 62:
 +      module = FFmpegEncoderModule<62>::Create(&sLibAV);
-       break;
++      break;
      default:
        module = nullptr;
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/FFmpegVideoDecoder.cpp firefox-144.0/dom/media/platforms/ffmpeg/FFmpegVideoDecoder.cpp
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/FFmpegVideoDecoder.cpp	2025-10-03 09:17:57.000000000 -0400
-+++ firefox-144.0/dom/media/platforms/ffmpeg/FFmpegVideoDecoder.cpp	2025-10-12 14:30:04.836101613 -0400
+   }
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/FFmpegVideoDecoder.cpp firefox-145.0/dom/media/platforms/ffmpeg/FFmpegVideoDecoder.cpp
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/FFmpegVideoDecoder.cpp	2025-10-31 09:10:34.000000000 -0400
++++ firefox-145.0/dom/media/platforms/ffmpeg/FFmpegVideoDecoder.cpp	2025-11-04 19:34:00.246959398 -0500
 @@ -1306,11 +1306,21 @@ MediaResult FFmpegVideoDecoder<LIBAV_VER
              RESULT_DETAIL("HW decoding is slow, switching back to SW decode"));
        }
@@ -15721,7 +15720,7 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/FFmpegVideoDecoder.cpp
      }
      if (NS_FAILED(rv)) {
        return rv;
-@@ -1670,10 +1695,17 @@ MediaResult FFmpegVideoDecoder<LIBAV_VER
+@@ -1694,10 +1719,17 @@ MediaResult FFmpegVideoDecoder<LIBAV_VER
          mLib->av_buffer_get_opaque(mFrame->buf[0]));
      MOZ_ASSERT(wrapper);
      FFMPEG_LOGV("Create a video data from a shmem image=%p", wrapper.get());
@@ -15739,7 +15738,7 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/FFmpegVideoDecoder.cpp
    }
  #endif
  #if defined(MOZ_WIDGET_GTK) && defined(MOZ_USE_HWDECODE)
-@@ -1706,10 +1738,17 @@ MediaResult FFmpegVideoDecoder<LIBAV_VER
+@@ -1732,10 +1764,17 @@ MediaResult FFmpegVideoDecoder<LIBAV_VER
              mInfo.mTransferFunction
                  ? TransferFunctionToString(mInfo.mTransferFunction.value())
                  : "unknown");
@@ -15757,7 +15756,7 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/FFmpegVideoDecoder.cpp
        } else {
          FFMPEG_LOG("Failed to uploaded video data to DMABuf");
        }
-@@ -1726,6 +1765,7 @@ MediaResult FFmpegVideoDecoder<LIBAV_VER
+@@ -1752,6 +1791,7 @@ MediaResult FFmpegVideoDecoder<LIBAV_VER
          return ret;
        }
      }
@@ -15765,7 +15764,7 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/FFmpegVideoDecoder.cpp
      Result<already_AddRefed<VideoData>, MediaResult> r =
          VideoData::CreateAndCopyData(
              mInfo, mImageContainer, aOffset, TimeUnit::FromMicroseconds(aPts),
-@@ -1733,6 +1773,15 @@ MediaResult FFmpegVideoDecoder<LIBAV_VER
+@@ -1759,6 +1799,15 @@ MediaResult FFmpegVideoDecoder<LIBAV_VER
              TimeUnit::FromMicroseconds(mFrame->pkt_dts),
              mInfo.ScaledImageRect(mFrame->width, mFrame->height),
              mImageAllocator);
@@ -15781,7 +15780,7 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/FFmpegVideoDecoder.cpp
      if (r.isErr()) {
        return r.unwrapErr();
      }
-@@ -1807,11 +1856,17 @@ MediaResult FFmpegVideoDecoder<LIBAV_VER
+@@ -1833,11 +1882,17 @@ MediaResult FFmpegVideoDecoder<LIBAV_VER
               mInfo.mTransferFunction
                   ? TransferFunctionToString(mInfo.mTransferFunction.value())
                   : "unknown");
@@ -15800,7 +15799,7 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/FFmpegVideoDecoder.cpp
  
    if (!vp) {
      return MediaResult(NS_ERROR_DOM_MEDIA_DECODE_ERR,
-@@ -1857,10 +1912,17 @@ MediaResult FFmpegVideoDecoder<LIBAV_VER
+@@ -1883,10 +1938,17 @@ MediaResult FFmpegVideoDecoder<LIBAV_VER
    surface->SetYUVColorSpace(GetFrameColorSpace());
    surface->SetColorRange(GetFrameColorRange());
  
@@ -15818,7 +15817,7 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/FFmpegVideoDecoder.cpp
  
    if (!vp) {
      return MediaResult(NS_ERROR_DOM_MEDIA_DECODE_ERR,
-@@ -2298,10 +2360,17 @@ MediaResult FFmpegVideoDecoder<LIBAV_VER
+@@ -2338,10 +2400,17 @@ MediaResult FFmpegVideoDecoder<LIBAV_VER
    }
    MOZ_ASSERT(image);
  
@@ -15836,9 +15835,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/FFmpegVideoDecoder.cpp
    if (!v) {
      nsPrintfCString msg("D3D image allocation error");
      FFMPEG_LOG("%s", msg.get());
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/FFmpegVideoEncoder.cpp firefox-144.0/dom/media/platforms/ffmpeg/FFmpegVideoEncoder.cpp
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/FFmpegVideoEncoder.cpp	2025-10-03 09:17:57.000000000 -0400
-+++ firefox-144.0/dom/media/platforms/ffmpeg/FFmpegVideoEncoder.cpp	2025-10-12 14:30:04.836389145 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/FFmpegVideoEncoder.cpp firefox-145.0/dom/media/platforms/ffmpeg/FFmpegVideoEncoder.cpp
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/FFmpegVideoEncoder.cpp	2025-10-31 09:10:34.000000000 -0400
++++ firefox-145.0/dom/media/platforms/ffmpeg/FFmpegVideoEncoder.cpp	2025-11-04 19:34:00.247342230 -0500
 @@ -118,11 +118,19 @@ struct H264LiteralSetting {
    H264Setting get() const { return {mValue, mString.AsString()}; }
  };
@@ -15859,9 +15858,9 @@ diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/FFmpegVideoEncoder.cpp
  
  static Maybe<H264Setting> GetH264Profile(const H264_PROFILE& aProfile) {
    switch (aProfile) {
-diff -Nuarp firefox-144.0.orig/dom/media/platforms/ffmpeg/moz.build firefox-144.0/dom/media/platforms/ffmpeg/moz.build
---- firefox-144.0.orig/dom/media/platforms/ffmpeg/moz.build	2025-10-03 09:17:57.000000000 -0400
-+++ firefox-144.0/dom/media/platforms/ffmpeg/moz.build	2025-10-12 14:30:04.851939248 -0400
+diff -Nuarp firefox-145.0.orig/dom/media/platforms/ffmpeg/moz.build firefox-145.0/dom/media/platforms/ffmpeg/moz.build
+--- firefox-145.0.orig/dom/media/platforms/ffmpeg/moz.build	2025-10-31 09:10:34.000000000 -0400
++++ firefox-145.0/dom/media/platforms/ffmpeg/moz.build	2025-11-04 19:34:00.247545814 -0500
 @@ -17,6 +17,7 @@ DIRS += [
      "ffmpeg59",
      "ffmpeg60",
