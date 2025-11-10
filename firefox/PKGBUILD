@@ -37,6 +37,8 @@ depends=(
   nss
   pango
   ttf-font
+  sqlite
+  zlib
 )
 makedepends=(
   cbindgen
@@ -91,7 +93,7 @@ mk_add_options MOZ_OBJDIR=${PWD@Q}/obj
 ac_add_options --prefix=/usr
 ac_add_options --enable-release
 ac_add_options --enable-hardening
-ac_add_options --enable-optimize="-O3 -march=native"
+ac_add_options --enable-optimize="-O2 -march=native"
 ac_add_options --enable-linker=lld
 ac_add_options --disable-install-strip
 
@@ -121,7 +123,7 @@ ac_add_options --with-system-zlib
 ac_add_options --with-system-sqlite
 
 ac_add_options --enable-official-branding
-ac_add_options --with-distribution-id=org.archlinux
+ac_add_options --with-distribution-id=org.cachyos
 ac_add_options --allow-addon-sideload
 ac_add_options --enable-lto=thin
 export MOZILLA_OFFICIAL=1
@@ -150,6 +152,9 @@ build() {
   CXXFLAGS="${CXXFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
 
   ulimit -n 4096
+
+  export RUSTFLAGS="-C link-arg=-fuse-ld=lld"
+  export MACH_USE_SYSTEM_PYTHON=1
 
   ./mach build -j$(nproc)
 }
