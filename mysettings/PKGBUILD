@@ -1,0 +1,31 @@
+# Maintainer: Peter Jung <admin@ptr1337.dev>
+
+pkgname=mysettings
+pkgver=1.2.12
+pkgrel=1
+groups=(cachyos)
+arch=('any')
+license=(GPL-1.0-only)
+makedepends=('coreutils' 'git')
+pkgdesc='CachyOS - Settings'
+source=("git+https://github.com/CachyOS/CachyOS-Settings.git#tag=$pkgver")
+install="$pkgname.install"
+sha256sums=('067a2866248f22395a1fa2e1549438e4ff6a2ef7d34edbe1256eff7a4cf5c5ad')
+depends=(
+  zram-generator
+  inxi
+  "systemd>=256"
+)
+optdepends=('libluv: for topmem'
+            'lua-luv: for topmem'
+            'power-profiles-daemon: For game-performance')
+provides=('ntsync-common')
+prepare() {
+  cd $_gitname
+}
+package() {
+  install -d "$pkgdir/etc"
+  cp -rf "${srcdir}/CachyOS-Settings/etc" "$pkgdir"
+  install -d "$pkgdir/usr"
+  cp -rf "${srcdir}/CachyOS-Settings/usr" "$pkgdir"
+}
