@@ -123,7 +123,6 @@ ac_add_options --with-system-zlib
 ac_add_options --with-system-sqlite
 
 ac_add_options --enable-official-branding
-ac_add_options --with-distribution-id=org.cachyos
 ac_add_options --allow-addon-sideload
 ac_add_options --enable-lto=thin
 export MOZILLA_OFFICIAL=1
