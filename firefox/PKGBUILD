@@ -51,11 +51,15 @@ optdepends=(
   'speech-dispatcher: Text-to-Speech'
   'xdg-desktop-portal: Screensharing with Wayland'
 )
-options=(!emptydirs !lto !makeflags)
+options=(
+  !emptydirs
+  !lto
+  !makeflags
+)
 source=(
   https://archive.mozilla.org/pub/firefox/releases/$pkgver/source/firefox-$pkgver.source.tar.xz
-  firefox-symbolic.svg
-  firefox.desktop
+  $pkgname-symbolic.svg
+  $pkgname.desktop
   0001-Install-under-remoting-name.patch
   ffmpeg8-fix.patch
 )
@@ -67,11 +71,13 @@ sha256sums=('eb0828db0e942ad345c725e2cbf2ed3b90d23771b054b6db0ded57cfa10b8c9c'
             '2b39e1e1efa845aac680db85e409cd07765e7d8f2346cbb957048f08dfa13daf')
 
 prepare() {
-  mkdir -p mozbuild
+  mkdir mozbuild
   cd firefox-$pkgver
 
   patch -Np1 -i ../0001-Install-under-remoting-name.patch
   patch -Np1 -i ../ffmpeg8-fix.patch
+
+  echo -n "$_google_api_key" >google-api-key
 
   rm -rf browser/components/pocket
 
@@ -91,10 +97,15 @@ ac_add_options --disable-install-strip
 ac_add_options --disable-crashreporter
 ac_add_options --disable-updater
 ac_add_options --disable-tests
+ac_add_options --disable-dmd
 ac_add_options --disable-debug
+ac_add_options --disable-rust-debug
+ac_add_options --disable-geckodriver
 ac_add_options --disable-profiling
 ac_add_options --disable-onnx
 ac_add_options --disable-bootstrap
+
+ac_add_options --without-wasm-sandboxed-libraries
 
 ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
@@ -106,8 +117,8 @@ ac_add_options --allow-addon-sideload
 export MOZILLA_OFFICIAL=1
 export MOZ_APP_REMOTINGNAME=$pkgname
 
-ac_add_options OPT_LEVEL="3"
-ac_add_options RUSTC_OPT_LEVEL="3"
+ac_add_options --with-google-location-service-api-keyfile=${PWD@Q}/google-api-key
+ac_add_options --with-google-safebrowsing-api-keyfile=${PWD@Q}/google-api-key
 
 ac_add_options --disable-pgo
 ac_add_options --disable-lto
@@ -133,7 +144,7 @@ build() {
   CFLAGS="${CFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
   CXXFLAGS="${CXXFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
 
-  export RUSTFLAGS="-C lto=off -C debuginfo=0"
+  ulimit -n 4096
 
   ./mach build
 }
