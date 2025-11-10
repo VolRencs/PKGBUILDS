@@ -105,7 +105,6 @@ ac_add_options --disable-debug
 ac_add_options --disable-rust-debug
 ac_add_options --disable-geckodriver
 ac_add_options --disable-profiling
-ac_add_options --disable-onnx
 ac_add_options --disable-bootstrap
 
 ac_add_options --without-wasm-sandboxed-libraries
@@ -117,14 +116,13 @@ ac_add_options --with-system-icu
 ac_add_options --enable-official-branding
 ac_add_options --with-distribution-id=org.archlinux
 ac_add_options --allow-addon-sideload
+ac_add_options --enable-lto=thin
 export MOZILLA_OFFICIAL=1
 export MOZ_APP_REMOTINGNAME=$pkgname
 
 ac_add_options --with-google-location-service-api-keyfile=${PWD@Q}/google-api-key
 ac_add_options --with-google-safebrowsing-api-keyfile=${PWD@Q}/google-api-key
 
-ac_add_options --disable-pgo
-ac_add_options --disable-lto
 END
 }
 
@@ -140,6 +138,7 @@ build() {
   export AR=llvm-ar
   export NM=llvm-nm
   export RANLIB=llvm-ranlib
+  export LD=ld.lld
 
   CFLAGS="${CFLAGS/-fexceptions/}"
   CXXFLAGS="${CXXFLAGS/-fexceptions/}"
@@ -148,7 +147,7 @@ build() {
 
   ulimit -n 4096
 
-  ./mach build
+  ./mach build -j$(nproc)
 }
 
 package() {
@@ -198,4 +197,3 @@ exec /usr/lib/$pkgname/firefox "\$@"
 END
   ln -srf "$pkgdir/usr/bin/$pkgname" "$pkgdir/usr/lib/$pkgname/firefox-bin"
 }
-# vim:set sw=2 sts=-1 et:
