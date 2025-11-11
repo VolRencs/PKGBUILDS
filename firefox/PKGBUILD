@@ -64,7 +64,7 @@ optdepends=(
 )
 options=(
   !emptydirs
-  lto=thin
+  !lto
   !makeflags
 )
 source=(
