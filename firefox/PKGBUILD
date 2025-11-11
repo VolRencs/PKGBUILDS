@@ -153,7 +153,6 @@ build() {
   ulimit -n 4096
 
   export RUSTFLAGS="-C link-arg=-fuse-ld=lld"
-  export MACH_USE_SYSTEM_PYTHON=1
 
   ./mach build -j$(nproc)
 }
