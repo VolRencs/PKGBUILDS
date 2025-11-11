@@ -15,7 +15,7 @@ jobs:
 
       - name: Build package in container
         run: |
-          docker run --rm -v $(pwd):/workspace -w /workspace archlinux:latest bash -c '
+          docker run --rm -v $(pwd):/workspace -w /workspace cachyos/cachyos-v3:latest bash -c '
             pacman -Syu --noconfirm && \
             pacman -S --noconfirm sudo base-devel \
                 ffmpeg pipewire rnnoise libxcomposite libxinerama libxkbcommon-x11 \

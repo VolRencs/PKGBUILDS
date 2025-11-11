@@ -16,7 +16,7 @@ jobs:
       - name: Build package in container
         id: build_pkg
         run: |
-          docker run --rm -v $(pwd):/workspace -w /workspace archlinux:latest bash -c '
+          docker run --rm -v $(pwd):/workspace -w /workspace cachyos/cachyos-v3:latest bash -c '
             pacman -Syu --noconfirm &&
             pacman -S --noconfirm sudo base-devel git extra-cmake-modules \
               gcc-libs glibc kauth kcmutils kconfig kcoreaddons kdbusaddons ki18n kio \
