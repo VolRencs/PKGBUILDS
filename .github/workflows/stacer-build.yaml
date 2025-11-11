@@ -15,7 +15,7 @@ jobs:
 
       - name: Build package in container
         run: |
-          docker run --rm -v $(pwd):/workspace -w /workspace cachyos/cachyos-v3:latest bash -c '
+          docker run --rm -v $(pwd):/workspace -w /workspace archlinux:latest bash -c '
             pacman -Syu --noconfirm &&
             pacman -S --noconfirm sudo base-devel cmake qt6-base qt6-charts qt6-svg qt6-tools git &&
             useradd -m builder &&

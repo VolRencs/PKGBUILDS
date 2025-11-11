@@ -15,7 +15,7 @@ jobs:
 
       - name: Build package in container
         run: |
-          docker run --rm -v $(pwd):/workspace -w /workspace cachyos/cachyos-v3:latest bash -c '
+          docker run --rm -v $(pwd):/workspace -w /workspace archlinux:latest bash -c '
             pacman -Syu --noconfirm &&
             pacman -S --noconfirm sudo base-devel gtk3 gstreamer gst-plugins-base-libs \
               libxss nss nspr desktop-file-utils hicolor-icon-theme wget unzip git libarchive &&
