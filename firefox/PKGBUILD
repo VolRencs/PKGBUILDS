@@ -110,7 +110,6 @@ ac_add_options --disable-bootstrap
 ac_add_options --disable-phc
 ac_add_options --disable-update-agent
 ac_add_options --disable-parental-controls
-ac_add_options --disable-maintenance-service
 ac_add_options --disable-synth-speechd
 ac_add_options --disable-webspeechtestbackend
 ac_add_options --disable-webspeech
