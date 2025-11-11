@@ -116,8 +116,6 @@ ac_add_options --without-wasm-sandboxed-libraries
 
 ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
-ac_add_options --with-system-zlib
-ac_add_options --with-system-sqlite
 
 ac_add_options --enable-official-branding
 ac_add_options --allow-addon-sideload
