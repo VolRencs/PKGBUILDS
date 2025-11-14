@@ -8,7 +8,7 @@ url="https://github.com/QuentiumYT/Stacer"
 arch=('x86_64')
 license=('GPL-3.0-or-later')
 depends=('qt6-base' 'qt6-charts' 'qt6-svg')
-makedepends=('cmake' 'qt6-tools')
+makedepends=('cmake' 'qt6-tools' 'cland' 'lld')
 provides=('stacer')
 conflicts=('stacer-git' 'stacer-bin')
 source=("https://github.com/QuentiumYT/Stacer/archive/refs/tags/v${pkgver}.tar.gz")
@@ -17,13 +17,18 @@ sha256sums=('35f92898dd605b81307b3fd2be8999ed8b72c63e60706dd07f0f247964ea8b26')
 build() {
     cd "Stacer-${pkgver}"
 
-    mkdir -p build
+    export CC=clang
+    export CXX=clang++
+    export LD=lld
 
-    cmake -DCMAKE_BUILD_TYPE=Release \
-          -DCMAKE_CXX_COMPILER=g++ \
-          -B build -S .
+    cmake -B build -S . \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_COMPILER=clang++ \
+        -DCMAKE_C_COMPILER=clang \
+        -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=lld" \
+        -DCMAKE_SHARED_LINKER_FLAGS="-fuse-ld=lld"
 
-    make -C build -j$(nproc)
+    cmake --build build -j$(nproc)
 }
 
 package() {
