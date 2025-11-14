@@ -66,6 +66,7 @@ build() {
     -DOBS_VERSION_OVERRIDE="$pkgver" \
     -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=lld" \
     -DCMAKE_SHARED_LINKER_FLAGS="-fuse-ld=lld" \
+    -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=OFF \
     -Wno-dev
 
   cmake --build build --target all -j$(nproc)
