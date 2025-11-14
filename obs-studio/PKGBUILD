@@ -46,7 +46,6 @@ prepare() {
 build() {
   export CC=clang
   export CXX=clang++
-  export LD=lld
   export CXXFLAGS+=" -Wno-error=deprecated-declarations"
 
   cmake -B build -S "$pkgname-$pkgver-sources" \
@@ -66,7 +65,6 @@ build() {
     -DOBS_VERSION_OVERRIDE="$pkgver" \
     -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=lld" \
     -DCMAKE_SHARED_LINKER_FLAGS="-fuse-ld=lld" \
-    -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=OFF \
     -Wno-dev
 
   cmake --build build --target all -j$(nproc)
