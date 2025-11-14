@@ -9,8 +9,7 @@ arch=(x86_64)
 pkgdesc='Plasma Login Manager'
 url='https://kde.org/plasma-desktop/'
 license=(GPL-2.0-or-later)
-depends=(gcc-libs
-         glibc
+depends=(glibc
          kauth
          kcmutils
          kconfig
@@ -29,7 +28,6 @@ depends=(gcc-libs
          plasma-workspace
          qt6-base
          qt6-declarative
-         sh
          systemd-libs)
 makedepends=(extra-cmake-modules
              git
