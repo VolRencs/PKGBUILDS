@@ -2,7 +2,7 @@
 
 pkgname=obs-studio
 pkgver=32.0.2
-pkgrel=2
+pkgrel=3
 pkgdesc="Free and open source software for video recording and live streaming"
 arch=('x86_64')
 url="https://obsproject.com"
@@ -14,7 +14,6 @@ depends=(
   'libxcomposite'
   'libxinerama'
   'libxkbcommon-x11'
-  'libdatachannel'
   'pciutils'
   'mbedtls'
   'qt6-svg'
@@ -53,7 +52,7 @@ build() {
     -DENABLE_VST=OFF \
     -DENABLE_VLC=OFF \
     -DENABLE_LIBFDK=OFF \
-    -DENABLE_WEBRTC=ON \
+    -DENABLE_WEBRTC=OFF \
     -DENABLE_WEBSOCKET=OFF \
     -DENABLE_NEW_MPEGTS_OUTPUT=OFF \
     -DENABLE_AJA=OFF \
