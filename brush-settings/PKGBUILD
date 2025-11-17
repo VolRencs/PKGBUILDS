@@ -38,8 +38,10 @@ For current user run:
 Add Brush to the list of valid shells
     echo "/usr/bin/brush" | sudo tee -a /etc/shells
 
-Change your login shell to Brush
+Change your root login shell to Brush
     sudo chsh -s /usr/bin/brush
+Change your user login shell to Brush
+    sudo chsh -s /usr/bin/brush "$USER"
 
 EOF
 }
