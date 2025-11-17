@@ -1,0 +1,40 @@
+# Maintainer: VolRen <VolRencs@proton.me>
+
+pkgname=brush-settings
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Brush configuration"
+arch=('any')
+url="https://github.com/VolRencs/brush-settings"
+license=('MIT')
+depends=(
+  brush
+  lsd
+  starship
+  fastfetch
+  ttf-fantasque-nerd
+)
+makedepends=(
+  git
+)
+source=("https://github.com/VolRencs/brush-settings/archive/refs/tags/$pkgver.tar.gz")
+sha256sums=('343a93d0e39f38d79a1428464f0eebb8496a98abc491d4e719ebb7a530fb4973')
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+    install -Dm644 .brushrc "$pkgdir/etc/skel/.brushrc"
+    install -Dm644 starship.toml "$pkgdir/etc/skel/.config/starship.toml"
+
+    cat << 'EOF'
+
+brush-config installed!
+
+Configs are in /etc/skel → new users get them automatically.
+
+For current user run:
+    cp /etc/skel/.brushrc ~/.brushrc && cp /etc/skel/.config/starship.toml ~/.config/starship.toml
+
+EOF
+}
+
