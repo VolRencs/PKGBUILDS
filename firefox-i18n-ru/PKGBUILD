@@ -1,7 +1,7 @@
 # Maintainer: VolRen <VolRencs@proton.me>
 
 pkgbase=firefox-i18n
-pkgver=145.0
+pkgver=145.0.1
 pkgrel=1
 pkgdesc="Русский языковой пакет для Firefox"
 url="https://www.mozilla.org/firefox/"
@@ -16,4 +16,4 @@ package_firefox-i18n-ru() {
   install -Dm644 ru.xpi \
     "$pkgdir/usr/lib/firefox/browser/extensions/langpack-ru@firefox.mozilla.org.xpi"
 }
-sha256sums=('26f5b9f3f7d2f1a6b887818e49f5e7ed6c10d93699595c6dddc1ab1a76793893')
+sha256sums=('18588f1fba5cc40f86e71a63a48aab85bdb6d07999d63597959ed36a060b135d')
