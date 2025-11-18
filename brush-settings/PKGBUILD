@@ -7,6 +7,7 @@ pkgdesc="Brush configuration"
 arch=('any')
 url="https://github.com/VolRencs/brush-settings"
 license=('MIT')
+install=brush-settings.install
 depends=(
   brush
   lsd
@@ -25,24 +26,5 @@ package() {
 
     install -Dm644 .brushrc "$pkgdir/etc/skel/.brushrc"
     install -Dm644 starship.toml "$pkgdir/etc/skel/.config/starship.toml"
-
-    cat << 'EOF'
-
-brush-config installed!
-
-Configs are in /etc/skel → new users get them automatically.
-
-For current user run:
-    cp /etc/skel/.brushrc ~/.brushrc && cp /etc/skel/.config/starship.toml ~/.config/starship.toml
-
-Add Brush to the list of valid shells
-    echo "/usr/bin/brush" | sudo tee -a /etc/shells
-
-Change your root login shell to Brush
-    sudo chsh -s /usr/bin/brush
-Change your user login shell to Brush
-    sudo chsh -s /usr/bin/brush "$USER"
-
-EOF
 }
 
