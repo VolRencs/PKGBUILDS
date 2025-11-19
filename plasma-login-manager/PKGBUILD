@@ -48,7 +48,7 @@ build() {
   export RANLIB=llvm-ranlib
 
   export CFLAGS="-rtlib=compiler-rt -unwindlib=libunwind"
-  export CXXFLAGS="-stdlib=libc++ -rtlib=compiler-rt -unwindlib=libunwind"
+  export CXXFLAGS="-stdlib=libc++"
   export LDFLAGS="-fuse-ld=lld -stdlib=libc++ -lc++abi -rtlib=compiler-rt -unwindlib=libunwind"
 
   cmake -B build -S $pkgname \
