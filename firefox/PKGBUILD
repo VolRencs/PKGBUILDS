@@ -123,8 +123,6 @@ ac_add_options --allow-addon-sideload
 export MOZILLA_OFFICIAL=1
 export MOZ_APP_REMOTINGNAME=$pkgname
 
-ac_add_options --locales=en-US,ru
-mk_add_options MOZ_CO_LOCALES=en-US,ru
 mk_add_options MOZ_CRASHREPORTER=0
 mk_add_options MOZ_DATA_REPORTING=0
 mk_add_options MOZ_SERVICES_HEALTHREPORT=0
@@ -155,7 +153,7 @@ build() {
 
   ulimit -n 4096
 
-  ./mach build -j$(nproc)
+  ./mach build --locales ru -j$(nproc)
 }
 
 package() {
