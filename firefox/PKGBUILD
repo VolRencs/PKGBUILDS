@@ -66,22 +66,21 @@ options=(
 )
 source=(
   https://archive.mozilla.org/pub/firefox/releases/$pkgver/source/firefox-$pkgver.source.tar.xz
+  "ru.xpi::https://archive.mozilla.org/pub/firefox/releases/$pkgver/linux-x86_64/xpi/ru.xpi"
   $pkgname-symbolic.svg
   $pkgname.desktop
-  0001-Install-under-remoting-name.patch
   ffmpeg8-fix.patch
 )
 validpgpkeys=('14F26682D0916CDD81E37B6D61B7B526D98F0353')
 sha256sums=('b48115bd304ff0169fefc488226caf4053e04cc2aa83b1a9f4ac85fbaa9ff457'
+            '18588f1fba5cc40f86e71a63a48aab85bdb6d07999d63597959ed36a060b135d'
             'a9b8b4a0a1f4a7b4af77d5fc70c2686d624038909263c795ecc81e0aec7711e9'
             '71fe797430198ac8c00b538dce537284cf526e48be0496698cf5a980d70c16da'
-            'ef63a12975f108f30b00bb3290d9ca76f311d8af9c1d5dfc0d8335ad57e8f77c'
             '2b39e1e1efa845aac680db85e409cd07765e7d8f2346cbb957048f08dfa13daf')
 
 prepare() {
   cd firefox-$pkgver
 
-  patch -Np1 -i ../0001-Install-under-remoting-name.patch
   patch -Np1 -i ../ffmpeg8-fix.patch
 
   cat >mozconfig <<END
@@ -118,10 +117,10 @@ ac_add_options --without-wasm-sandboxed-libraries
 ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
 
+ac_add_options RUSTC_OPT_LEVEL="2"
 ac_add_options --enable-official-branding
 ac_add_options --allow-addon-sideload
 export MOZILLA_OFFICIAL=1
-export MOZ_APP_REMOTINGNAME=$pkgname
 
 mk_add_options MOZ_CRASHREPORTER=0
 mk_add_options MOZ_DATA_REPORTING=0
@@ -153,7 +152,7 @@ build() {
 
   ulimit -n 4096
 
-  ./mach build --locales ru -j$(nproc)
+  ./mach build -j$(nproc)
 }
 
 package() {
@@ -197,9 +196,11 @@ END
   install -Dm644 ../$pkgname.desktop \
     "$pkgdir/usr/share/applications/$pkgname.desktop"
 
+  install -Dm644 ru.xpi \
+    "$pkgdir/usr/lib/firefox/browser/extensions/langpack-ru@firefox.mozilla.org.xpi"
+
   install -Dm755 /dev/stdin "$pkgdir/usr/bin/$pkgname" <<END
 #!/bin/sh
 exec /usr/lib/$pkgname/firefox "\$@"
 END
-  ln -srf "$pkgdir/usr/bin/$pkgname" "$pkgdir/usr/lib/$pkgname/firefox-bin"
 }
