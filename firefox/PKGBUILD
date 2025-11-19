@@ -10,6 +10,7 @@ license=(MPL-2.0)
 depends=(
   alsa-lib
   at-spi2-core
+  gcc-libs
   bash
   cairo
   dbus
@@ -41,9 +42,8 @@ makedepends=(
   cbindgen
   clang
   diffutils
-  lld
+  mold
   llvm
-  libc++
   mesa
   nasm
   nodejs
@@ -89,9 +89,9 @@ mk_add_options MOZ_OBJDIR=${PWD@Q}/obj
 ac_add_options --prefix=/usr
 ac_add_options --enable-release
 ac_add_options --enable-hardening
-ac_add_options --enable-optimize="-O2 -march=native"
-ac_add_options --enable-linker=lld
-ac_add_options --disable-install-strip
+ac_add_options --enable-optimize="-O2 -march=native -mtune=native"
+ac_add_options --enable-lto=thin
+ac_add_options --enable-linker=mold
 
 # Disable
 ac_add_options --disable-crashreporter
@@ -117,7 +117,6 @@ ac_add_options --with-system-nss
 
 ac_add_options --enable-official-branding
 ac_add_options --allow-addon-sideload
-ac_add_options --enable-lto=thin
 export MOZILLA_OFFICIAL=1
 export MOZ_APP_REMOTINGNAME=$pkgname
 
@@ -141,11 +140,6 @@ build() {
   export AR=llvm-ar
   export NM=llvm-nm
   export RANLIB=llvm-ranlib
-
-  export CXXFLAGS="-stdlib=libc++"
-
-  export LDFLAGS="-fuse-ld=lld -stdlib=libc++ -lc++abi -rtlib=compiler-rt -unwindlib=libunwind"
-  export RUSTFLAGS="-Clink-arg=-fuse-ld=lld -Clink-arg=-rtlib=compiler-rt -Clink-arg=-unwindlib=libunwind"
 
   CFLAGS="${CFLAGS/-fexceptions/}"
   CXXFLAGS="${CXXFLAGS/-fexceptions/}"
