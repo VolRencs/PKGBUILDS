@@ -3,7 +3,7 @@
 
 pkgname=plasma-login-manager
 pkgver=6.5.git20251104
-pkgrel=2
+pkgrel=1
 _commit=c9a89bbcea7204978a82aad0366f8834552768d2
 arch=(x86_64)
 pkgdesc='Plasma Login Manager'
@@ -43,21 +43,13 @@ sha256sums=('0a811ca5169d8d78b85e772aa6181a3c14090e782a18916b5d2be4e3d934bd63'
 build() {
   export CC=clang
   export CXX=clang++
-  export AR=llvm-ar
-  export NM=llvm-nm
-  export RANLIB=llvm-ranlib
-
-  export CFLAGS="-rtlib=compiler-rt -unwindlib=libunwind"
-  export CXXFLAGS="-stdlib=libc++"
-  export LDFLAGS="-fuse-ld=lld -stdlib=libc++ -lc++abi -rtlib=compiler-rt -unwindlib=libunwind"
+  export LD=lld
 
   cmake -B build -S $pkgname \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_LIBEXECDIR=lib \
-    -DCMAKE_C_FLAGS="$CFLAGS" \
-    -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
-    -DCMAKE_EXE_LINKER_FLAGS="$LDFLAGS" \
-    -DCMAKE_SHARED_LINKER_FLAGS="$LDFLAGS" \
+    -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=lld" \
+    -DCMAKE_SHARED_LINKER_FLAGS="-fuse-ld=lld" \
     -DDBUS_CONFIG_FILENAME=plasma_org.freedesktop.DisplayManager.conf
 
   cmake --build build
