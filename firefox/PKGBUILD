@@ -43,6 +43,7 @@ makedepends=(
   diffutils
   lld
   llvm
+  libc++
   mesa
   nasm
   nodejs
