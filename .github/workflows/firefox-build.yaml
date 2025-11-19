@@ -21,8 +21,8 @@ jobs:
                 alsa-lib at-spi2-core bash cairo dbus ffmpeg fontconfig freetype2 \
                 gdk-pixbuf2 glib2 glibc gtk3 hicolor-icon-theme libpulse libx11 libxcb \
                 libxcomposite libxdamage libxext libxfixes libxrandr libxss mime-types \
-                nspr nss pango ttf-font clang lld llvm mesa nasm nodejs \
-                python rust unzip yasm zip cbindgen libice libsm libxt libc++ && \
+                nspr nss pango ttf-font clang llvm mold mesa nasm nodejs \
+                python rust unzip yasm zip cbindgen libice libsm libxt && \
             useradd -m builder && \
             echo "builder ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/builder && \
             chmod 440 /etc/sudoers.d/builder && \
