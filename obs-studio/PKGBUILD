@@ -39,7 +39,7 @@ sha256sums=('48d744037c553eea8f9b76bf46f6dcac753e52871f49b2c1a2580757f723a1b7'
             '25322c692cf5cc88fc7d17cbb40a61b7e32d5ea675da647dd1a1996474ec2c8e')
 prepare() {
   cd "$srcdir/$pkgname-$pkgver-sources"
-  patch -p1 -i "$srcdir/12328.patch"
+  patch -p1 -i "$srcdir/fixqt6.patch"
 }
 build() {
   cd "$srcdir/$pkgname-$pkgver-sources"
