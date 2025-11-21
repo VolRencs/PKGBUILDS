@@ -42,11 +42,8 @@ sha256sums=('0a811ca5169d8d78b85e772aa6181a3c14090e782a18916b5d2be4e3d934bd63'
             'bbab5ad9ef318042cafc5bd02fd8dc69cb1c9bda6dcd2c9fce7aa85754a5067e'
             'f9e6e8e81fbb7952bd3e72d650517d2edb5deaacaf04d16487b34297f8bf65dd')
 build() {
-  export CC=clang
-  export CXX=clang++
-  export LD=lld
 
-  cmake -B build -G Ninja \
+  cmake -B build -S "${pkgname}" -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_LIBEXECDIR=lib \
     -DCMAKE_C_COMPILER=clang \
