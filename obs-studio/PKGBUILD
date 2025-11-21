@@ -42,10 +42,6 @@ prepare() {
   patch -p1 -i "$srcdir/fixqt6.patch"
 }
 build() {
-
-  export CFLAGS+=" -O2 -march=haswell"
-  export CXXFLAGS+=" -Wno-error=deprecated-declarations"
-
   cmake -B build -S "$pkgname-$pkgver-sources" -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
