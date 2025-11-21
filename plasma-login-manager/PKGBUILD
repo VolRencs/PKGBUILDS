@@ -4,6 +4,7 @@
 pkgname=plasma-login-manager
 pkgver=6.5.git20251104
 pkgrel=1
+epoch=1
 _commit=c9a89bbcea7204978a82aad0366f8834552768d2
 arch=(x86_64)
 pkgdesc='Plasma Login Manager'
@@ -32,29 +33,30 @@ depends=(glibc
 makedepends=(extra-cmake-modules
              git
              clang
-             lld)
+             lld
+             ninja)
 source=(git+https://invent.kde.org/plasma/plasma-login-manager#commit=$_commit
         plasmalogin{,-greeter,-autologin})
 sha256sums=('0a811ca5169d8d78b85e772aa6181a3c14090e782a18916b5d2be4e3d934bd63'
             '1101fff5d0a53105668e54862f6ed5475322953ad512184e93eae1e80131fea5'
             'bbab5ad9ef318042cafc5bd02fd8dc69cb1c9bda6dcd2c9fce7aa85754a5067e'
             'f9e6e8e81fbb7952bd3e72d650517d2edb5deaacaf04d16487b34297f8bf65dd')
-
 build() {
   export CC=clang
   export CXX=clang++
   export LD=lld
 
-  cmake -B build -S $pkgname \
+  cmake -B build -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_LIBEXECDIR=lib \
+    -DCMAKE_C_COMPILER=clang \
+    -DCMAKE_CXX_COMPILER=clang++ \
     -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=lld" \
     -DCMAKE_SHARED_LINKER_FLAGS="-fuse-ld=lld" \
     -DDBUS_CONFIG_FILENAME=plasma_org.freedesktop.DisplayManager.conf
 
   cmake --build build
 }
-
 package() {
   DESTDIR="$pkgdir" cmake --install build
   install -Dm644 plasmalogin* -t "$pkgdir"/etc/pam.d
