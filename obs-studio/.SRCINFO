@@ -12,8 +12,6 @@ pkgbase = obs-studio
 	makedepends = simde
 	makedepends = uthash
 	makedepends = vulkan-headers
-	makedepends = clang
-	makedepends = lld
 	makedepends = ninja
 	depends = ffmpeg
 	depends = pipewire
@@ -26,7 +24,7 @@ pkgbase = obs-studio
 	depends = qt6-svg
 	optdepends = v4l2loopback-dkms: virtual camera support
 	source = obs-studio-32.0.2.tar.gz::https://github.com/obsproject/obs-studio/releases/download/32.0.2/OBS-Studio-32.0.2-Sources.tar.gz
-	source = 12328.patch::https://patch-diff.githubusercontent.com/raw/obsproject/obs-studio/pull/12328.patch
+	source = fixqt6.patch::https://patch-diff.githubusercontent.com/raw/obsproject/obs-studio/pull/12328.patch
 	sha256sums = 48d744037c553eea8f9b76bf46f6dcac753e52871f49b2c1a2580757f723a1b7
 	sha256sums = 25322c692cf5cc88fc7d17cbb40a61b7e32d5ea675da647dd1a1996474ec2c8e
 

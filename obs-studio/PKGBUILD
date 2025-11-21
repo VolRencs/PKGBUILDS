@@ -26,8 +26,6 @@ makedepends=(
   'simde'
   'uthash'
   'vulkan-headers'
-  'clang'
-  'lld'
   'ninja'
 )
 optdepends=(
@@ -35,7 +33,7 @@ optdepends=(
 )
 source=(
   "$pkgname-$pkgver.tar.gz::https://github.com/obsproject/obs-studio/releases/download/$pkgver/OBS-Studio-$pkgver-Sources.tar.gz"
-  "12328.patch::https://patch-diff.githubusercontent.com/raw/obsproject/obs-studio/pull/12328.patch"
+  "fixqt6.patch::https://patch-diff.githubusercontent.com/raw/obsproject/obs-studio/pull/12328.patch"
 )
 sha256sums=('48d744037c553eea8f9b76bf46f6dcac753e52871f49b2c1a2580757f723a1b7'
             '25322c692cf5cc88fc7d17cbb40a61b7e32d5ea675da647dd1a1996474ec2c8e')
@@ -51,9 +49,6 @@ build() {
 
   cmake -B build -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_C_COMPILER=clang \
-    -DCMAKE_CXX_COMPILER=clang++ \
-    -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=lld" \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DENABLE_JACK=ON \
     -DENABLE_SNDIO=OFF \
