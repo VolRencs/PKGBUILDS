@@ -28,22 +28,24 @@ makedepends=(
   'vulkan-headers'
   'clang'
   'lld'
+  'ninja'
 )
 optdepends=(
   'v4l2loopback-dkms: virtual camera support'
 )
 source=(
-  "https://github.com/obsproject/obs-studio/archive/$pkgver/$pkgname-$pkgver.tar.gz"
-  "https://patch-diff.githubusercontent.com/raw/obsproject/obs-studio/pull/12328.patch"
+  "$pkgname-$pkgver.tar.gz::https://github.com/obsproject/obs-studio/releases/download/$pkgver/OBS-Studio-$pkgver-Sources.tar.gz"
+  "12328.patch::https://patch-diff.githubusercontent.com/raw/obsproject/obs-studio/pull/12328.patch"
 )
-sha256sums=('39e99b9fbdc77e7e87cfd9c7e8709d1d427627bad5b21b791019c887c8598d13'
+sha256sums=('48d744037c553eea8f9b76bf46f6dcac753e52871f49b2c1a2580757f723a1b7'
             '25322c692cf5cc88fc7d17cbb40a61b7e32d5ea675da647dd1a1996474ec2c8e')
 prepare() {
-  cd "$srcdir/obs-studio-$pkgver"
+  cd "$srcdir/$pkgname-$pkgver-sources"
   patch -p1 -i "$srcdir/12328.patch"
 }
 build() {
-  cd "$srcdir/obs-studio-$pkgver"
+  cd "$srcdir/$pkgname-$pkgver-sources"
+
   export CFLAGS+=" -O2 -march=haswell"
   export CXXFLAGS+=" -Wno-error=deprecated-declarations"
 
