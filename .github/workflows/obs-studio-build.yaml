@@ -19,7 +19,7 @@ jobs:
             pacman -Syu --noconfirm && \
             pacman -S --noconfirm sudo base-devel \
                 ffmpeg pipewire rnnoise libxcomposite libxinerama libxkbcommon-x11 \
-                pciutils mbedtls vulkan-headers qt6-svg uthash lld clang \
+                pciutils mbedtls vulkan-headers qt6-svg uthash lld clang ninja \
                 cmake extra-cmake-modules ffnvcodec-headers nlohmann-json simde && \
             useradd -m builder && \
             echo "builder ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/builder && \
