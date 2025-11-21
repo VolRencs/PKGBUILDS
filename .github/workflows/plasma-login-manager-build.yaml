@@ -39,8 +39,12 @@ jobs:
           PKGNAME=$(grep "^pkgname=" PKGBUILD | head -1 | cut -d= -f2 | tr -d ' ')
           PKGVER=$(grep "^pkgver=" PKGBUILD | head -1 | cut -d= -f2 | tr -d ' ')
           PKGREL=$(grep "^pkgrel=" PKGBUILD | head -1 | cut -d= -f2 | tr -d ' ')
+          EPOCH=$(grep "^epoch=" PKGBUILD | head -1 | cut -d= -f2 | xargs || echo "0")
 
-          PKGFILE="${PKGNAME}-${PKGVER}-${PKGREL}-x86_64.pkg.tar.zst"
+          if [[ -n "$EPOCH" && "$EPOCH" -gt 0 ]]; then
+            FULLVER="${EPOCH}:${PKGVER}-${PKGREL}"
+            PKGFILE="${PKGNAME}-${EPOCH}:${PKGVER}-${PKGREL}-x86_64.pkg.tar.zst"
+          fi
 
           if [[ ! -f "$PKGFILE" ]]; then
             echo "Ошибка: пакет $PKGFILE не найден!"
@@ -49,10 +53,9 @@ jobs:
           fi
 
           echo "PKGNAME=$PKGNAME" >> $GITHUB_ENV
-          echo "PKGVER=$PKGVER" >> $GITHUB_ENV
-          echo "PKGREL=$PKGREL" >> $GITHUB_ENV
+          echo "FULLVER=$FULLVER" >> $GITHUB_ENV
           echo "PKGFILE=$PKGFILE" >> $GITHUB_ENV
-          echo "TAG=v${PKGVER}-${PKGREL}" >> $GITHUB_ENV
+          echo "TAG=v$FULLVER" >> $GITHUB_ENV
 
           echo "Пакет: $PKGFILE"
           echo "Тег: v${PKGVER}-${PKGREL}"
