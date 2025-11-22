@@ -1,4 +1,4 @@
-name: Build TTF-MPlus
+name: Build ttf-mplus
 
 on: workflow_dispatch
 
@@ -41,7 +41,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.TAG }}
-          name: TTF-MPlus v${{ env.PKGVER }}-${{ env.PKGREL }}
+          name: ttf-mplus v${{ env.PKGVER }}-${{ env.PKGREL }}
           files: |
             ttf-mplus/ttf-mplus1-${{ env.PKGVER }}-${{ env.PKGREL }}-any.pkg.tar.zst
             ttf-mplus/ttf-mplus2-${{ env.PKGVER }}-${{ env.PKGREL }}-any.pkg.tar.zst
