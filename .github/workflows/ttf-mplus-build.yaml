@@ -26,22 +26,32 @@ jobs:
               makepkg --noconfirm
             "
           '
-
-      - name: Fix permissions for Git
+      
+      - name: Extract package info from PKGBUILD
+        id: pkg_info
         run: |
-          sudo chown -R $(whoami) .git
-          ls -la .git/config
+          cd ttf-mplus
 
-      - name: Extract PKGVER and create Git tag
-        run: |
-          pkgver=$(grep "^pkgver=" ttf-mplus/PKGBUILD | cut -d= -f2)
-          tag="v${pkgver}-${GITHUB_RUN_NUMBER}"
-          echo "PKGVER=$pkgver" >> $GITHUB_ENV
-          echo "TAG=$tag" >> $GITHUB_ENV
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git tag -a "${tag}" -m "Release ${tag}"
-          git push origin "${tag}"
+          PKGNAME=$(grep "^pkgname=" PKGBUILD | head -1 | cut -d= -f2 | tr -d ' ')
+          PKGVER=$(grep "^pkgver=" PKGBUILD | head -1 | cut -d= -f2 | tr -d ' ')
+          PKGREL=$(grep "^pkgrel=" PKGBUILD | head -1 | cut -d= -f2 | tr -d ' ')
+
+          PKGFILE="${PKGNAME}-${PKGVER}-${PKGREL}-x86_64.pkg.tar.zst"
+
+          if [[ ! -f "$PKGFILE" ]]; then
+            echo "Ошибка: пакет $PKGFILE не найден!"
+            ls -la
+            exit 1
+          fi
+
+          echo "PKGNAME=$PKGNAME" >> $GITHUB_ENV
+          echo "PKGVER=$PKGVER" >> $GITHUB_ENV
+          echo "PKGREL=$PKGREL" >> $GITHUB_ENV
+          echo "PKGFILE=$PKGFILE" >> $GITHUB_ENV
+          echo "TAG=v${PKGVER}-${PKGREL}" >> $GITHUB_ENV
+
+          echo "Пакет: $PKGFILE"
+          echo "Тег: v${PKGVER}-${PKGREL}"
 
       - name: Publish Release
         uses: softprops/action-gh-release@v2
@@ -49,7 +59,7 @@ jobs:
           tag_name: ${{ env.TAG }}
           name: TTF-MPlus v${{ env.PKGVER }}
           files: |
-            ttf-mplus/ttf-mplus1-1.0.0-1-any.pkg.tar.zst
-            ttf-mplus/ttf-mplus2-1.0.0-1-any.pkg.tar.zst
+            ${{ env.PKGNAME }}/ttf-${{ env.PKGNAME }}1-${{ env.PKGVER }}-any.pkg.tar.zst
+            ${{ env.PKGNAME }}/ttf-${{ env.PKGNAME }}2-${{ env.PKGVER }}-any.pkg.tar.zst
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
