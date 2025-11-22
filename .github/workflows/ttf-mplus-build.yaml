@@ -59,7 +59,7 @@ jobs:
           tag_name: ${{ env.TAG }}
           name: TTF-MPlus v${{ env.PKGVER }}
           files: |
-            ${{ env.PKGNAME }}/ttf-${{ env.PKGNAME }}1-${{ env.PKGVER }}-any.pkg.tar.zst
-            ${{ env.PKGNAME }}/ttf-${{ env.PKGNAME }}2-${{ env.PKGVER }}-any.pkg.tar.zst
+            ttf-mplus1-${{ env.PKGVER }}-any.pkg.tar.zst
+            ttf-mplus2-${{ env.PKGVER }}-any.pkg.tar.zst
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
