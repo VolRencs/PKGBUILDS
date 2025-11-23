@@ -31,7 +31,7 @@ jobs:
       - name: Extract package info from PKGBUILD
         id: pkg_info
         run: |
-          cd egl-wayland2
+          cd /home/builder/gh-action
 
           # Берём pkgname (работает и если это массив)
           PKGNAME=$(source PKGBUILD && echo "${pkgname[0]}")
