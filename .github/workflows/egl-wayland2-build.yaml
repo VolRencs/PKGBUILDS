@@ -6,20 +6,26 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+      options: --user root
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+    
+      - name: Prepare build directory
+        run: |
+          mkdir -p /home/builder/gh-action
+          cp -r /github/workspace/egl-wayland2 /home/builder/gh-action/
+          chown -R nobody /home/builder/gh-action
 
-      - name: Build Arch package
-        id: build
-        uses: heyhusen/archlinux-package-action@v2
-        with:
-          path: 'egl-wayland2'
-          flags: '-cfs --noconfirm'
-          namcap: false
+      - name: Build package
+        run: |
+          cd /home/builder/gh-action
+          sudo -u nobody makepkg -si --noconfirm --skipinteg --rmdeps --pkgdir /home/builder/gh-action/pkg
 
       - name: Extract package info from PKGBUILD
         id: pkg_info
