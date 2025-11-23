@@ -15,14 +15,11 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
-    
-      - name: List workspace
-        run: ls -la
 
       - name: Prepare build directory
         run: |
           mkdir -p /home/builder/gh-action
-          cp -r /github/workspace/egl-wayland2/* /home/builder/gh-action/
+          cp -r /egl-wayland2/* /home/builder/gh-action/
           chown -R nobody /home/builder/gh-action
 
       - name: Build package
