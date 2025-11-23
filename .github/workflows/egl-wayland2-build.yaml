@@ -15,10 +15,10 @@ jobs:
 
       - name: Build package in container
         run: |
-          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace/egl-wayland2 archlinux:latest /bin/bash -c "
-            pacman -Syu --noconfirm &&
-            pacman -S --noconfirm base-devel eglexternalplatform glibc libdrm wayland git libglvnd meson wayland-protocols &&
-            sudo -u nobody makepkg --noconfirm
+          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace/egl-wayland2 --user $(id -u):$(id -g) archlinux:latest /bin/bash -c "
+          pacman -Syu --noconfirm &&
+          pacman -S --noconfirm base-devel eglexternalplatform glibc libdrm wayland git libglvnd meson wayland-protocols &&
+          makepkg --noconfirm
           "
 
       - name: Extract package info from PKGBUILD
