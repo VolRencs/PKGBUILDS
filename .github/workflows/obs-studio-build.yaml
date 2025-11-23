@@ -23,8 +23,7 @@ jobs:
               ffmpeg pipewire rnnoise pciutils mbedtls vulkan-headers qt6-svg uthash ninja \
               cmake extra-cmake-modules ffnvcodec-headers nlohmann-json simde && \
           cd obs-studio
-          export MAKEPKG_CONF=/dev/null
-          makepkg --noconfirm --skipinteg
+          sudo makepkg --noconfirm --skipinteg
           cp *.pkg.tar.zst ..
       
       - name: Extract package info from PKGBUILD
