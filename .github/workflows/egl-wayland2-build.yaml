@@ -16,15 +16,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Prepare build
-        run: |
-          mkdir -p /home/builder/gh-action
-          cp -r egl-wayland2/* /home/builder/gh-action/
-          chown -R nobody /home/builder/gh-action
-
       - name: Build package
         run: |
-          cd /home/builder/gh-action
+          chown -R nobody egl-walyand2
+          cd egl-wayland
           pacman -Suy --noconfirm && pacman -S --noconfirm base-devel eglexternalplatform glibc libdrm wayland git libglvnd meson wayland-protocols
           sudo -u nobody makepkg --noconfirm
 
