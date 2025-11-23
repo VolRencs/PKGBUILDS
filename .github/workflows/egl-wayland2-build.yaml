@@ -18,7 +18,7 @@ jobs:
 
       - name: Build package
         run: |
-          chown -R nobody egl-walyand2
+          chown -R nobody egl-wayland2
           cd egl-wayland
           pacman -Suy --noconfirm && pacman -S --noconfirm base-devel eglexternalplatform glibc libdrm wayland git libglvnd meson wayland-protocols
           sudo -u nobody makepkg --noconfirm
