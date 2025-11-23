@@ -59,6 +59,7 @@ jobs:
           else
             git tag -a "$TAG" -m "Release $TAG"
             git push origin "$TAG"
+          fi
 
       - name: Publish Release
         uses: softprops/action-gh-release@v2
