@@ -30,9 +30,8 @@ jobs:
 
       - name: Extract package info from PKGBUILD
         id: pkg_info
-        shell: bash
         run: |
-          cd /home/builder/gh-action
+          cd egl-wayland2
 
           PKGNAME=$(source PKGBUILD && echo "${pkgname[0]}")
           PKGVER=$(grep "^pkgver=" PKGBUILD | cut -d= -f2 | tr -d ' ')
