@@ -22,15 +22,11 @@ jobs:
           pacman -S --noconfirm sudo base-devel git \
               ffmpeg pipewire rnnoise pciutils mbedtls vulkan-headers qt6-svg uthash ninja \
               cmake extra-cmake-modules ffnvcodec-headers nlohmann-json simde && \
-          useradd -m builder && \
-          echo "builder ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/builder && \
-          cp -r /__w/*/obs-studio /home/builder/src && \
-          chown -R builder:builder /home/builder/src && \
-          sudo -u builder bash -c "
-            cd /home/builder/src/obs-studio && \
-            makepkg --noconfirm --needed --skipinteg
-          "
-          cp /home/builder/src/obs-studio/*.pkg.tar.zst .
+          cd obs-studio
+          useradd -m builder
+          echo "builder ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/builder
+          sudo -u builder makepkg --noconfirm --needed --skipinteg
+          cp *.pkg.tar.zst ..
       
       - name: Extract package info from PKGBUILD
         id: pkg_info
