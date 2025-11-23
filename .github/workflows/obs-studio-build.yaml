@@ -23,10 +23,7 @@ jobs:
               ffmpeg pipewire rnnoise pciutils mbedtls vulkan-headers qt6-svg uthash ninja \
               cmake extra-cmake-modules ffnvcodec-headers nlohmann-json simde && \
           cd obs-studio
-          sudo chown -R root:root .
-          useradd -m builder
-          echo "builder ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/builder
-          sudo -u builder makepkg --noconfirm --needed --skipinteg
+          sudo -u builder makepkg --noconfirm --skipinteg
           cp *.pkg.tar.zst ..
       
       - name: Extract package info from PKGBUILD
