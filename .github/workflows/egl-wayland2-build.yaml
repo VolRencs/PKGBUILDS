@@ -16,6 +16,9 @@ jobs:
         with:
           fetch-depth: 0
     
+      - name: List workspace
+        run: ls -la /github/workspace
+
       - name: Prepare build directory
         run: |
           mkdir -p /home/builder/gh-action
