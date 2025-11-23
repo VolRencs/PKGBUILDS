@@ -15,6 +15,7 @@ depends=(
   'pciutils'
   'mbedtls'
   'qt6-svg'
+  'libxkbcommon'
 )
 makedepends=(
   'extra-cmake-modules'
