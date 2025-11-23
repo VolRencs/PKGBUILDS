@@ -28,6 +28,7 @@ jobs:
             sudo -u builder bash -c "
               cd obs-studio && \
               sed -i 's/find_package(X11 REQUIRED)/find_package(X11 QUIET)/g' && \
+                  libobs/cmake/os-linux.cmake && \
               makepkg --noconfirm --needed
             "
           '
