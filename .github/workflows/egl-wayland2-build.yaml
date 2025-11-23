@@ -6,9 +6,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: archlinux:latest
-      options: --user root
 
     steps:
       - name: Checkout repository
@@ -16,12 +13,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Build package
+      - name: Build package in container
         run: |
-          chown -R nobody egl-wayland2
-          cd egl-wayland2
-          pacman -Suy --noconfirm && pacman -S --noconfirm base-devel eglexternalplatform glibc libdrm wayland git libglvnd meson wayland-protocols
-          sudo -u nobody makepkg --noconfirm
+          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace/egl-wayland2 archlinux:latest /bin/bash -c "
+            pacman -Syu --noconfirm &&
+            pacman -S --noconfirm base-devel eglexternalplatform glibc libdrm wayland git libglvnd meson wayland-protocols &&
+            sudo -u nobody makepkg --noconfirm
+          "
 
       - name: Extract package info from PKGBUILD
         id: pkg_info
@@ -50,7 +48,6 @@ jobs:
           echo "Тег: v${PKGVER}-${PKGREL}"
       
       - name: Create Git tag
-        container: none
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
@@ -63,7 +60,6 @@ jobs:
           fi
 
       - name: Publish Release
-        container: none
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.TAG }}
