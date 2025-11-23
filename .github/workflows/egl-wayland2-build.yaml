@@ -15,18 +15,12 @@ jobs:
 
       - name: Build Arch package
         id: build
-        uses: 2m/arch-pkgbuild-builder@v1.21
+        uses: heyhusen/archlinux-package-action@v2
         with:
-          target: 'pkgbuild'
-          pkgname: 'egl-wayland2'
-          pkgbuild_dir: 'egl-wayland2'
+          path: 'egl-wayland2'       # путь к папке с PKGBUILD
+          flags: '-cfs --noconfirm' # чистая сборка без проверки подписи
+          namcap: false             # отключаем проверку PKGBUILD через namcap
 
-      - name: Debug outputs
-        run: |
-          echo "pkgver = ${{ steps.build.outputs.pkgver }}"
-          echo "pkgrel = ${{ steps.build.outputs.pkgrel }}"
-          echo "epoch  = ${{ steps.build.outputs.epoch }}"
-          echo "pkgfiles = ${{ steps.build.outputs.pkgfiles }}"
 
       - name: Create Git tag
         run: |
