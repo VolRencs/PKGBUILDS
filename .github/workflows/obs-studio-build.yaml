@@ -22,8 +22,10 @@ jobs:
           pacman -S --noconfirm sudo base-devel git \
               ffmpeg pipewire rnnoise pciutils mbedtls vulkan-headers qt6-svg uthash ninja \
               cmake extra-cmake-modules ffnvcodec-headers nlohmann-json simde && \
+          export BUILDDIR=/tmp/build
+          mkdir -p "$BUILDDIR"
+          chown -R nobody "$BUILDDIR"
           cd obs-studio
-          git config --global --add safe.directory "$PWD"
           sudo -u nobody makepkg --noconfirm --skipinteg
           cp *.pkg.tar.zst ..
       
