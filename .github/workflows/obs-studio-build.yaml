@@ -15,18 +15,26 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      
+
+      - name: Install dependencies
+        run: |
+          pacman -Syu --noconfirm
+          pacman -S --noconfirm sudo base-devel git \
+            ffmpeg pipewire rnnoise pciutils mbedtls vulkan-headers qt6-svg uthash ninja \
+            cmake extra-cmake-modules ffnvcodec-headers nlohmann-json simde
+
+      - name: Prepare build directory for makepkg
+        run: |
+          mkdir -p /tmp/build
+          chown -R nobody /tmp/build
+
+          cp /etc/makepkg.conf /tmp/makepkg.conf
+          sed -i 's|^BUILDDIR=.*|BUILDDIR=/tmp/build|' /tmp/makepkg.conf
+
       - name: Build package
         run: |
-          pacman -Syu --noconfirm && \
-          pacman -S --noconfirm sudo base-devel git \
-              ffmpeg pipewire rnnoise pciutils mbedtls vulkan-headers qt6-svg uthash ninja \
-              cmake extra-cmake-modules ffnvcodec-headers nlohmann-json simde && \
-          export BUILDDIR=/tmp/build
-          mkdir -p "$BUILDDIR"
-          chown -R nobody "$BUILDDIR"
           cd obs-studio
-          sudo -u nobody makepkg --noconfirm --skipinteg
+          sudo -u nobody makepkg --config /tmp/makepkg.conf --noconfirm --skipinteg
           cp *.pkg.tar.zst ..
       
       - name: Extract package info from PKGBUILD
