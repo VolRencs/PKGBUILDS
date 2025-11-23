@@ -24,7 +24,7 @@ jobs:
               cmake extra-cmake-modules ffnvcodec-headers nlohmann-json simde && \
           useradd -m builder && \
           echo "builder ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/builder && \
-          cp -r /github/workspace /home/builder/src && \
+          cp -r /__w/*/obs-studio /home/builder/src && \
           chown -R builder:builder /home/builder/src && \
           sudo -u builder bash -c "
             cd /home/builder/src/obs-studio && \
