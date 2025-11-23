@@ -6,9 +6,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-        image: archlinux:latest
-        options: --user root
 
     steps:
       - name: Checkout repository
@@ -16,63 +13,28 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install dependencies
+      - name: Build Arch package
+        id: build
+        uses: 2m/arch-pkgbuild-builder@v1.21
+        with:
+          target: 'pkgbuild'
+          pkgname: 'obs-studio'
+          pkgbuild_dir: 'obs-studio'
+
+      - name: Show built packages
         run: |
-          pacman -Syu --noconfirm
-          pacman -S --noconfirm sudo base-devel git \
-            ffmpeg pipewire rnnoise pciutils mbedtls vulkan-headers qt6-svg uthash ninja \
-            cmake extra-cmake-modules ffnvcodec-headers nlohmann-json simde
+          echo "Packages:"
+          ls -la "${{ steps.build.outputs.pkgfiles }}"
 
-      - name: Prepare build directory for makepkg
-        run: |
-          mkdir -p /tmp/build
-          chown -R nobody /tmp/build
-
-          cp /etc/makepkg.conf /tmp/makepkg.conf
-          sed -i 's|^BUILDDIR=.*|BUILDDIR=/tmp/build|' /tmp/makepkg.conf
-
-      - name: Build package
-        run: |
-          cd obs-studio
-          sudo -u nobody makepkg --config /tmp/makepkg.conf --noconfirm --skipinteg
-          cp *.pkg.tar.zst ..
-      
-      - name: Extract package info from PKGBUILD
-        id: pkg_info
-        run: |
-          cd obs-studio
-
-          PKGNAME=$(grep "^pkgname=" PKGBUILD | head -1 | cut -d= -f2 | tr -d ' ')
-          PKGVER=$(grep "^pkgver=" PKGBUILD | head -1 | cut -d= -f2 | tr -d ' ')
-          PKGREL=$(grep "^pkgrel=" PKGBUILD | head -1 | cut -d= -f2 | tr -d ' ')
-          EPOCH=$(grep "^epoch=" PKGBUILD | head -1 | cut -d= -f2 | xargs)
-
-          FULLVER="${EPOCH}:${PKGVER}-${PKGREL}"
-          PKGFILE="${PKGNAME}-${EPOCH}:${PKGVER}-${PKGREL}-x86_64.pkg.tar.zst"
-          TAGVER="v${EPOCH}_${PKGVER}-${PKGREL}"
-
-          if [[ ! -f "$PKGFILE" ]]; then
-            echo "Ошибка: пакет $PKGFILE не найден!"
-            ls -la
-            exit 1
-          fi
-
-          echo "PKGNAME=$PKGNAME" >> $GITHUB_ENV
-          echo "FULLVER=$FULLVER" >> $GITHUB_ENV
-          echo "PKGFILE=$PKGFILE" >> $GITHUB_ENV
-          echo "TAG=$TAGVER" >> $GITHUB_ENV
-
-          echo "Пакет: $PKGFILE"
-          echo "Тег: v${PKGVER}-${PKGREL}"
-
-      - name: Create and push Git tag
+      - name: Create Git tag
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
-          TAG="${{ env.TAG }}"
+          TAG="v${{ steps.build.outputs.pkgver }}-${{ steps.build.outputs.pkgrel }}"
+
           if git rev-parse "$TAG" >/dev/null 2>&1; then
-            echo "Тег $TAG уже существует, пропускаем создание."
+            echo "Tag $TAG already exists"
           else
             git tag -a "$TAG" -m "Release $TAG"
             git push origin "$TAG"
@@ -81,9 +43,8 @@ jobs:
       - name: Publish Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ env.TAG }}
-          name: ${{ env.PKGNAME }} ${{ env.TAG }}
-          files: obs-studio/${{ env.PKGFILE }}
+          tag_name: v${{ steps.build.outputs.pkgver }}-${{ steps.build.outputs.pkgrel }}
+          files: ${{ steps.build.outputs.pkgfiles }}
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
