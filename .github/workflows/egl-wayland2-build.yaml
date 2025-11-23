@@ -21,6 +21,13 @@ jobs:
           pkgname: 'egl-wayland2'
           pkgbuild_dir: 'egl-wayland2'
 
+      - name: Debug outputs
+        run: |
+          echo "pkgver = ${{ steps.build.outputs.pkgver }}"
+          echo "pkgrel = ${{ steps.build.outputs.pkgrel }}"
+          echo "epoch  = ${{ steps.build.outputs.epoch }}"
+          echo "pkgfiles = ${{ steps.build.outputs.pkgfiles }}"
+
       - name: Create Git tag
         run: |
           git config --global user.name "GitHub Actions"
