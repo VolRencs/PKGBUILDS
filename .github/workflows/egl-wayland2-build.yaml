@@ -18,7 +18,6 @@ jobs:
 
       - name: Prepare build
         run: |
-          pacman -Suy --noconfirm && pacman -S --noconfirm base-devel
           mkdir -p /home/builder/gh-action
           cp -r egl-wayland2/* /home/builder/gh-action/
           chown -R nobody /home/builder/gh-action
@@ -26,6 +25,9 @@ jobs:
       - name: Build package
         run: |
           cd /home/builder/gh-action
+          DEPENDS=$(makepkg --printsrcinfo | grep '^depends =' -A1 | tail -n1 | tr -d '()' | tr -d "'")
+          MAKEDEPENDS=$(makepkg --printsrcinfo | grep '^makedepends =' -A1 | tail -n1 | tr -d '()' | tr -d "'")
+          pacman -Suy --noconfirm && pacman -S --noconfirm base-devel $DEPENDS $MAKEDEPENDS
           sudo -u nobody makepkg -si --noconfirm
 
       - name: Extract package info from PKGBUILD
