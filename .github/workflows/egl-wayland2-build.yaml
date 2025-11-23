@@ -68,7 +68,7 @@ jobs:
         with:
           tag_name: ${{ env.TAG }}
           name: ${{ env.PKGNAME }} ${{ env.TAG }}
-          files: egl-wayland2/${{ env.PKGFILE }}
+          files: ${{ steps.build.outputs.pkgfiles }}
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
