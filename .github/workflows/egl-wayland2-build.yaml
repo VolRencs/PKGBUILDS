@@ -26,7 +26,7 @@ jobs:
       - name: Build package
         run: |
           cd /home/builder/gh-action
-          sudo -u nobody makepkg -si --noconfirm --skipinteg --rmdeps --pkgdir /home/builder/gh-action/pkg
+          sudo -u nobody makepkg -si --noconfirm
 
       - name: Extract package info from PKGBUILD
         id: pkg_info
@@ -75,7 +75,7 @@ jobs:
         with:
           tag_name: ${{ env.TAG }}
           name: ${{ env.PKGNAME }} ${{ env.TAG }}
-          files: /home/builder/gh-action/pkg/${{ env.PKGFILE }}
+          files: /home/builder/gh-action/${{ env.PKGFILE }}
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
