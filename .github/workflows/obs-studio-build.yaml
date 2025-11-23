@@ -27,6 +27,7 @@ jobs:
             chown -R builder:builder /workspace && \
             sudo -u builder bash -c "
               cd obs-studio && \
+              sed -i 's/find_package(X11 REQUIRED)/find_package(X11 QUIET)/g' && \
               makepkg --noconfirm --needed
             "
           '
@@ -58,10 +59,6 @@ jobs:
 
           echo "Пакет: $PKGFILE"
           echo "Тег: v${PKGVER}-${PKGREL}"
-
-      - name: Fix permissions for Git
-        run: |
-          sudo chown -R $(whoami):$(whoami) .git
 
       - name: Create and push Git tag
         run: |
