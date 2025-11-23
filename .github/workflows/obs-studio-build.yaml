@@ -21,11 +21,6 @@ jobs:
           pkgname: 'obs-studio'
           pkgbuild_dir: 'obs-studio'
 
-      - name: Show built packages
-        run: |
-          echo "Packages:"
-          ls -la "${{ steps.build.outputs.pkgfiles }}"
-
       - name: Create Git tag
         run: |
           git config --global user.name "GitHub Actions"
