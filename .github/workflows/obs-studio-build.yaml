@@ -23,7 +23,8 @@ jobs:
               ffmpeg pipewire rnnoise pciutils mbedtls vulkan-headers qt6-svg uthash ninja \
               cmake extra-cmake-modules ffnvcodec-headers nlohmann-json simde && \
           cd obs-studio
-          sudo makepkg --noconfirm --skipinteg
+          git config --global --add safe.directory "$PWD"
+          sudo -u nobody makepkg --noconfirm --skipinteg
           cp *.pkg.tar.zst ..
       
       - name: Extract package info from PKGBUILD
