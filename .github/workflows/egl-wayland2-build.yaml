@@ -74,7 +74,7 @@ jobs:
         with:
           tag_name: ${{ env.TAG }}
           name: ${{ env.PKGNAME }} ${{ env.TAG }}
-          files: ${{ steps.build.outputs.pkgfiles }}
+          files: /home/builder/gh-action/pkg/${{ env.PKGFILE }}
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
