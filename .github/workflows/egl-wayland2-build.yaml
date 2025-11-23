@@ -16,8 +16,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Prepare build directory
+      - name: Prepare build
         run: |
+          pacman -Suy --noconfirm && pacman -S --noconfirm base-devel
           mkdir -p /home/builder/gh-action
           cp -r egl-wayland2/* /home/builder/gh-action/
           chown -R nobody /home/builder/gh-action
