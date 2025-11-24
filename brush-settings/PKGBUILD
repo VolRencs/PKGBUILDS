@@ -13,7 +13,7 @@ depends=(
   lsd
   starship
   fastfetch
-  ttf-fantasque-nerd
+  otf-comicshanns-nerd
 )
 makedepends=(
   git

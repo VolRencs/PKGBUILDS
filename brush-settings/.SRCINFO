@@ -10,7 +10,7 @@ pkgbase = brush-settings
 	depends = lsd
 	depends = starship
 	depends = fastfetch
-	depends = ttf-fantasque-nerd
+	depends = otf-comicshanns-nerd
 	source = https://github.com/VolRencs/brush-settings/archive/refs/tags/1.0.0.tar.gz
 	sha256sums = 343a93d0e39f38d79a1428464f0eebb8496a98abc491d4e719ebb7a530fb4973
 
