@@ -8,7 +8,7 @@ arch=('x86_64')
 url="https://github.com/Vencord/Vesktop"
 license=('GPL-3.0-only')
 depends=('alsa-lib' 'gtk3' 'nss')
-makedepends=('nodejs' 'npm')
+makedepends=('nodejs' 'npm' 'pnpm')
 optdepends=(
   'libnotify: Notifications'
   'xdg-utils: Open links, files, etc'
@@ -24,8 +24,8 @@ sha256sums=('ba103cf8a9edef31eb78c1bc3d76e40151f84ff02b2da8fd2bc21a954841b523'
 
 build() {
   cd "${srcdir}/Vesktop-${pkgver}"
-  npm ci --ignore-scripts
-  npm run package:dir
+  pnpm install --frozen-lockfile
+  pnpm run package:dir
 }
 
 package() {
