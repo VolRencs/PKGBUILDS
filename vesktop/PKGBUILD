@@ -8,7 +8,7 @@ arch=('x86_64')
 url="https://github.com/Vencord/Vesktop"
 license=('GPL-3.0-only')
 depends=('alsa-lib' 'gtk3' 'nss')
-makedepends=('pnpm' 'nodejs' 'npm')
+makedepends=('pnpm' 'nodejs')
 optdepends=(
   'libnotify: Notifications'
   'xdg-utils: Open links, files, etc'
