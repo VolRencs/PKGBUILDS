@@ -31,15 +31,12 @@ build() {
 package() {
   cd "${srcdir}/Vesktop-${pkgver}"
 
-  install -d "${pkgdir}/usr/lib/${pkgname}"
-  cp -r dist/linux-unpacked/* "${pkgdir}/usr/lib/${pkgname}/"
+  install -d "$pkgdir/usr/lib/$pkgname"
+  install -d "$pkgdir/usr/bin"
 
-  if [ -f "${pkgdir}/usr/lib/${pkgname}/electron" ]; then
-    mv "${pkgdir}/usr/lib/${pkgname}/electron" "${pkgdir}/usr/lib/${pkgname}/vesktop"
-  fi
+  cp -R "dist/linux-unpacked/." "$pkgdir/usr/lib/$pkgname"
 
   install -Dm644 "../vesktop.desktop" "${pkgdir}/usr/share/applications/${pkgname}.desktop"
-
   install -Dm644 "build/icon.svg" "${pkgdir}/usr/share/icons/hicolor/scalable/apps/${pkgname}.svg"
 
   install -Dm755 "../vesktop.sh" "${pkgdir}/usr/bin/${pkgname}"
