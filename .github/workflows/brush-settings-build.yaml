@@ -25,12 +25,26 @@ jobs:
         id: pkg_info
         run: |
           cd brush-settings
+
+          PKGNAME=$(grep "^pkgname=" PKGBUILD | head -1 | cut -d= -f2 | tr -d ' ')
           PKGVER=$(grep "^pkgver=" PKGBUILD | head -1 | cut -d= -f2 | tr -d ' ')
           PKGREL=$(grep "^pkgrel=" PKGBUILD | head -1 | cut -d= -f2 | tr -d ' ')
+
+          PKGFILE="${PKGNAME}-${PKGVER}-${PKGREL}-x86_64.pkg.tar.zst"
+
+          if [[ ! -f "$PKGFILE" ]]; then
+            echo "Ошибка: пакет $PKGFILE не найден!"
+            ls -la
+            exit 1
+          fi
+
+          echo "PKGNAME=$PKGNAME" >> $GITHUB_ENV
           echo "PKGVER=$PKGVER" >> $GITHUB_ENV
           echo "PKGREL=$PKGREL" >> $GITHUB_ENV
+          echo "PKGFILE=$PKGFILE" >> $GITHUB_ENV
           echo "TAG=v${PKGVER}-${PKGREL}" >> $GITHUB_ENV
-          echo "Версия: $PKGVER-$PKGREL"
+
+          echo "Пакет: $PKGFILE"
           echo "Тег: v${PKGVER}-${PKGREL}"
       
       - name: Fix .git ownership for runner user
@@ -53,6 +67,6 @@ jobs:
         with:
           tag_name: ${{ env.TAG }}
           name: ${{ env.PKGNAME }} ${{ env.TAG }}
-          files: brush-settings/brush-settings${{ env.PKGVER }}-${{ env.PKGREL }}-any.pkg.tar.zst
+          files: brush-settings/${{ env.PKGFILE }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
