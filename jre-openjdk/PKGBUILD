@@ -82,8 +82,10 @@ _nonheadless=(
   lib/libsplashscreen.so
 )
 
+_git_tag=jdk-${_majorver}.${_minorver}.${_securityver}+${_updatever}
+
 build() {
-  cd jdk${_majorver}u-jdk-${_majorver}.${_minorver}.${_securityver}+${_updatever}
+  cd jdk${_majorver}u-${_git_tag}
 
   bash configure \
     --with-version-string="${_majorver}.${_minorver}.${_securityver}" \
@@ -102,7 +104,7 @@ build() {
 }
 
 package() {
-  cd jdk${_majorver}u-jdk-${_majorver}.${_minorver}.${_securityver}+${_updatever}/build/linux-x86_64-server-release/images/jre
+  cd jdk${_majorver}u-${_git_tag}/build/linux-x86_64-server-release/images/jre
 
   install -dm755 "${pkgdir}${_jvmdir}"
   cp -a bin lib "${pkgdir}${_jvmdir}"
