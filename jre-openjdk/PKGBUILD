@@ -14,7 +14,7 @@ url='https://openjdk.java.net/'
 license=('LicenseRef-Java')
 
 makedepends=(
-  "java-environment>=22"
+  jdk-openjdk
   alsa-lib
   bash
   cpio
