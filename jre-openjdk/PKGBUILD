@@ -78,7 +78,7 @@ _nonheadless=(
 )
 
 build() {
-  cd jdk-25.0.1+8
+  cd jdk25u-jdk-25.0.1-8
 
   bash configure \
     --with-version-string="25.0.1" \
@@ -97,7 +97,7 @@ build() {
 }
 
 package() {
-  cd jdk-25.0.1+8/build/linux-x86_64-server-release/images/jre
+  cd jdk25u-jdk-25.0.1-8/build/linux-x86_64-server-release/images/jre
 
   install -dm755 "${pkgdir}${_jvmdir}"
   cp -a bin lib "${pkgdir}${_jvmdir}"
