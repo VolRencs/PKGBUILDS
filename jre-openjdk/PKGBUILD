@@ -2,13 +2,8 @@
 
 pkgname=jre-openjdk
 pkgbase=java-openjdk
-_majorver=25
-_minorver=0
-_securityver=1
-_updatever=8
-pkgver=${_majorver}.${_minorver}.${_securityver}.u${_updatever}
+pkgver=25.0.1.u8
 pkgrel=3
-
 arch=('x86_64')
 url='https://openjdk.java.net/'
 license=('LicenseRef-Java')
@@ -67,13 +62,13 @@ optdepends=(
 )
 
 source=(
-  https://github.com/openjdk/jdk${_majorver}u/archive/jdk-${_majorver}.${_minorver}.${_securityver}+${_updatever}.tar.gz
+  https://github.com/openjdk/jdk25u/archive/jdk-25.0.1+8.tar.gz
   freedesktop-java.desktop
 )
 sha256sums=('SKIP'
             'SKIP')
 
-_jvmdir=/usr/lib/jvm/java-${_majorver}-openjdk
+_jvmdir=/usr/lib/jvm/java-25-openjdk
 
 _nonheadless=(
   lib/libawt_xawt.so
@@ -82,13 +77,11 @@ _nonheadless=(
   lib/libsplashscreen.so
 )
 
-_git_tag=jdk-${_majorver}.${_minorver}.${_securityver}+${_updatever}
-
 build() {
-  cd jdk${_majorver}u-${_git_tag}
+  cd jdk-25.0.1+8
 
   bash configure \
-    --with-version-string="${_majorver}.${_minorver}.${_securityver}" \
+    --with-version-string="25.0.1" \
     --with-stdc++lib=dynamic \
     --with-libjpeg=system \
     --with-giflib=system \
@@ -104,7 +97,7 @@ build() {
 }
 
 package() {
-  cd jdk${_majorver}u-${_git_tag}/build/linux-x86_64-server-release/images/jre
+  cd jdk-25.0.1+8/build/linux-x86_64-server-release/images/jre
 
   install -dm755 "${pkgdir}${_jvmdir}"
   cp -a bin lib "${pkgdir}${_jvmdir}"
