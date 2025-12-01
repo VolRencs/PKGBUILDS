@@ -3,7 +3,7 @@
 pkgname=egl-wayland2
 pkgver=1.0.1
 pkgrel=1
-_commit=d71abc0f87f2694a446aba5b5cd919d8a2704de3
+_commit=3e5b643542708cbb9c67d18fe19b5fa4151d7d8f
 pkgdesc="new EGLStream-based Wayland external platform"
 url="https://github.com/NVIDIA/egl-wayland2"
 arch=(x86_64)
@@ -22,7 +22,7 @@ makedepends=(
 )
 provides=(libnvidia-egl-wayland2.so)
 source=("git+https://github.com/NVIDIA/egl-wayland2#commit=$_commit")
-b2sums=('2185e7c1e7e884593583eaa3641b899feb5a5c07628ead6d3f738097b246546cb6cb79868ca04a8ec49d38b862a3bd8e55cbb291c7f46873faf668a9cea80383')
+sha256sums=('45fa88b0d91abdcc8d942f1a8a74fba8a2a0f5cac317b941550f4d7a2a360a1b')
 
 prepare() {
   cd $pkgname
@@ -40,5 +40,3 @@ check() {
 package() {
   meson install -C build --destdir "$pkgdir"
 }
-
-# vim:set sw=2 sts=-1 et:
