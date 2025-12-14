@@ -1,7 +1,7 @@
 # Maintainer: VolRen <VolRencs@proton.me>
 
 pkgname=firefox
-pkgver=145.0.1
+pkgver=146.0
 pkgrel=1
 epoch=1
 pkgdesc="Fast, Private & Safe Web Browser"
@@ -24,15 +24,6 @@ depends=(
   gtk3
   hicolor-icon-theme
   libpulse
-  libx11
-  libxcb
-  libxcomposite
-  libxdamage
-  libxext
-  libxfixes
-  libxrandr
-  libxss
-  libxt
   mime-types
   nspr
   nss
@@ -69,21 +60,18 @@ source=(
   "ru.xpi::https://archive.mozilla.org/pub/firefox/releases/$pkgver/linux-x86_64/xpi/ru.xpi"
   $pkgname-symbolic.svg
   $pkgname.desktop
-  ffmpeg8-fix.patch
   Install-under-remoting-name.patch
 )
 validpgpkeys=('14F26682D0916CDD81E37B6D61B7B526D98F0353')
-sha256sums=('b48115bd304ff0169fefc488226caf4053e04cc2aa83b1a9f4ac85fbaa9ff457'
-            '18588f1fba5cc40f86e71a63a48aab85bdb6d07999d63597959ed36a060b135d'
+sha256sums=('08d4cae010abc31603ef74091a5d1f81da8e62d3b66c806690e70f03c422df16'
+            '6c26ea0afedce05d029b442c7bbb2e3d9398da000540fe1ad2796c6e9b6f213d'
             'a9b8b4a0a1f4a7b4af77d5fc70c2686d624038909263c795ecc81e0aec7711e9'
             '381a0bb236513a48596fcd17115629b19c5d862ce845144c7dfb61cd8903b1b8'
-            '2b39e1e1efa845aac680db85e409cd07765e7d8f2346cbb957048f08dfa13daf'
             'ef63a12975f108f30b00bb3290d9ca76f311d8af9c1d5dfc0d8335ad57e8f77c')
 
 prepare() {
   cd firefox-$pkgver
 
-  patch -Np1 -i ../ffmpeg8-fix.patch
   patch -Np1 -i ../Install-under-remoting-name.patch
 
   cat >mozconfig <<END
@@ -95,6 +83,7 @@ ac_add_options --enable-hardening
 ac_add_options --enable-optimize="-O2 -march=native"
 ac_add_options --enable-lto=thin
 ac_add_options --enable-linker=lld
+ac_add_options --enable-default-toolkit=cairo-gtk3-wayland-only
 ac_add_options --disable-install-strip
 
 ac_add_options --disable-crashreporter
@@ -119,6 +108,9 @@ ac_add_options --without-wasm-sandboxed-libraries
 
 ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
+ac_add_options --with-system-libvpx
+ac_add_options --with-system-webp
+ac_add_options --with-system-libevent
 
 ac_add_options RUSTC_OPT_LEVEL="2"
 ac_add_options --enable-official-branding
