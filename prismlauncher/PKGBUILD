@@ -1,0 +1,56 @@
+pkgname=prismlauncher
+pkgver=10.0.1
+pkgrel=1
+pkgdesc="Minecraft launcher with ability to manage multiple instances"
+arch=(x86_64)
+url='https://prismlauncher.org'
+license=('GPL-3.0-only AND LGPL-3.0-or-later AND LGPL-2.0-or-later AND Apache-2.0 AND MIT AND LicenseRef-Batch AND OFL-1.1')
+depends=(
+  glibc
+  gcc-libs
+  java-runtime
+  libgl
+  qt6-base
+  qt6-svg
+  qt6-imageformats
+  qt6-networkauth
+  quazip-qt6
+  zlib
+  hicolor-icon-theme
+  tomlplusplus
+  cmark
+)
+makedepends=(cmake extra-cmake-modules git jdk17-openjdk scdoc ghc-filesystem gamemode)
+optdepends=('glfw: to use system GLFW libraries'
+            'openal: to use system OpenAL libraries'
+            'visualvm: Profiling support'
+            'xorg-xrandr: for older minecraft versions'
+            'orca: minecraft screen reader'
+            'flite: minecraft voice narration')
+source=("https://github.com/PrismLauncher/PrismLauncher/releases/download/$pkgver/PrismLauncher-$pkgver.tar.gz")
+b2sums=('684739c99aed623fade5b0e84e2256e6e9e8bd0ea10fc3c0bdefe6067060d72addf82d5e796c4513bdded10846e1b6d9ef28fb2ac1640f9c22b2b37eeff55f00')
+
+build() {
+  cd PrismLauncher-$pkgver
+
+  export PATH="/usr/lib/jvm/java-17-openjdk/bin/:$PATH"
+
+  cmake -DCMAKE_BUILD_TYPE= \
+    -DCMAKE_INSTALL_PREFIX="/usr" \
+    -DLauncher_BUILD_PLATFORM="archlinux" \
+    -DLauncher_QT_VERSION_MAJOR="6" \
+    -DLauncher_ENABLE_JAVA_DOWNLOADER=ON \
+    -Bbuild -S.
+  cmake --build build
+}
+
+check() {
+  cd PrismLauncher-$pkgver/build
+  ctest .
+}
+
+package() {
+
+  cd PrismLauncher-$pkgver/build
+  DESTDIR="$pkgdir" cmake --install .
+}
