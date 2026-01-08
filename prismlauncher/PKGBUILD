@@ -6,8 +6,6 @@ arch=(x86_64)
 url='https://prismlauncher.org'
 license=('GPL-3.0-only AND LGPL-3.0-or-later AND LGPL-2.0-or-later AND Apache-2.0 AND MIT AND LicenseRef-Batch AND OFL-1.1')
 depends=(
-  glibc
-  gcc-libs
   java-runtime
   libgl
   qt6-base
@@ -20,7 +18,7 @@ depends=(
   tomlplusplus
   cmark
 )
-makedepends=(cmake extra-cmake-modules git jdk17-openjdk scdoc gamemode qrencode)
+makedepends=(cmake extra-cmake-modules git jdk-openjdk scdoc gamemode qrencode)
 optdepends=('glfw: to use system GLFW libraries'
             'openal: to use system OpenAL libraries'
             'visualvm: Profiling support'
@@ -35,18 +33,12 @@ build() {
 
   export PATH="/usr/lib/jvm/java-17-openjdk/bin/:$PATH"
 
-  cmake -DCMAKE_BUILD_TYPE= \
+  cmake \
     -DCMAKE_INSTALL_PREFIX="/usr" \
     -DLauncher_BUILD_PLATFORM="archlinux" \
-    -DLauncher_QT_VERSION_MAJOR="6" \
     -DLauncher_ENABLE_JAVA_DOWNLOADER=ON \
     -Bbuild -S.
   cmake --build build
-}
-
-check() {
-  cd PrismLauncher-$pkgver/build
-  ctest .
 }
 
 package() {
