@@ -20,7 +20,7 @@ depends=(
   tomlplusplus
   cmark
 )
-makedepends=(cmake extra-cmake-modules git jdk17-openjdk scdoc ghc-filesystem gamemode)
+makedepends=(cmake extra-cmake-modules git jdk17-openjdk scdoc gamemode qrencode)
 optdepends=('glfw: to use system GLFW libraries'
             'openal: to use system OpenAL libraries'
             'visualvm: Profiling support'
