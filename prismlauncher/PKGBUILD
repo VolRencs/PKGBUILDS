@@ -12,11 +12,11 @@ depends=(
   qt6-svg
   qt6-imageformats
   qt6-networkauth
-  quazip-qt6
   zlib
   hicolor-icon-theme
   tomlplusplus
   cmark
+  libarchive
 )
 makedepends=(cmake extra-cmake-modules git jdk17-openjdk scdoc gamemode qrencode)
 optdepends=('glfw: to use system GLFW libraries'
