@@ -1,0 +1,50 @@
+# Maintainer: Peter Jung <ptr1337@cachyos.org>
+# Maintainer: VolRen <VolRencs@proton.me>
+
+pkgname=plasma-login-manager
+pkgver=6.5.git20260112
+pkgrel=1
+_commit=22625ec7b19cc72c8bc62e80cb66dd19e3c72d50
+arch=(x86_64)
+pkgdesc='Plasma Login Manager'
+url='https://kde.org/plasma-desktop/'
+license=(GPL-2.0-or-later)
+depends=(gcc-libs
+         glibc
+         kauth
+         kcmutils
+         kconfig
+         kcoreaddons
+         kdbusaddons
+         ki18n
+         kio
+         kirigami
+         kpackage
+         kservice
+         kwindowsystem
+         layer-shell-qt
+         libplasma
+         libxau
+         pam
+         plasma-workspace
+         qt6-base
+         qt6-declarative
+         sh
+         systemd-libs)
+makedepends=(extra-cmake-modules
+             git
+             qt6-tools)
+source=(git+https://invent.kde.org/plasma/plasma-login-manager#commit=$_commit)
+sha256sums=('SKIP')
+
+build() {
+  cmake -B build -S $pkgname \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_INSTALL_LIBEXECDIR=lib \
+    -DDBUS_CONFIG_FILENAME=plasma_org.freedesktop.DisplayManager.conf
+  cmake --build build
+}
+
+package() {
+  DESTDIR="$pkgdir" cmake --install build
+}
