@@ -33,7 +33,7 @@ depends=(gcc-libs
 makedepends=(extra-cmake-modules
              git
              qt6-tools)
-source=(https://download.kde.org/unstable/plasma/$pkgver/plasma-login-manager-$pkgver.tar.gz)
+source=(https://download.kde.org/unstable/plasma/$pkgver/plasma-login-manager-$pkgver.tar.xz)
 sha256sums=('SKIP')
 
 build() {
