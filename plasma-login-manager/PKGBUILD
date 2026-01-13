@@ -33,12 +33,11 @@ depends=(gcc-libs
 makedepends=(extra-cmake-modules
              git
              qt6-tools)
-source=(https://invent.kde.org/plasma/plasma-login-manager/-/archive/v$pkgver/plasma-login-manager-v$pkgver.tar.gz)
+source=(https://download.kde.org/unstable/plasma/$pkgver/plasma-login-manager-$pkgver.tar.gz)
 sha256sums=('SKIP')
 
 build() {
-  cmake -B build -S $pkgname \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  cmake -B build -S $pkgname-$pkgver \
     -DCMAKE_INSTALL_LIBEXECDIR=lib \
     -DDBUS_CONFIG_FILENAME=plasma_org.freedesktop.DisplayManager.conf
   cmake --build build
