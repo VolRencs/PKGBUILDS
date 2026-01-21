@@ -114,6 +114,8 @@ ac_add_options --with-system-libvpx
 ac_add_options --with-system-webp
 ac_add_options --with-system-libevent
 ac_add_options --with-system-zlib
+ac_add_options --with-system-jpeg
+ac_add_options --with-system-icu
 
 ac_add_options RUSTC_OPT_LEVEL="2"
 ac_add_options --enable-official-branding
@@ -157,9 +159,9 @@ build() {
 package() {
   cd firefox-$pkgver
   DESTDIR="$pkgdir" ./mach install
+  local appdir="$pkgdir/usr/lib/$pkgname"
 
-  local vendorjs="$pkgdir/usr/lib/$pkgname/browser/defaults/preferences/vendor.js"
-  install -Dm644 /dev/stdin "$vendorjs" <<END
+  install -Dvm644 /dev/stdin "$appdir/browser/defaults/preferences/vendor.js" <<END
 pref("intl.locale.requested", "");
 pref("spellchecker.dictionary_path", "/usr/share/hunspell");
 pref("browser.shell.checkDefaultBrowser", false);
@@ -177,8 +179,7 @@ pref("extensions.htmlaboutaddons.recommendations.enabled", false);
 pref("browser.discovery.enabled", false);
 END
 
-  local distini="$pkgdir/usr/lib/$pkgname/distribution/distribution.ini"
-  install -Dm644 /dev/stdin "$distini" <<END
+  install -Dvm644 /dev/stdin "$appdir/distribution/distribution.ini" <<END
 [Global]
 id=cachyos
 version=1.0
