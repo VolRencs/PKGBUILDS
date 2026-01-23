@@ -22,7 +22,7 @@ makedepends=(
   cmake
   extra-cmake-modules
   git
-  jdk21-openjdk
+  jdk17-openjdk
   scdoc
   qrencode
   gamemode
@@ -40,11 +40,13 @@ sha256sums=('SKIP')
 build() {
   cd PrismLauncher-$pkgver
 
-  export PATH="/usr/lib/jvm/java-21-openjdk/bin/:$PATH"
+  export PATH="/usr/lib/jvm/java-17-openjdk/bin/:$PATH"
 
   cmake -S . -B build -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX="/usr" \
+    -DCMAKE_C_FLAGS_INIT="" \
+    -DCMAKE_CXX_FLAGS_INIT="" \
     -DLauncher_BUILD_PLATFORM="archlinux" \
     -DLauncher_ENABLE_JAVA_DOWNLOADER=ON \
     -Bbuild -S.
