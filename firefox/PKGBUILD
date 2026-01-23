@@ -54,6 +54,7 @@ options=(
   !emptydirs
   !lto
   !makeflags
+  !debug
 )
 source=(
   https://archive.mozilla.org/pub/firefox/releases/$pkgver/source/firefox-$pkgver.source.tar.xz
