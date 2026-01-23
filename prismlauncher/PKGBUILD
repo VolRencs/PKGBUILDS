@@ -29,12 +29,16 @@ makedepends=(
   gamemode
   ninja
 )
-optdepends=('glfw: to use system GLFW libraries'
-            'openal: to use system OpenAL libraries'
-            'visualvm: Profiling support'
-            'xorg-xrandr: for older minecraft versions'
-            'orca: minecraft screen reader'
-            'flite: minecraft voice narration')
+optdepends=(
+  'glfw: to use system GLFW libraries'
+  'openal: to use system OpenAL libraries'
+  'orca: minecraft screen reader'
+  'flite: minecraft voice narration'
+)
+options=(
+  !emptydirs
+  !debug
+)
 source=("https://github.com/PrismLauncher/PrismLauncher/releases/download/$pkgver/PrismLauncher-$pkgver.tar.gz")
 sha256sums=('4b36e8b0345a21a9a8da36633fa5bf4d8f44d992da1529cdfb6bf52a0ff7f33c')
 
@@ -53,6 +57,5 @@ build() {
 }
 
 package() {
-  cd PrismLauncher-$pkgver/build
-  DESTDIR="$pkgdir" cmake --install .
+  DESTDIR="$pkgdir" cmake --install build
 }
