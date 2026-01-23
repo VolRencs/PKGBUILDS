@@ -22,13 +22,8 @@ depends=(
 )
 
 optdepends=(
-  'gst-plugins-good: for better video playback support'
-  'gst-libav: for additional multimedia codecs'
-  'libpulse: for audio playback support'
-  'alsa-lib: for audio output via ALSA'
   'otf-takao: for Japanese fonts'
   'ttf-ms-fonts: for Microsoft fonts'
-  'libreoffice: for OpenSymbol fonts'
 )
 
 provides=("onlyoffice=${pkgver}")
