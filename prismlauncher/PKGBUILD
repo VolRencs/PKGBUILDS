@@ -25,6 +25,7 @@ makedepends=(
   jdk21-openjdk
   scdoc
   qrencode
+  gamemode
   ninja
 )
 optdepends=('glfw: to use system GLFW libraries'
