@@ -45,8 +45,6 @@ build() {
   cmake -S . -B build -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX="/usr" \
-    -DCMAKE_C_FLAGS_INIT="" \
-    -DCMAKE_CXX_FLAGS_INIT="" \
     -DLauncher_BUILD_PLATFORM="archlinux" \
     -DLauncher_ENABLE_JAVA_DOWNLOADER=ON \
     -Bbuild -S.
