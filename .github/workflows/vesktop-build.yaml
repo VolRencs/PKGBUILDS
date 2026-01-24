@@ -29,11 +29,17 @@ jobs:
           PKGNAME=$(grep "^pkgname=" PKGBUILD | head -1 | cut -d= -f2 | tr -d ' ')
           PKGVER=$(grep "^pkgver=" PKGBUILD | head -1 | cut -d= -f2 | tr -d ' ')
           PKGREL=$(grep "^pkgrel=" PKGBUILD | head -1 | cut -d= -f2 | tr -d ' ')
-          EPOCH=$(grep "^epoch=" PKGBUILD | head -1 | cut -d= -f2 | xargs)
+          EPOCH=$(grep "^epoch=" PKGBUILD | head -1 | cut -d= -f2 | xargs || true)
 
-          FULLVER="${EPOCH}:${PKGVER}-${PKGREL}"
-          PKGFILE="${PKGNAME}-${EPOCH}:${PKGVER}-${PKGREL}-x86_64.pkg.tar.zst"
-          TAGVER="v${EPOCH}_${PKGVER}-${PKGREL}"
+          if [[ -n "$EPOCH" ]]; then
+            FULLVER="${EPOCH}:${PKGVER}-${PKGREL}"
+            PKGFILE="${PKGNAME}-${EPOCH}:${PKGVER}-${PKGREL}-x86_64.pkg.tar.zst"
+            TAGVER="v${EPOCH}_${PKGVER}-${PKGREL}"
+          else
+            FULLVER="${PKGVER}-${PKGREL}"
+            PKGFILE="${PKGNAME}-${PKGVER}-${PKGREL}-x86_64.pkg.tar.zst"
+            TAGVER="v${PKGVER}-${PKGREL}"
+          fi
 
           if [[ ! -f "$PKGFILE" ]]; then
             echo "Ошибка: пакет $PKGFILE не найден!"
@@ -47,7 +53,7 @@ jobs:
           echo "TAG=$TAGVER" >> $GITHUB_ENV
 
           echo "Пакет: $PKGFILE"
-          echo "Тег: v${PKGVER}-${PKGREL}"
+          echo "Тег: $TAGVER"
       
       - name: Fix .git ownership for runner user
         run: sudo chown -R $(whoami):$(whoami) .git
