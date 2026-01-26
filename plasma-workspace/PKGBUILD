@@ -119,8 +119,8 @@ build() {
     -DCMAKE_INSTALL_LIBEXECDIR=lib \
     -DGLIBC_LOCALE_GEN=OFF \
     -DBUILD_TESTING=OFF \
-    -WITH_X11_SESSION=OFF \
-    -WITH_X11=OFF
+    -DWITH_X11_SESSION=OFF \
+    -DWITH_X11=OFF
   cmake --build build
 }
 
