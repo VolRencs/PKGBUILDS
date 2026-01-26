@@ -1,6 +1,6 @@
 pkgname=prismlauncher
 pkgver=10.0.2
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="Minecraft launcher with ability to manage multiple instances"
 arch=(x86_64)
@@ -18,14 +18,13 @@ depends=(
   tomlplusplus
   cmark
   libarchive
+  qrencode
 )
 makedepends=(
   cmake
   extra-cmake-modules
   git
-  jdk17-openjdk
-  scdoc
-  qrencode
+  jdk-openjdk
   gamemode
   ninja
 )
@@ -42,9 +41,14 @@ options=(
 source=("https://github.com/PrismLauncher/PrismLauncher/releases/download/$pkgver/PrismLauncher-$pkgver.tar.gz")
 sha256sums=('4b36e8b0345a21a9a8da36633fa5bf4d8f44d992da1529cdfb6bf52a0ff7f33c')
 
-build() {
-  export PATH="/usr/lib/jvm/java-17-openjdk/bin:$PATH"
+prepare() {
+    cd "PrismLauncher-$pkgver"
 
+    sed -i 's/-target 7 -source 7/-target 8 -source 8/g' libraries/javacheck/CMakeLists.txt
+    sed -i 's/-target 7 -source 7/-target 8 -source 8/g' libraries/launcher/CMakeLists.txt
+
+}
+build() {
   CFLAGS="${CFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
   CXXFLAGS="${CXXFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
 
