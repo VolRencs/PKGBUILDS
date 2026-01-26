@@ -90,7 +90,7 @@ depends=(accountsservice
          qt6-location
          qt6-positioning
          qt6-svg
-         qt6-tools # for qdbus
+         qt6-tools
          qt6-virtualkeyboard
          sh
          solid
@@ -99,8 +99,6 @@ depends=(accountsservice
          xcb-util
          xcb-util-cursor
          xcb-util-image
-         xorg-xmessage
-         xorg-xrdb
          xorg-xwayland
          zlib)
 makedepends=(baloo
@@ -136,7 +134,6 @@ package_plasma-workspace() {
             'discover: manage applications installation from the launcher'
             'kdepim-addons: displaying PIM events in the calendar'
             'kwayland-integration: Wayland integration for Qt5 applications'
-            'kwin-x11: X session window manager'
             'networkmanager-qt: IP based geolocation'
             'plasma-workspace-wallpapers: additional wallpapers'
             'plasma5-integration: use Plasma settings in Qt5 applications'
