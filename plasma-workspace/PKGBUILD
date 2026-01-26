@@ -2,8 +2,8 @@
 # Maintainer: Antonio Rojas <arojas@archlinux.org>
 # Contributor: Andrea Scarpino <andrea@archlinux.org>
 # Contributor: Alexey D. <lq07829icatm at rambler.ru>
-pkgbase=plasma-workspace
-pkgname=(plasma-workspace)
+
+pkgname=plasma-workspace
 pkgver=6.5.5
 _dirver=$(echo $pkgver | cut -d. -f1-3)
 pkgrel=1
@@ -128,7 +128,7 @@ build() {
   cmake --build build
 }
 
-package_plasma-workspace() {
+package() {
   optdepends=('appmenu-gtk-module: global menu support for some GTK3 applications'
             'baloo: Baloo search runner'
             'discover: manage applications installation from the launcher'
@@ -138,7 +138,7 @@ package_plasma-workspace() {
             'plasma-workspace-wallpapers: additional wallpapers'
             'plasma5-integration: use Plasma settings in Qt5 applications'
             'xdg-desktop-portal-gtk: sync font settings to Flatpak apps')
-  depends+=(plasma-integration) # Declare runtime dependency here to avoid dependency cycles at build time
+  depends+=(plasma-integration)
   conflicts=(plasma-wayland-session)
   replaces=(plasma-wayland-session)
 
