@@ -4,7 +4,7 @@
 # Contributor: Alexey D. <lq07829icatm at rambler.ru>
 
 pkgname=plasma-workspace
-pkgver=6.5.5
+pkgver=6.5.90
 _dirver=$(echo $pkgver | cut -d. -f1-3)
 pkgrel=2
 pkgdesc='KDE Plasma Workspace'
@@ -50,7 +50,6 @@ depends=(accountsservice
          knewstuff
          knighttime
          knotifications
-         knotifyconfig
          kpackage
          kparts
          kpipewire
@@ -82,7 +81,6 @@ depends=(accountsservice
          ocean-sound-theme
          plasma-activities
          plasma-activities-stats
-         plasma5support
          prison
          qt6-5compat
          qt6-base
@@ -105,7 +103,6 @@ makedepends=(baloo
              extra-cmake-modules
              kdoctools
              networkmanager-qt
-             phonon-qt6
              plasma-wayland-protocols
              qcoro
              ninja)
@@ -116,7 +113,8 @@ sha256sums=('29b0763bbbdd9e27416dce1fd939242d2588feef36c4cbae941c31964d531fd4')
 prepare() {
   cd "$pkgname-$pkgver"
 
-  sed -i '/ecm_optional_add_subdirectory(xembed-sni-proxy)/d' CMakeLists.txt
+  sed -e 's/NotifyConfig//' -i $pkgname-$pkgver/CMakeLists.txt
+  sed -e 's/ecm_optional_add_subdirectory(xembed-sni-proxy)//' -i $pkgname-$pkgver/CMakeLists.txt
 }
 
 build() {
@@ -125,7 +123,7 @@ build() {
     -DCMAKE_BUILD_TYPE=Release \
     -DGLIBC_LOCALE_GEN=OFF \
     -DBUILD_TESTING=OFF \
-    -DPLASMA_X11_DEFAULT_SESSION=OFF \
+    -DWITH_X11_SESSION=OFF \
     -DWITH_X11=OFF
   cmake --build build
 }
