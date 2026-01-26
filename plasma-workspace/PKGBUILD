@@ -111,8 +111,6 @@ source=(https://download.kde.org/unstable/plasma/$_dirver/$pkgname-$pkgver.tar.x
 sha256sums=('SKIP')
 
 prepare() {
-  cd "$pkgname-$pkgver"
-
   sed -e 's/NotifyConfig//' -i $pkgname-$pkgver/CMakeLists.txt
   sed -e 's/ecm_optional_add_subdirectory(xembed-sni-proxy)//' -i $pkgname-$pkgver/CMakeLists.txt
 }
