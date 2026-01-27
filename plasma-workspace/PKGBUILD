@@ -1,0 +1,147 @@
+# Maintainer: Felix Yan <felixonmars@archlinux.org>
+# Maintainer: Antonio Rojas <arojas@archlinux.org>
+# Contributor: Andrea Scarpino <andrea@archlinux.org>
+# Contributor: Alexey D. <lq07829icatm at rambler.ru>
+
+pkgname=plasma-workspace
+pkgver=6.6.0
+_dirver=$(echo $pkgver | cut -d. -f1-3)
+pkgrel=1
+epoch=1
+pkgdesc='KDE Plasma Workspace'
+arch=(x86_64)
+url='https://kde.org/plasma-desktop/'
+license=(LGPL-2.0-or-later)
+depends=(accountsservice
+         appstream-qt
+         dbus
+         fontconfig
+         freetype2
+         gcc-libs
+         glibc
+         icu
+         kactivitymanagerd
+         karchive
+         kauth
+         kbookmarks
+         kcmutils
+         kcolorscheme
+         kcompletion
+         kconfig
+         kconfigwidgets
+         kcoreaddons
+         kcrash
+         kde-cli-tools
+         kdeclarative
+         kded
+         kdbusaddons
+         kglobalaccel
+         kguiaddons
+         kholidays
+         ki18n
+         kiconthemes
+         kidletime
+         kio
+         kio-extras
+         kio-fuse
+         kirigami
+         kirigami-addons
+         kitemmodels
+         kjobwidgets
+         knewstuff
+         knighttime
+         knotifications
+         kpackage
+         kparts
+         kpipewire
+         krunner
+         kquickcharts
+         kscreenlocker
+         kservice
+         kstatusnotifieritem
+         ksvg
+         ksystemstats
+         ktexteditor
+         ktextwidgets
+         kuserfeedback
+         kwallet
+         kwayland
+         kwidgetsaddons
+         kwin
+         kwindowsystem
+         kxmlgui
+         layer-shell-qt
+         libcanberra
+         libkexiv2
+         libksysguard
+         libplasma
+         libqalculate
+         libxcb
+         libxcrypt
+         milou
+         ocean-sound-theme
+         plasma-activities
+         plasma-activities-stats
+         prison
+         qt6-5compat
+         qt6-base
+         qt6-declarative
+         qt6-location
+         qt6-positioning
+         qt6-svg
+         qt6-tools
+         qt6-virtualkeyboard
+         sh
+         solid
+         systemd-libs
+         wayland
+         xcb-util
+         xcb-util-cursor
+         xcb-util-image
+         xorg-xwayland
+         zlib)
+makedepends=(baloo
+             extra-cmake-modules
+             networkmanager-qt
+             plasma-wayland-protocols
+             qcoro
+             ninja
+             libice
+             libsm
+             libxau
+             libxcursor
+             libxfixes
+             libxft
+             libxtst)
+groups=(plasma)
+source=(https://download.kde.org/stable/plasma/$_dirver/$pkgname-$pkgver.tar.xz)
+sha256sums=('29b0763bbbdd9e27416dce1fd939242d2588feef36c4cbae941c31964d531fd4')
+
+build() {
+  cmake -B build -S $pkgname-$pkgver -G Ninja \
+    -DCMAKE_INSTALL_LIBEXECDIR=lib \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DGLIBC_LOCALE_GEN=OFF \
+    -DBUILD_TESTING=OFF \
+    -DWITH_X11_SESSION=OFF
+  cmake --build build
+}
+
+package() {
+  optdepends=('appmenu-gtk-module: global menu support for some GTK3 applications'
+            'baloo: Baloo search runner'
+            'discover: manage applications installation from the launcher'
+            'kdepim-addons: displaying PIM events in the calendar'
+            'kwayland-integration: Wayland integration for Qt5 applications'
+            'networkmanager-qt: IP based geolocation'
+            'plasma-workspace-wallpapers: additional wallpapers'
+            'plasma5-integration: use Plasma settings in Qt5 applications'
+            'xdg-desktop-portal-gtk: sync font settings to Flatpak apps')
+  depends+=(plasma-integration)
+  conflicts=(plasma-wayland-session)
+  replaces=(plasma-wayland-session)
+
+  DESTDIR="$pkgdir" cmake --install build
+
+  rm -r "$pkgdir"/usr/share/xsessions/plasmax11.desktop
+}
