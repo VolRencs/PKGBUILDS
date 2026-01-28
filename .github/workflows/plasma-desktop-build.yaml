@@ -38,7 +38,7 @@ jobs:
           else
             FULLVER="${PKGVER}-${PKGREL}"
             PKGFILE="${PKGNAME}-${PKGVER}-${PKGREL}-x86_64.pkg.tar.zst"
-            TAGVER="v${PKGVER}-${PKGREL}"
+            TAGVER="v${PKGVER}-${PKGREL}-desktop"
           fi
 
           if [[ ! -f "$PKGFILE" ]]; then
