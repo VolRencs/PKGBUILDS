@@ -83,6 +83,7 @@ depends=(accountsservice
          ocean-sound-theme
          plasma-activities
          plasma-activities-stats
+         plasma5support
          prison
          qt6-5compat
          qt6-base
