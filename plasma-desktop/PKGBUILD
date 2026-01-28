@@ -96,9 +96,8 @@ makedepends=(extra-cmake-modules
              xorg-server-devel
              ninja)
 groups=(plasma)
-source=(https://download.kde.org/stable/plasma/$_dirver/$pkgname-$pkgver.tar.xz{,.sig})
-sha256sums=('2367f12531575b2e445cd2b0fa0b756f151f10eaa27358b0966735ff400146c7'
-            'SKIP')
+source=(https://download.kde.org/stable/plasma/$_dirver/$pkgname-$pkgver.tar.xz)
+sha256sums=('2367f12531575b2e445cd2b0fa0b756f151f10eaa27358b0966735ff400146c7')
 
 build() {
   cmake -B build -S $pkgname-$pkgver -G Ninja \

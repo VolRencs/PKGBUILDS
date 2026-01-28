@@ -51,6 +51,7 @@ depends=(accountsservice
          knewstuff
          knighttime
          knotifications
+         knotifyconfig
          kpackage
          kparts
          kpipewire
