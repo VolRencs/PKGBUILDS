@@ -103,20 +103,19 @@ prepare() {
 sed -i '/find_package(X11)/,/TYPE REQUIRED/ s/TYPE REQUIRED/TYPE OPTIONAL/' $pkgname-$pkgver/CMakeLists.txt
 sed -i 's/find_package(XCB REQUIRED/find_package(XCB/' $pkgname-$pkgver/CMakeLists.txt
 sed -i '/if(X11_Xkb_FOUND AND XCB_XKB_FOUND)/,/endif()/ s/^/#/' $pkgname-$pkgver/CMakeLists.txt
+sed -i '/if(X11_FOUND)/,/endif()/d' CMakeLists.txt
 
 sed -i 's/option(BUILD_KCM_MOUSE_X11 .*ON)/option(BUILD_KCM_MOUSE_X11 "Build the Mouse KCM'\''s X11 backend" OFF)/' $pkgname-$pkgver/CMakeLists.txt
 sed -i 's/option(BUILD_KCM_TOUCHPAD_X11 .*ON)/option(BUILD_KCM_TOUCHPAD_X11 "Build the Touchpad KCM'\''s X11 backend" OFF)/' $pkgname-$pkgver/CMakeLists.txt
 }
 
 build() {
-  export CMAKE_DISABLE_FIND_PACKAGE_X11=ON
-  export CMAKE_DISABLE_FIND_PACKAGE_XCB=ON
-  export CMAKE_DISABLE_FIND_PACKAGE_KF6WindowSystemX11=ON
 
   cmake -B build -S $pkgname-$pkgver -G Ninja \
     -DCMAKE_INSTALL_LIBEXECDIR=lib \
     -DBUILD_TESTING=OFF \
-    -DBUILD_DOC=OFF 
+    -DBUILD_DOC=OFF \
+    -DHAVE_X11=OFF
   cmake --build build
 }
 
