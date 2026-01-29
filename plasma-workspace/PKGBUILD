@@ -6,7 +6,7 @@
 pkgname=plasma-workspace
 pkgver=6.5.5
 _dirver=$(echo $pkgver | cut -d. -f1-3)
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc='KDE Plasma Workspace'
 arch=(x86_64)
@@ -107,14 +107,7 @@ makedepends=(baloo
              networkmanager-qt
              plasma-wayland-protocols
              qcoro
-             ninja
-             libice
-             libsm
-             libxau
-             libxcursor
-             libxfixes
-             libxft
-             libxtst)
+             ninja)
 groups=(plasma)
 source=(https://download.kde.org/stable/plasma/$_dirver/$pkgname-$pkgver.tar.xz)
 sha256sums=('29b0763bbbdd9e27416dce1fd939242d2588feef36c4cbae941c31964d531fd4')
@@ -122,6 +115,7 @@ sha256sums=('29b0763bbbdd9e27416dce1fd939242d2588feef36c4cbae941c31964d531fd4')
 prepare() {
   sed -e 's/add_subdirectory(phonon)//' -i $pkgname-$pkgver/CMakeLists.txt
   sed -i '/find_package(Phonon4Qt6/,/TYPE REQUIRED)/d' $pkgname-$pkgver/CMakeLists.txt
+  sed -e 's/ecm_optional_add_subdirectory(xembed-sni-proxy)//' -i $pkgname-$pkgver/CMakeLists.txt
 }
 
 build() {
@@ -129,7 +123,8 @@ build() {
     -DCMAKE_INSTALL_LIBEXECDIR=lib \
     -DCMAKE_BUILD_TYPE=Release \
     -DGLIBC_LOCALE_GEN=OFF \
-    -DBUILD_TESTING=OFF
+    -DBUILD_TESTING=OFF \
+    -DWITH_X11=OFF
   cmake --build build
 }
 
