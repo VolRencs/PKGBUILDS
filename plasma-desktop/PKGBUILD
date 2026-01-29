@@ -103,7 +103,7 @@ prepare() {
 sed -i '/find_package(X11)/,/TYPE REQUIRED/ s/TYPE REQUIRED/TYPE OPTIONAL/' $pkgname-$pkgver/CMakeLists.txt
 sed -i 's/find_package(XCB REQUIRED/find_package(XCB/' $pkgname-$pkgver/CMakeLists.txt
 sed -i '/if(X11_Xkb_FOUND AND XCB_XKB_FOUND)/,/endif()/ s/^/#/' $pkgname-$pkgver/CMakeLists.txt
-sed -i '/if(X11_FOUND)/,/endif()/d' CMakeLists.txt
+sed -i '/if(X11_FOUND)/,/endif()/d' $pkgname-$pkgver/CMakeLists.txt
 
 sed -i 's/option(BUILD_KCM_MOUSE_X11 .*ON)/option(BUILD_KCM_MOUSE_X11 "Build the Mouse KCM'\''s X11 backend" OFF)/' $pkgname-$pkgver/CMakeLists.txt
 sed -i 's/option(BUILD_KCM_TOUCHPAD_X11 .*ON)/option(BUILD_KCM_TOUCHPAD_X11 "Build the Touchpad KCM'\''s X11 backend" OFF)/' $pkgname-$pkgver/CMakeLists.txt
