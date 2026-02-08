@@ -4,6 +4,7 @@
 pkgname=telegram-desktop
 pkgver=6.5.0
 pkgrel=1
+epoch=1
 pkgdesc='Official Telegram Desktop client'
 arch=('x86_64')
 url="https://desktop.telegram.org/"
@@ -49,6 +50,8 @@ makedepends=(
   'python'
   'range-v3'
   'tl-expected'
+  'clang'
+  'lld'
 )
 optdepends=(
   'geoclue: geoinformation support'
@@ -66,9 +69,16 @@ sha512sums=('1ea6d2141e45206ab3d08b2f1bfab98bb2baab585a8112e8a358e2cad72db7e666c
             '6dc6e684a0bf35bb83f6fa6579a0da82d604190b222f2cd2de9b8ef5b93f5f18ac9a8733e2c5cf2a64ed9933b346ea31e26a4bcc0039956280ec2deef9649457')
 
 build() {
+  export CC=clang
+  export CXX=clang++
+  export LD=ld.lld
+
   CXXFLAGS+=' -ffat-lto-objects'
 
   cmake -S td -B td/build -G Ninja \
+    -DCMAKE_C_COMPILER=clang \
+    -DCMAKE_CXX_COMPILER=clang++ \
+    -DCMAKE_LINKER=lld \
     -DCMAKE_BUILD_TYPE=None \
     -DCMAKE_INSTALL_PREFIX="$PWD/td/install" \
     -Wno-dev \
@@ -78,7 +88,9 @@ build() {
   cmake --install td/build
 
   cmake -S tdesktop-$pkgver-full -B build -G Ninja \
-    -DCMAKE_VERBOSE_MAKEFILE=ON \
+    -DCMAKE_C_COMPILER=clang \
+    -DCMAKE_CXX_COMPILER=clang++ \
+    -DCMAKE_LINKER=lld \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -Dtde2e_DIR="$PWD/td/install/lib/cmake/tde2e" \
     -DCMAKE_BUILD_TYPE=Release \
