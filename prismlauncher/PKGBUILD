@@ -1,6 +1,6 @@
 pkgname=prismlauncher
 pkgver=10.0.2
-pkgrel=2
+pkgrel=3
 epoch=1
 pkgdesc="Minecraft launcher with ability to manage multiple instances"
 arch=(x86_64)
