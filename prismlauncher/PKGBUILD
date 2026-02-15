@@ -1,6 +1,6 @@
 pkgname=prismlauncher
-pkgver=10.0.2
-pkgrel=3
+pkgver=10.0.5
+pkgrel=1
 epoch=1
 pkgdesc="Minecraft launcher with ability to manage multiple instances"
 arch=(x86_64)
@@ -39,7 +39,7 @@ options=(
   !debug
 )
 source=("https://github.com/PrismLauncher/PrismLauncher/releases/download/$pkgver/PrismLauncher-$pkgver.tar.gz")
-sha256sums=('4b36e8b0345a21a9a8da36633fa5bf4d8f44d992da1529cdfb6bf52a0ff7f33c')
+sha256sums=('2f3b71906151d12fe72888fda0ed87aad07c250561c1b0cb6c4eb0962c56b4b8')
 
 prepare() {
     cd "PrismLauncher-$pkgver"
