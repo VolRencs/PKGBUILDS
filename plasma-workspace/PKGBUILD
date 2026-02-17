@@ -117,6 +117,11 @@ groups=(plasma)
 source=(https://download.kde.org/stable/plasma/$_dirver/$pkgname-$pkgver.tar.xz)
 sha256sums=('098e1fddb30600855248bea36e012c0f5ff12d1ba3381a1ce42005e4d2304d6e')
 
+prepare() {
+  sed -e 's/ecm_optional_add_subdirectory(xembed-sni-proxy)//' -i $pkgname-$pkgver/CMakeLists.txt
+  sed -e 's/ecm_optional_add_subdirectory(gmenu-dbusmenu-proxy)//' -i $pkgname-$pkgver/CMakeLists.txt
+}
+
 build() {
   cmake -B build -S $pkgname-$pkgver -G Ninja \
     -DCMAKE_INSTALL_LIBEXECDIR=lib \
