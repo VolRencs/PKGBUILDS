@@ -4,9 +4,9 @@
 # Contributor: Alexey D. <lq07829icatm at rambler.ru>
 
 pkgname=plasma-workspace
-pkgver=6.5.5
+pkgver=6.6.0
 _dirver=$(echo $pkgver | cut -d. -f1-3)
-pkgrel=3
+pkgrel=1
 epoch=1
 pkgdesc='KDE Plasma Workspace'
 arch=(x86_64)
@@ -51,7 +51,6 @@ depends=(accountsservice
          knewstuff
          knighttime
          knotifications
-         knotifyconfig
          kpackage
          kparts
          kpipewire
@@ -83,7 +82,6 @@ depends=(accountsservice
          ocean-sound-theme
          plasma-activities
          plasma-activities-stats
-         plasma5support
          prison
          qt6-5compat
          qt6-base
@@ -117,14 +115,7 @@ makedepends=(baloo
              libxtst)
 groups=(plasma)
 source=(https://download.kde.org/stable/plasma/$_dirver/$pkgname-$pkgver.tar.xz)
-sha256sums=('29b0763bbbdd9e27416dce1fd939242d2588feef36c4cbae941c31964d531fd4')
-
-prepare() {
-  sed -e 's/add_subdirectory(phonon)//' -i $pkgname-$pkgver/CMakeLists.txt
-  sed -i '/find_package(Phonon4Qt6/,/TYPE REQUIRED)/d' $pkgname-$pkgver/CMakeLists.txt
-  sed -e 's/ecm_optional_add_subdirectory(xembed-sni-proxy)//' -i $pkgname-$pkgver/CMakeLists.txt
-  sed -e 's/ecm_optional_add_subdirectory(gmenu-dbusmenu-proxy)//' -i $pkgname-$pkgver/CMakeLists.txt
-}
+sha256sums=('098e1fddb30600855248bea36e012c0f5ff12d1ba3381a1ce42005e4d2304d6e')
 
 build() {
   cmake -B build -S $pkgname-$pkgver -G Ninja \
