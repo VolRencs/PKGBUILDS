@@ -52,6 +52,7 @@ build() {
     -DENABLE_SCRIPTING=OFF \
     -DENABLE_V4L2=OFF \
     -DENABLE_DECKLINK=OFF \
+    -DENABLE_RTMPS=OFF \
     -DOBS_VERSION_OVERRIDE="$pkgver" \
     -Wno-dev
 
