@@ -2,7 +2,7 @@
 
 pkgname=obs-studio
 pkgver=32.0.4
-pkgrel=2
+pkgrel=1
 epoch=1
 pkgdesc="Free and open source software for video recording and live streaming"
 arch=('x86_64')
@@ -13,6 +13,7 @@ depends=(
   'pipewire'
   'rnnoise'
   'pciutils'
+  'mbedtls'
   'qt6-svg'
   'libxkbcommon'
 )
