@@ -11,7 +11,6 @@ license=(MPL-2.0)
 depends=(
   alsa-lib
   at-spi2-core
-  gcc-libs
   bash
   cairo
   dbus
@@ -23,7 +22,9 @@ depends=(
   glibc
   gtk3
   hicolor-icon-theme
+  libgcc
   libpulse
+  libstdc++
   mime-types
   nspr
   nss
@@ -70,7 +71,7 @@ sha256sums=('ec93e5040a23b7dbe9ec77eb4a7ccda9820856d7851bf2f617f3673b6354cb6f'
             'a9b8b4a0a1f4a7b4af77d5fc70c2686d624038909263c795ecc81e0aec7711e9'
             '381a0bb236513a48596fcd17115629b19c5d862ce845144c7dfb61cd8903b1b8'
             'ef63a12975f108f30b00bb3290d9ca76f311d8af9c1d5dfc0d8335ad57e8f77c'
-            'c2aaff2a743c738edbf02d7be816c30fe3a5acb2d3dcb7a3906357a9f2ed438f'
+            '83857f3531688885b62be0b06583f6815f236edbc43a942830395ec3cbdc7934'
             '8d2182ae8660474ac567482fe6658af77f3b402314e361c846528ae171586245')
 
 prepare() {
@@ -87,6 +88,7 @@ ac_add_options --prefix=/usr
 ac_add_options --enable-release
 ac_add_options --enable-hardening
 ac_add_options --enable-optimize="-O2 -march=native"
+ac_add_options RUSTFLAGS="-C target-cpu=native"
 ac_add_options --enable-lto=thin
 ac_add_options --enable-linker=lld
 ac_add_options --enable-default-toolkit=cairo-gtk3-wayland-only
@@ -112,6 +114,7 @@ ac_add_options --disable-necko-wifi
 ac_add_options --disable-rust-tests
 ac_add_options --disable-debug-js-modules
 ac_add_options --disable-debug-symbols
+ac_add_options --disable-parental-controls
 
 ac_add_options --without-wasm-sandboxed-libraries
 
