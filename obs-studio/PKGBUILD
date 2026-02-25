@@ -27,7 +27,7 @@ makedepends=(
   'ninja'
 )
 source=(
-  "$pkgname-$pkgver.tar.gz::https://github.com/obsproject/obs-studio/releases/download/$pkgver/OBS-Studio-$pkgver-rc1-Sources.tar.gz"
+  "$pkgname-$pkgver.tar.gz::https://github.com/obsproject/obs-studio/releases/download/$pkgver-rc1/OBS-Studio-$pkgver-rc1-Sources.tar.gz"
 )
 sha256sums=('17b44f973a0e98c4c322c2aca10d8b662c19fbbe50879c30ac805b0702e827dd')
 
