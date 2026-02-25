@@ -1,7 +1,7 @@
 # Maintainer: VolRen <VolRencs@proton.me>
 
 pkgname=obs-studio
-pkgver=32.0.4
+pkgver=32.1.0-rc1
 pkgrel=1
 epoch=1
 pkgdesc="Free and open source software for video recording and live streaming"
@@ -28,36 +28,32 @@ makedepends=(
 )
 source=(
   "$pkgname-$pkgver.tar.gz::https://github.com/obsproject/obs-studio/releases/download/$pkgver/OBS-Studio-$pkgver-Sources.tar.gz"
-  "fixqt6.patch::https://patch-diff.githubusercontent.com/raw/obsproject/obs-studio/pull/12328.patch"
 )
-sha256sums=('d9e62ea24305fbfe14c69a6422de1525fe84da232df2cc0d7e4601a840bdbba8'
-            '25322c692cf5cc88fc7d17cbb40a61b7e32d5ea675da647dd1a1996474ec2c8e')
-prepare() {
-  cd "$srcdir/$pkgname-$pkgver-sources"
-  patch -p1 -i "$srcdir/fixqt6.patch"
-}
+sha256sums=('17b44f973a0e98c4c322c2aca10d8b662c19fbbe50879c30ac805b0702e827dd')
+
 build() {
   cmake -B build -S "$pkgname-$pkgver-sources" -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DENABLE_JACK=ON \
+    -DENABLE_JACK=OFF \
     -DENABLE_SNDIO=OFF \
     -DENABLE_BROWSER=OFF \
     -DENABLE_VST=OFF \
     -DENABLE_VLC=OFF \
     -DENABLE_LIBFDK=OFF \
-    -DENABLE_WEBRTC=OFF \
-    -DENABLE_WEBSOCKET=OFF \
-    -DENABLE_NEW_MPEGTS_OUTPUT=OFF \
     -DENABLE_AJA=OFF \
     -DENABLE_SCRIPTING=OFF \
     -DENABLE_V4L2=OFF \
     -DENABLE_DECKLINK=OFF \
     -DENABLE_RTMPS=OFF \
+    -DENABLE_RTMP=OFF \
+    -DENABLE_WEBSOCKET=OFF \
+    -DENABLE_NEW_MPEGTS_OUTPUT=OFF \
+    -DENABLE_WEBRTC=OFF \
     -DOBS_VERSION_OVERRIDE="$pkgver" \
     -Wno-dev
 
-  cmake --build build -j$(nproc)
+  cmake --build build
 }
 package() {
   DESTDIR="$pkgdir" cmake --install build
