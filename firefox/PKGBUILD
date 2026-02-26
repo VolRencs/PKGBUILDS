@@ -83,62 +83,65 @@ prepare() {
 
   cat >mozconfig <<END
 ac_add_options --enable-application=browser
-mk_add_options MOZ_OBJDIR=${PWD@Q}/obj
-ac_add_options --prefix=/usr
-ac_add_options --enable-release
+ac_add_options --enable-default-toolkit=cairo-gtk3-wayland-only
 ac_add_options --enable-hardening
-ac_add_options --enable-optimize="-O2 -march=native"
-ac_add_options RUSTFLAGS="-C target-cpu=native"
 ac_add_options --enable-lto=thin
 ac_add_options --enable-linker=lld
-ac_add_options --enable-default-toolkit=cairo-gtk3-wayland-only
-ac_add_options --disable-install-strip
+ac_add_options --enable-official-branding
+ac_add_options --enable-optimize="-O2 -march=native"
+ac_add_options --enable-release
+ac_add_options --enable-system-ffi
+ac_add_options --enable-system-pixman
+ac_add_options RUSTFLAGS="-C target-cpu=native"
+ac_add_options RUSTC_OPT_LEVEL="2"
 
-ac_add_options --disable-crashreporter
-ac_add_options --disable-updater
-ac_add_options --disable-tests
-ac_add_options --disable-dmd
-ac_add_options --disable-debug
-ac_add_options --disable-rust-debug
-ac_add_options --disable-geckodriver
-ac_add_options --disable-profiling
-ac_add_options --disable-bootstrap
-ac_add_options --disable-phc
-ac_add_options --disable-synth-speechd
-ac_add_options --disable-webspeechtestbackend
-ac_add_options --disable-webspeech
-ac_add_options --disable-warnings-as-errors
-ac_add_options --disable-printing
 ac_add_options --disable-accessibility
-ac_add_options --disable-necko-wifi
-ac_add_options --disable-rust-tests
+ac_add_options --disable-bootstrap
+ac_add_options --disable-crashreporter
+ac_add_options --disable-debug
 ac_add_options --disable-debug-js-modules
 ac_add_options --disable-debug-symbols
+ac_add_options --disable-dmd
+ac_add_options --disable-geckodriver
+ac_add_options --disable-install-strip
+ac_add_options --disable-necko-wifi
 ac_add_options --disable-parental-controls
+ac_add_options --disable-phc
+ac_add_options --disable-printing
+ac_add_options --disable-profiling
+ac_add_options --disable-rust-debug
+ac_add_options --disable-rust-tests
+ac_add_options --disable-synth-speechd
+ac_add_options --disable-tests
+ac_add_options --disable-updater
+ac_add_options --disable-warnings-as-errors
+ac_add_options --disable-webspeech
+ac_add_options --disable-webspeechtestbackend
 
+ac_add_options --with-system-bz2
+ac_add_options --with-system-icu
+ac_add_options --with-system-jpeg
+ac_add_options --with-system-jsonc
+ac_add_options --with-system-libevent
+ac_add_options --with-system-libvpx
+ac_add_options --with-system-nss
+ac_add_options --with-system-nspr
+ac_add_options --with-system-webp
+ac_add_options --with-system-zlib
 ac_add_options --without-wasm-sandboxed-libraries
 
-ac_add_options --with-system-nspr
-ac_add_options --with-system-nss
-ac_add_options --with-system-libvpx
-ac_add_options --with-system-webp
-ac_add_options --with-system-libevent
-ac_add_options --with-system-zlib
-ac_add_options --with-system-jpeg
-ac_add_options --with-system-icu
-ac_add_options --enable-system-pixman
-ac_add_options --enable-system-ffi
-
-ac_add_options RUSTC_OPT_LEVEL="2"
-ac_add_options --enable-official-branding
 ac_add_options --allow-addon-sideload
-export MOZILLA_OFFICIAL=1
-export MOZ_APP_REMOTINGNAME=$pkgname
+
+ac_add_options --prefix=/usr
 
 mk_add_options MOZ_CRASHREPORTER=0
 mk_add_options MOZ_DATA_REPORTING=0
+mk_add_options MOZ_OBJDIR=${PWD@Q}/obj
 mk_add_options MOZ_SERVICES_HEALTHREPORT=0
 mk_add_options MOZ_TELEMETRY_REPORTING=0
+
+export MOZILLA_OFFICIAL=1
+export MOZ_APP_REMOTINGNAME=$pkgname
 
 END
 }
