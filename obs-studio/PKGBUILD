@@ -32,7 +32,7 @@ source=(
 sha256sums=('f902971f0b5db75d653bfc6dbc9fdf565c09ceed085a3d165c33f07b2783882e')
 
 build() {
-  cmake -B build -S "$pkgname-$pkgver-rc1-sources" -G Ninja \
+  cmake -B build -S "$pkgname-$pkgver-rc2-sources" -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DENABLE_AJA=OFF \
