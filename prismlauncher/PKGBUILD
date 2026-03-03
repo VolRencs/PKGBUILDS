@@ -34,30 +34,23 @@ optdepends=(
   'orca: minecraft screen reader'
   'flite: minecraft voice narration'
 )
-options=(
-  !emptydirs
-  !debug
-)
 source=("https://github.com/PrismLauncher/PrismLauncher/releases/download/$pkgver/PrismLauncher-$pkgver.tar.gz")
 sha256sums=('2f3b71906151d12fe72888fda0ed87aad07c250561c1b0cb6c4eb0962c56b4b8')
 
 prepare() {
     cd "PrismLauncher-$pkgver"
-
-    sed -i 's/-target 7 -source 7/-target 8 -source 8/g' libraries/javacheck/CMakeLists.txt
-    sed -i 's/-target 7 -source 7/-target 8 -source 8/g' libraries/launcher/CMakeLists.txt
-
+    sed -i 's/-source 7 -target 7/-source 8 -target 8/g' libraries/*/CMakeLists.txt
 }
-build() {
-  CFLAGS="${CFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
-  CXXFLAGS="${CXXFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
 
+build() {
   cmake -S "PrismLauncher-$pkgver" -B build -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX="/usr" \
     -DLauncher_BUILD_PLATFORM="archlinux" \
-    -DLauncher_ENABLE_JAVA_DOWNLOADER=ON 
-  cmake --build build -j$(nproc)
+    -DLauncher_ENABLE_JAVA_DOWNLOADER=ON \
+    -DCMAKE_C_FLAGS="$CFLAGS -DNDEBUG" \
+    -DCMAKE_CXX_FLAGS="$CXXFLAGS -DNDEBUG" 
+  cmake --build build
 }
 
 package() {
