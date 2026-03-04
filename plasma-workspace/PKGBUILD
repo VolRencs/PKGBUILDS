@@ -4,7 +4,7 @@
 # Contributor: Alexey D. <lq07829icatm at rambler.ru>
 
 pkgname=plasma-workspace
-pkgver=6.6.1
+pkgver=6.6.2
 _dirver=$(echo $pkgver | cut -d. -f1-3)
 pkgrel=1
 epoch=1
@@ -115,7 +115,7 @@ makedepends=(baloo
              libxtst)
 groups=(plasma)
 source=(https://download.kde.org/stable/plasma/$_dirver/$pkgname-$pkgver.tar.xz)
-sha256sums=('c8c344bd3c842731cfd5df1c717db6e451329dd32b983717d7ff9abdff3434ed')
+sha256sums=('26302234542ae2c8286727895997c8e22652e90e92febb60e3ce975194e0cacd')
 
 prepare() {
   sed -e 's/ecm_optional_add_subdirectory(xembed-sni-proxy)//' -i $pkgname-$pkgver/CMakeLists.txt
