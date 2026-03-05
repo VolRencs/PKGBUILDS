@@ -1,7 +1,7 @@
 # Maintainer: Antonio Rojas <arojas@archlinux.org> 
 
 pkgname=kaccounts-integration
-pkgver=25.12.2
+pkgver=25.12.3
 pkgrel=1
 epoch=1
 pkgdesc='Online account management system and its Plasma integration components'
@@ -26,7 +26,7 @@ depends=(gcc-libs
 makedepends=(extra-cmake-modules
              qcoro)
 source=(https://download.kde.org/stable/release-service/$pkgver/src/$pkgname-$pkgver.tar.xz)
-sha256sums=('6f3b3d5b630ad1150425982d1266718075c419580bb0f828824524a380c85aa5')
+sha256sums=('71c20ae5ca1459f732cc3c92248885b2d1d84e251f2d1b0f462b00adda8fc3b6')
 
 build() {
   cmake -B build -S $pkgname-$pkgver \
