@@ -118,7 +118,6 @@ ac_add_options --disable-warnings-as-errors
 ac_add_options --disable-webspeech
 ac_add_options --disable-webspeechtestbackend
 
-ac_add_options --with-system-bz2
 ac_add_options --with-system-icu
 ac_add_options --with-system-jpeg
 ac_add_options --with-system-jsonc
