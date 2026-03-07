@@ -1,0 +1,28 @@
+
+pkgname=lsd
+pkgver=1.2.0
+pkgrel=1
+epoch=1
+pkgdesc='Modern ls with a lot of pretty colors and awesome icons'
+url='https://github.com/lsd-rs/lsd'
+arch=('x86_64')
+license=('Apache-2.0')
+depends=('libgcc' 'zlib')
+makedepends=('cargo')
+checkdepends=('git')
+optdepends=(
+  'nerd-fonts'
+  'awesome-terminal-fonts'
+)
+source=(https://github.com/lsd-rs/lsd/archive/v${pkgver}/${pkgname}-${pkgver}.tar.gz)
+sha256sums=('dae8d43087686a4a1de0584922608e9cbab00727d0f72e4aa487860a9cbfeefa')
+
+build() {
+  cd "$pkgname-$pkgver"
+  cargo build --release --locked
+}
+
+package() {
+  cd "$pkgname-$pkgver"
+  install -Dm755 target/release/$pkgname "$pkgdir/usr/bin/$pkgname"
+}
