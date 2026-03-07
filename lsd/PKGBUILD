@@ -16,6 +16,7 @@ optdepends=(
 )
 source=(https://github.com/lsd-rs/lsd/archive/v${pkgver}/${pkgname}-${pkgver}.tar.gz)
 sha256sums=('dae8d43087686a4a1de0584922608e9cbab00727d0f72e4aa487860a9cbfeefa')
+options=('!lto')
 
 build() {
   cd "$pkgname-$pkgver"
