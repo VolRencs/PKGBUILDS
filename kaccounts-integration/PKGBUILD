@@ -2,7 +2,7 @@
 
 pkgname=kaccounts-integration
 pkgver=25.12.3
-pkgrel=2
+pkgrel=1
 epoch=1
 pkgdesc='Online account management system and its Plasma integration components'
 arch=(x86_64)
@@ -22,12 +22,13 @@ depends=(gcc-libs
          qt6-base
          signond)
 makedepends=(extra-cmake-modules
-             qcoro)
+             qcoro
+             ninja)
 source=(https://download.kde.org/stable/release-service/$pkgver/src/$pkgname-$pkgver.tar.xz)
 sha256sums=('71c20ae5ca1459f732cc3c92248885b2d1d84e251f2d1b0f462b00adda8fc3b6')
 
 build() {
-  cmake -B build -S $pkgname-$pkgver \
+  cmake -B build -S $pkgname-$pkgver -G Ninja \
     -DBUILD_TESTING=OFF
   cmake --build build
 }

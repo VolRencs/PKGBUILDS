@@ -25,13 +25,14 @@ depends=(gcc-libs
 makedepends=(extra-cmake-modules
              kdegraphics-mobipocket
              libappimage
-             qt6-tools)
+             qt6-tools
+             ninja)
 groups=(kf6)
 source=(https://download.kde.org/stable/frameworks/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
 sha256sums=('4e99cd8dc1fd784589c5b173f076bd5655eca2908fb61a31cb5404e1c7f64a88')
 
 build() {
-  cmake -B build -S $pkgname-$pkgver \
+  cmake -B build -S $pkgname-$pkgver -G Ninja \
     -DBUILD_TESTING=OFF
   cmake --build build
 }
