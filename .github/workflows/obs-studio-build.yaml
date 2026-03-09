@@ -33,7 +33,7 @@ jobs:
 
           FULLVER="${EPOCH}:${PKGVER}-${PKGREL}"
           PKGFILE="${PKGNAME}-${EPOCH}:${PKGVER}-${PKGREL}-x86_64.pkg.tar.zst"
-          TAGVER="v${EPOCH}_${PKGVER}-rc3-${PKGREL}"
+          TAGVER="v${EPOCH}_${PKGVER}-${PKGREL}"
 
           if [[ ! -f "$PKGFILE" ]]; then
             echo "Ошибка: пакет $PKGFILE не найден!"
