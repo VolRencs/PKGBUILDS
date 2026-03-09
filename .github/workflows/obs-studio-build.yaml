@@ -21,17 +21,6 @@ jobs:
           echo "builder ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/builder && sudo -u builder bash -c " cd obs-studio && updpkgsums && makepkg -s --noconfirm "
           '
 
-      - name: Commit updated checksums
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-
-          git add obs-studio/PKGBUILD
-
-          git diff --cached --quiet || git commit -m "Update sha256sums"
-
-          git push
-
       - name: Extract package info from PKGBUILD
         id: pkg_info
         run: |
