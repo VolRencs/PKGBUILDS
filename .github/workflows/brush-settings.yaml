@@ -41,7 +41,7 @@ jobs:
 
           FULLVER="${epoch:+$epoch:}$pkgver-$pkgrel"
           PKGFILE="${pkgname}-${FULLVER}-x86_64.pkg.tar.zst"
-          TAG="v${FULLVER//:/_}"
+          TAG="${pkgname}-v${FULLVER//:/_}"
 
           echo "PKGNAME=$pkgname" >> $GITHUB_ENV
           echo "PKGFILE=$PKGFILE" >> $GITHUB_ENV
