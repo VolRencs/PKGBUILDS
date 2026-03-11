@@ -1,14 +1,13 @@
 # Maintainer: Peter Jung <admin@ptr1337.dev>
 
 pkgname=mysettings
-pkgver=1.3.1
+pkgver=1.0.0
 pkgrel=1
-groups=(cachyos)
 arch=('any')
 license=(GPL-1.0-only)
 makedepends=('coreutils' 'git')
 pkgdesc='CachyOS - Settings'
-source=("git+https://github.com/CachyOS/CachyOS-Settings.git#tag=$pkgver")
+source=("git+https://github.com/VolRencs/mysettings.git#tag=$pkgver")
 install="$pkgname.install"
 sha256sums=('SKIP')
 depends=(
@@ -16,9 +15,6 @@ depends=(
   inxi
   "systemd>=256"
 )
-optdepends=('libluv: for topmem'
-            'lua-luv: for topmem'
-            'power-profiles-daemon: For game-performance')
 provides=('ntsync-common')
 prepare() {
   cd $_gitname
