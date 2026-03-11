@@ -1,4 +1,4 @@
-name: Build Obs Studio
+name: Build OBS Studio
 
 on:
   workflow_dispatch:
