@@ -17,11 +17,11 @@ depends=(
 )
 provides=('ntsync-common')
 prepare() {
-  cd $_gitname
+  cd $pkgname
 }
 package() {
   install -d "$pkgdir/etc"
-  cp -rf "${srcdir}/CachyOS-Settings/etc" "$pkgdir"
+  cp -rf "${srcdir}/$pkgname/etc" "$pkgdir"
   install -d "$pkgdir/usr"
-  cp -rf "${srcdir}/CachyOS-Settings/usr" "$pkgdir"
+  cp -rf "${srcdir}/$pkgname/usr" "$pkgdir"
 }
