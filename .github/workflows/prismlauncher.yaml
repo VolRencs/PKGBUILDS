@@ -55,7 +55,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.TAG }}
-          name: ${{ env.PKGNAME }} ${{ env.TAG }}
+          name: ${{ env.TAG }}
           files: ${{ env.PACKAGE_DIR }}/${{ env.PKGFILE }}
           generate_release_notes: true
         env:
