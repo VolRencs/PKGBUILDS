@@ -1,10 +1,10 @@
-name: Build Kaccounts Integration
+name: Build Prismlauncher
 
 on:
   workflow_dispatch:
 
 env:
-  PACKAGE_DIR: kaccounts-integration
+  PACKAGE_DIR: prismlauncher
 
 jobs:
   build:
