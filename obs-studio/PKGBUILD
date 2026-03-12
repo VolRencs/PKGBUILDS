@@ -30,7 +30,7 @@ source=("$pkgname-$pkgver.tar.gz::https://github.com/obsproject/obs-studio/relea
 sha256sums=('e03440278ef0e14232325e5a7068a18c03f358d949ab20e3d29308b7692ad7e2')
 
 build() {
-  cmake -B build -S "$pkgname-$pkgver-Sources" -G Ninja \
+  cmake -B build -S "$pkgname-$pkgver-sources" -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DENABLE_AJA=OFF \
