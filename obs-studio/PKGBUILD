@@ -27,7 +27,7 @@ makedepends=(
   'ninja'
 )
 source=("$pkgname-$pkgver.tar.gz::https://github.com/obsproject/obs-studio/releases/download/$pkgver/OBS-Studio-$pkgver-Sources.tar.gz")
-sha256sums=('f902971f0b5db75d653bfc6dbc9fdf565c09ceed085a3d165c33f07b2783882e')
+sha256sums=('e03440278ef0e14232325e5a7068a18c03f358d949ab20e3d29308b7692ad7e2')
 
 build() {
   cmake -B build -S "$pkgname-$pkgver-Sources" -G Ninja \
