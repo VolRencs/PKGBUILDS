@@ -1,7 +1,7 @@
 # Maintainer:Antonio Rojas <arojas@archlinux.org>
 
 pkgname=purpose
-pkgver=6.23.0
+pkgver=6.24.0
 pkgrel=1
 epoch=1
 pkgdesc='Framework for providing abstractions to get the developers purposes fulfilled'
@@ -32,7 +32,7 @@ optdepends=('bluedevil: sharing via Bluetooth'
 conflicts=('purpose5<5.114.0-2')
 groups=(kf6)
 source=(https://download.kde.org/stable/frameworks/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
-sha256sums=('d1554574d6dd394794daf00069bdd3f83d7e303a02d2c46a1973081c5de29d5d')
+sha256sums=('e95dba236f79bf1655a0581e9f1c3ce64d342750135fde700d463dd205bebc47')
 
 build() {
   cmake -B build -S $pkgname-$pkgver -G Ninja \
