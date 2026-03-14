@@ -70,8 +70,7 @@ build() {
 }
 
 check() {
-  cd PrismLauncher-$pkgver/build
-  ctest .
+  ctest build
 }
 
 package() {
@@ -80,8 +79,5 @@ package() {
   install -Dm644 batch.license -t "$pkgdir"/usr/share/licenses/$pkgname/
   install -Dm644 mdi.license -t "$pkgdir"/usr/share/licenses/$pkgname/
 
-  cd PrismLauncher-$pkgver/build
-  DESTDIR="$pkgdir" cmake --install .
+  DESTDIR="$pkgdir" cmake --install build
 }
-
-# vim:set ts=2 sw=2 et:
