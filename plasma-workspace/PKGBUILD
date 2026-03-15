@@ -43,7 +43,6 @@ depends=(accountsservice
          kidletime
          kio
          kio-extras
-         kio-fuse
          kirigami
          kirigami-addons
          kitemmodels
