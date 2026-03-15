@@ -89,7 +89,6 @@ depends=(accountsservice
          qt6-location
          qt6-positioning
          qt6-svg
-         qt6-tools
          qt6-virtualkeyboard
          sh
          solid
