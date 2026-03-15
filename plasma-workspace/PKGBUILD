@@ -90,6 +90,7 @@ depends=(accountsservice
          qt6-positioning
          qt6-svg
          qt6-virtualkeyboard
+         qt6-tools
          sh
          solid
          systemd-libs
