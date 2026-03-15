@@ -87,10 +87,7 @@ makedepends=(extra-cmake-modules
              intltool
              libibus
              packagekit-qt6
-             scim
              wayland-protocols
-             xf86-input-libinput
-             xorg-server-devel
              ninja)
 groups=(plasma)
 source=(https://download.kde.org/stable/plasma/$_dirver/$pkgname-$pkgver.tar.xz)
