@@ -51,7 +51,6 @@ depends=(attica
          kxmlgui
          libcanberra
          libksysguard
-         libwacom
          libxcb
          libxcursor
          libxi
@@ -67,7 +66,6 @@ depends=(attica
          qt6-5compat
          qt6-base
          qt6-declarative
-         sdl2
          solid
          sonnet
          systemd-libs
@@ -87,7 +85,6 @@ optdepends=('bluedevil: Bluetooth applet'
             'scim: kimpanel SCIM support')
 makedepends=(extra-cmake-modules
              intltool
-             kaccounts-integration
              libibus
              packagekit-qt6
              scim
