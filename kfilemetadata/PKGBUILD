@@ -23,7 +23,6 @@ depends=(gcc-libs
          qt6-base
          taglib)
 makedepends=(extra-cmake-modules
-             kdegraphics-mobipocket
              libappimage
              qt6-tools
              ninja)
