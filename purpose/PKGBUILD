@@ -16,12 +16,14 @@ depends=(gcc-libs
          ki18n
          kio
          kirigami
+         kitemmodels
          knotifications
          kservice
          qt6-base
          qt6-declarative)
 makedepends=(extra-cmake-modules
              intltool
+             prison
              qt6-tools
              ninja)
 optdepends=('bluedevil: sharing via Bluetooth'
