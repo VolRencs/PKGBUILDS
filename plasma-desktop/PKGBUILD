@@ -76,17 +76,12 @@ depends=(attica
 optdepends=('bluedevil: Bluetooth applet'
             'glib2: kimpanel IBUS support'
             'ibus: kimpanel IBUS support'
-            'kaccounts-integration: OpenDesktop integration plugin'
             'kscreen: screen management'
-            'libaccounts-qt: OpenDesktop integration plugin'
-            'packagekit-qt6: to install new krunner plugins'
             'plasma-nm: Network manager applet'
-            'plasma-pa: Audio volume applet'
-            'scim: kimpanel SCIM support')
+            'plasma-pa: Audio volume applet')
 makedepends=(extra-cmake-modules
              intltool
              libibus
-             packagekit-qt6
              wayland-protocols
              ninja)
 groups=(plasma)
