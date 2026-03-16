@@ -5,6 +5,7 @@
 pkgname=kdegraphics-thumbnailers
 pkgver=25.12.3
 pkgrel=1
+epoch=1
 pkgdesc='Thumbnailers for various graphics file formats'
 url='https://apps.kde.org/kdegraphics_thumbnailers/'
 arch=(x86_64)
