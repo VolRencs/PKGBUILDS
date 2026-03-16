@@ -28,7 +28,8 @@ sha256sums=('05eb9e268c161d25c6899f1affdb99acaf8ec506a11083fea807e335a5de18f9')
 
 build() {
   cmake -B build -S $pkgname-$pkgver -G Ninja \
-    -DBUILD_TESTING=OFF
+    -DBUILD_TESTING=OFF \
+    -DDISABLE_MOBIPOCKET=ON
   cmake --build build
 }
 
