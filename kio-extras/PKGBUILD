@@ -38,7 +38,6 @@ depends=(gcc-libs
          solid
          syntax-highlighting)
 makedepends=(extra-cmake-modules
-             gperf
              libappimage
              openexr
              plasma-activities-stats
