@@ -3,7 +3,7 @@
 # Contributor: Andrea Scarpino <andrea@archlinux.org>
 
 pkgname=kwin
-pkgver=6.6.2
+pkgver=6.6.3
 _dirver=$(echo $pkgver | cut -d. -f1-3)
 pkgrel=1
 epoch=1
@@ -78,7 +78,7 @@ makedepends=(extra-cmake-modules
 optdepends=('plasma-keyboard: virtual keyboard')
 groups=(plasma)
 source=(https://download.kde.org/stable/plasma/$_dirver/$pkgname-$pkgver.tar.xz)
-sha256sums=('89db742659f0c96140ba39b4053ade7e1c20660e7eb82c18b5a68c16f93356e8')
+sha256sums=('61a2e0f0b1a34f38b37f8a4ac7f7712c975ec763ff4e24ebb05ec1187e458e0f')
 
 build() {
   cmake -B build -S $pkgname-$pkgver -G Ninja \
