@@ -13,7 +13,7 @@ url='https://kde.org/plasma-desktop/'
 license=(LGPL-2.0-or-later)
 depends=(attica
          baloo
-         emoji-font # for clock and language KCMs
+         emoji-font
          gcc-libs
          glibc
          kauth
@@ -95,7 +95,8 @@ build() {
     -DBUILD_DOC=OFF \
     -DBUILD_KCM_TOUCHPAD_X11=OFF \
     -DBUILD_KCM_MOUSE_X11=OFF \
-    -DBUILD_KCM_TABLET=OFF
+    -DBUILD_KCM_TABLET=OFF \
+    -DBUILD_KCM_TOUCHPAD_KWIN_WAYLAND
   cmake --build build
 }
 
