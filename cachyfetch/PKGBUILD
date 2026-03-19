@@ -1,6 +1,6 @@
 # Maintainer: Your Name <your@email.com>
 pkgname=cachyfetch
-pkgver=1.0
+pkgver=1.1
 pkgrel=1
 pkgdesc="A fast system info fetcher written in Go, made for CachyOS"
 arch=('x86_64')
@@ -14,9 +14,10 @@ sha256sums=('SKIP')
 
 build() {
     cd "$pkgname-$pkgver"
-    export CGO_ENABLED=0
-    export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
-    go build -ldflags "-s -w -X main.version=$pkgver" -o "$pkgname" .
+    export CGO_ENABLED=1
+    export LDFLAGS="$LDFLAGS"
+    export GOFLAGS="-buildmode=pie -trimpath -mod=readonly"
+    go build -ldflags "-s -w -linkmode=external -extldflags '$LDFLAGS' -X main.version=$pkgver"
 }
 
 package() {
