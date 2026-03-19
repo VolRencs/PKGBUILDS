@@ -1,0 +1,25 @@
+# Maintainer: Your Name <your@email.com>
+pkgname=cachyfetch
+pkgver=1.0
+pkgrel=1
+pkgdesc="A fast system info fetcher written in Go, made for CachyOS"
+arch=('x86_64')
+url="https://github.com/VolRencs/cachyfetch"
+license=('MIT')
+depends=()
+makedepends=('go')
+optdepends=('pciutils: GPU detection fallback via lspci')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/VolRencs/cachyfetch/archive/$pkgver.tar.gz")
+sha256sums=('SKIP')
+
+build() {
+    cd "$pkgname-$pkgver"
+    export CGO_ENABLED=0
+    export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
+    go build -ldflags "-s -w -X main.version=$pkgver" -o "$pkgname" .
+}
+
+package() {
+    cd "$pkgname-$pkgver"
+    install -Dm755 "$pkgname" "$pkgdir/usr/bin/$pkgname"
+}
