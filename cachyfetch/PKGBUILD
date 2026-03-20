@@ -1,26 +1,27 @@
-# Maintainer: Your Name <your@email.com>
+# Maintainer: VolRen <VolRencs@proton.me>
+
 pkgname=cachyfetch
-pkgver=1.1
+pkgver=1.0.0
 pkgrel=1
-pkgdesc="A fast system info fetcher written in Go, made for CachyOS"
+pkgdesc="A fast system info fetcher written in Zig, made for CachyOS"
 arch=('x86_64')
 url="https://github.com/VolRencs/cachyfetch"
 license=('MIT')
-depends=()
-makedepends=('go')
-optdepends=('pciutils: GPU detection fallback via lspci')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/VolRencs/cachyfetch/archive/$pkgver.tar.gz")
+makedepends=('zig')
+optdepends=(
+    'pciutils: GPU name detection via lspci'
+    'nvidia-utils: NVIDIA GPU name via nvidia-smi'
+    'xorg-xrandr: monitor detection on X11'
+)
+source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
 sha256sums=('SKIP')
 
 build() {
     cd "$pkgname-$pkgver"
-    export CGO_ENABLED=1
-    export LDFLAGS="$LDFLAGS"
-    export GOFLAGS="-buildmode=pie -trimpath -mod=readonly"
-    go build -ldflags "-s -w -linkmode=external -extldflags '$LDFLAGS' -X main.version=$pkgver"
+    zig build -Doptimize=ReleaseFast --prefix-exe-dir .
 }
 
 package() {
     cd "$pkgname-$pkgver"
-    install -Dm755 "$pkgname" "$pkgdir/usr/bin/$pkgname"
+    install -Dm755 zig-out/bin/$pkgname "$pkgdir/usr/bin/$pkgname"
 }
