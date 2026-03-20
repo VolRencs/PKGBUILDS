@@ -1,7 +1,7 @@
 # Maintainer: VolRen <VolRencs@proton.me>
 
 pkgname=cachyfetch
-pkgver=1.0.0
+pkgver=1.1.0
 pkgrel=1
 pkgdesc="A fast system info fetcher written in Zig, made for CachyOS"
 arch=('x86_64')
