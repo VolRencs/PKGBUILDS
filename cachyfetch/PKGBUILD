@@ -18,7 +18,7 @@ sha256sums=('SKIP')
 
 build() {
     cd "$pkgname-$pkgver"
-    zig build -Doptimize=ReleaseFast --prefix-exe-dir .
+    zig build -Doptimize=ReleaseFast
 }
 
 package() {
