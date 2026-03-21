@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       package:
-        description: "Package to build"
+        description: "Package to build (JSON array or YAML list)"
         required: true
         type: string
         default: |
@@ -16,12 +16,28 @@ on:
           ]
 
 jobs:
-  build:
+  prepare:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Prepare matrix JSON
+        id: set-matrix
+        run: |
+          echo "Raw input:"
+          echo "${{ github.event.inputs.package }}"
+          clean=$(echo '${{ github.event.inputs.package }}' \
+            | jq '[.[] | (tostring | gsub("^\\s+|\\s+$";"")) | select(. != "") ]')
 
+          echo "Clean matrix: $clean"
+          echo "matrix=$clean" >> $GITHUB_OUTPUT
+
+  build:
+    needs: prepare
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        pkg: ${{ fromJson(github.event.inputs.package) }}
+        pkg: ${{ fromJson(needs.prepare.outputs.matrix) }}
 
     env:
       PACKAGE_DIR: ${{ matrix.pkg }}
