@@ -3,26 +3,37 @@ name: Build KF6
 on:
   workflow_dispatch:
     inputs:
-      package:
-        description: "Package to build"
+      packages:
+        description: "Пакеты для сборки (по одному на строку). Удаляй ненужные или добавляй новые."
         required: true
         type: string
         default: |
-          - prison
-          - kfilemetadata
-          - knewstuff
-          - purpose
+          prison
+          kfilemetadata
+          knewstuff
+          purpose
 
 jobs:
-  build:
+  setup:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        run: |
+          echo "matrix=$(echo '${{ github.event.inputs.packages }}' | jq -R -s 'split("\n") | map(select(length > 0))')" >> $GITHUB_OUTPUT
 
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        pkg: ${{ fromJson(github.event.inputs.package) }}
+        pkg: ${{ fromJSON(needs.setup.outputs.matrix) }}
 
     env:
       PACKAGE_DIR: ${{ matrix.pkg }}
+
     steps:
       - uses: actions/checkout@v6
         with:
