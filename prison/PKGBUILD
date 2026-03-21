@@ -17,7 +17,7 @@ makedepends=(extra-cmake-modules
 optdepends=('qt6-declarative: QML bindings')
 groups=(kf6)
 source=(https://download.kde.org/stable/frameworks/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
-sha256sums=('39ea2b51fd0e405b964c1f22d64ad0111c79895894590d68b29712d7dde4cd34'')
+sha256sums=('39ea2b51fd0e405b964c1f22d64ad0111c79895894590d68b29712d7dde4cd34')
 
 build() {
   cmake -B build -S $pkgname-$pkgver -G Ninja \
