@@ -8,10 +8,12 @@ on:
         required: true
         type: string
         default: |
-          prison
-          kfilemetadata
-          knewstuff
-          purpose
+          [
+            "prison",
+            "kfilemetadata",
+            "knewstuff",
+            "purpose"
+          ]
 
 jobs:
   build:
@@ -19,7 +21,7 @@ jobs:
 
     strategy:
       matrix:
-        pkg: ${{ fromJson(github.event.inputs.packages) }}
+        pkg: ${{ fromJson(github.event.inputs.package) }}
 
     env:
       PACKAGE_DIR: ${{ matrix.pkg }}
