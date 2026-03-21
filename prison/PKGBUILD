@@ -13,7 +13,8 @@ depends=(gcc-libs
          zxing-cpp)
 makedepends=(extra-cmake-modules
              qt6-declarative
-             qt6-tools)
+             qt6-tools
+             ninja)
 optdepends=('qt6-declarative: QML bindings')
 groups=(kf6)
 source=(https://download.kde.org/stable/frameworks/${pkgver%.*}/$pkgname-$pkgver.tar.xz)
