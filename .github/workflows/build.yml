@@ -21,7 +21,10 @@ jobs:
     steps:
       - id: set-matrix
         run: |
-          echo "matrix=$(echo '${{ github.event.inputs.packages }}' | jq -R -s 'split("\n") | map(select(length > 0))')" >> $GITHUB_OUTPUT
+          echo "matrix=$( \
+            echo '${{ toJSON(github.event.inputs.packages) }}' \
+            | jq 'split("\n") | map(select(length > 0))' \
+          )" >> $GITHUB_OUTPUT
 
   build:
     needs: setup
