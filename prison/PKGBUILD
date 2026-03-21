@@ -10,6 +10,7 @@ depends=(gcc-libs
          glibc
          qrencode
          qt6-base
+         qt6-multimedia
          zxing-cpp)
 makedepends=(extra-cmake-modules
              qt6-declarative
