@@ -24,13 +24,23 @@ jobs:
       - name: Prepare matrix JSON
         id: set-matrix
         run: |
+          INPUT='${{ github.event.inputs.package }}'
           echo "Raw input:"
-          echo "${{ github.event.inputs.package }}"
-          clean=$(echo '${{ github.event.inputs.package }}' \
-            | jq '[.[] | (tostring | gsub("^\\s+|\\s+$";"")) | select(. != "") ]')
+          echo "$INPUT"
+
+          if echo "$INPUT" | jq -e . >/dev/null 2>&1; then
+            clean=$(echo "$INPUT" | jq -c '[.[] | tostring | gsub("^\\s+|\\s+$";"") | select(. != "")]')
+          else
+            clean=$(printf '%s\n' "$INPUT" \
+              | sed 's/^[[:space:]]*//; s/[[:space:]]*$//' \
+              | sed '/^$/d' \
+              | jq -R . | jq -s -c .)
+          fi
 
           echo "Clean matrix: $clean"
-          echo "matrix=$clean" >> $GITHUB_OUTPUT
+          echo "matrix<<EOF" >> $GITHUB_OUTPUT
+          echo "$clean" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
   build:
     needs: prepare
