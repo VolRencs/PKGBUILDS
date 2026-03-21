@@ -12,7 +12,8 @@ on:
             "prison",
             "kfilemetadata",
             "knewstuff",
-            "purpose"
+            "purpose",
+            "solid"
           ]
 
 jobs:
