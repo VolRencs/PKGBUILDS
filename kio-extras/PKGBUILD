@@ -22,10 +22,8 @@ depends=(gcc-libs
          knotifications
          kservice
          kwidgetsaddons
-         libimobiledevice
          libkexiv2
          libmtp
-         libplist
          libproxy
          libssh
          libtirpc
