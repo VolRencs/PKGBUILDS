@@ -1,4 +1,4 @@
-name: Build packages
+name: Build KF6
 
 on:
   workflow_dispatch:
@@ -8,8 +8,10 @@ on:
         required: true
         type: string
         default: |
-         - kio-extras
-         - prison
+         prison
+         kfilemetadata
+         knewstuff
+         purpose
 
 jobs:
   build:
