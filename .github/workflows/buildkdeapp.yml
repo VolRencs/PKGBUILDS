@@ -1,15 +1,55 @@
-name: Build Plasma Workspace
+name: Build KDE Apps
 
 on:
   workflow_dispatch:
-
-env:
-  PACKAGE_DIR: plasma-workspace
+    inputs:
+      package:
+        description: "Package to build (JSON array or YAML list)"
+        required: true
+        type: string
+        default: |
+          [
+            "kio-extras",
+            "kdegraphics-thumbnailers"
+          ]
 
 jobs:
-  build:
+  prepare:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Prepare matrix JSON
+        id: set-matrix
+        run: |
+          INPUT='${{ github.event.inputs.package }}'
+          echo "Raw input:"
+          echo "$INPUT"
 
+          if echo "$INPUT" | jq -e . >/dev/null 2>&1; then
+            clean=$(echo "$INPUT" | jq -c '[.[] | tostring | gsub("^\\s+|\\s+$";"") | select(. != "")]')
+          else
+            clean=$(printf '%s\n' "$INPUT" \
+              | sed 's/^[[:space:]]*//; s/[[:space:]]*$//' \
+              | sed '/^$/d' \
+              | jq -R . | jq -s -c .)
+          fi
+
+          echo "Clean matrix: $clean"
+          echo "matrix<<EOF" >> $GITHUB_OUTPUT
+          echo "$clean" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+  build:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pkg: ${{ fromJson(needs.prepare.outputs.matrix) }}
+
+    env:
+      PACKAGE_DIR: ${{ matrix.pkg }}
+      
     steps:
       - uses: actions/checkout@v6
         with:
@@ -52,11 +92,11 @@ jobs:
           git push origin "${{ env.TAG }}" || true
 
       - name: Publish release
-        uses: softprops/action-gh-release@v2
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ env.TAG }}
+          tag: ${{ env.TAG }}
           name: ${{ env.TAG }}
-          files: ${{ env.PACKAGE_DIR }}/${{ env.PKGFILE }}
-          generate_release_notes: true
+          artifacts: ${{ env.PACKAGE_DIR }}/${{ env.PKGFILE }}
+          generateReleaseNotes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
