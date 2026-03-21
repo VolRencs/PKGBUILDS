@@ -8,10 +8,10 @@ on:
         required: true
         type: string
         default: |
-         prison
-         kfilemetadata
-         knewstuff
-         purpose
+          prison
+          kfilemetadata
+          knewstuff
+          purpose
 
 jobs:
   build:
