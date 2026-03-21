@@ -52,11 +52,11 @@ jobs:
           git push origin "${{ env.TAG }}" || true
 
       - name: Publish release
-        uses: softprops/action-gh-release@v2
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ env.TAG }}
+          tag: ${{ env.TAG }}
           name: ${{ env.TAG }}
-          files: ${{ env.PACKAGE_DIR }}/${{ env.PKGFILE }}
-          generate_release_notes: true
+          artifacts: ${{ env.PACKAGE_DIR }}/${{ env.PKGFILE }}
+          generateReleaseNotes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
