@@ -97,13 +97,21 @@ makedepends=(baloo
              networkmanager-qt
              plasma-wayland-protocols
              qcoro
-             ninja)
+             ninja
+             libice
+             libsm
+             libxau
+             libxcursor
+             libxfixes
+             libxft
+             libxtst)
 groups=(plasma)
 source=(https://download.kde.org/stable/plasma/$_dirver/$pkgname-$pkgver.tar.xz)
 sha256sums=('18001465a01ee29292a3c37e62205106ee9f79f18aaa42ae9654d160abf11790')
 
 prepare() {
   sed -e 's/ecm_optional_add_subdirectory(xembed-sni-proxy)//' -i $pkgname-$pkgver/CMakeLists.txt
+  sed -e 's/ecm_optional_add_subdirectory(gmenu-dbusmenu-proxy)//' -i $pkgname-$pkgver/CMakeLists.txt
 }
 
 build() {
@@ -111,9 +119,7 @@ build() {
     -DCMAKE_INSTALL_LIBEXECDIR=lib \
     -DCMAKE_BUILD_TYPE=Release \
     -DGLIBC_LOCALE_GEN=OFF \
-    -DBUILD_TESTING=OFF \
-    -DWITH_X11_SESSION=OFF \
-    -DWITH_X11=OFF
+    -DBUILD_TESTING=OFF 
   cmake --build build
 }
 
