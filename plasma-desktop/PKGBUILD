@@ -62,7 +62,6 @@ depends=(attica
          plasma-workspace
          plasma5support
          polkit-kde-agent
-         powerdevil
          qt6-5compat
          qt6-base
          qt6-declarative
