@@ -31,18 +31,12 @@ makedepends=(
   wayland
   wayland-protocols
 )
-
 checkdepends=(python-pytest)
-
 source=(
   "git+https://gitlab.freedesktop.org/libinput/libinput.git?signed#tag=$pkgver"
 )
-
 b2sums=('a84d2dbc73e33f1ed21b28d525b0e11fc361094f9e584b7ab80a73308a09ff737445c25eaf2b324147ef723d9db82489c407d34cfb262c31edb27f8c2138d268')
 
-validpgpkeys=(
-  3C2C43D9447D5938EF4551EBE23B7E70B467F0BF
-)
 
 build() {
   local meson_options=(
