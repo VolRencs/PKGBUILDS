@@ -2,7 +2,7 @@
 
 pkgname=purpose
 pkgver=6.24.0
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc='Framework for providing abstractions to get the developers purposes fulfilled'
 arch=(x86_64)

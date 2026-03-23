@@ -1,6 +1,6 @@
 pkgname=prison
 pkgver=6.24.0
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc='A barcode API to produce QRCode barcodes and DataMatrix barcodes'
 arch=(x86_64)
