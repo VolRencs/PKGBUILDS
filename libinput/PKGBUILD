@@ -39,6 +39,7 @@ build() {
   local meson_options=(
     -D documentation=false
     -D libwacom=false
+    -D lua-plugins=false
   )
 
   arch-meson libinput build "${meson_options[@]}"
