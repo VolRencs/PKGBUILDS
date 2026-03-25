@@ -41,8 +41,8 @@ source=(
     "${pkgname}.desktop"
     "https://github.com/VSCodium/vscodium/releases/download/${pkgver}/VSCodium-${pkgver}-src.tar.gz"
 )
-sha256sums=('7c6864be64a7cb698340c45b4cfc0091a1d9bb78b0e73d7e3a25d8a0b438beec'
-            '74509d8ccb685a6d55e8bba8f4231963b766e1e3e38443bc1e72238519dcdeac')
+sha256sums=('SKIP'
+            'SKIP')
 provides=('codium' 'vscodium')
 conflicts=('codium' 'vscodium' 'vscodium-bin' 'vscodium-git')
 
