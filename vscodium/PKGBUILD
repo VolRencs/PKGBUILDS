@@ -1,6 +1,7 @@
 pkgname=vscodium
 pkgver=1.112.01907
 pkgrel=1
+epoch=1
 pkgdesc="Free/Libre Open Source Software Binaries of VSCode (git build from latest release)."
 arch=('x86_64')
 url='https://github.com/VSCodium/vscodium.git'
