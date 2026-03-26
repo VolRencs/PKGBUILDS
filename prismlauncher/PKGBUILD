@@ -27,7 +27,7 @@ makedepends=(
   cmake
   extra-cmake-modules
   git
-  jdk-openjdk
+  jdk8-openjdk
   gamemode
   ninja
 )
@@ -40,14 +40,8 @@ optdepends=(
 source=("https://github.com/PrismLauncher/PrismLauncher/releases/download/$pkgver/PrismLauncher-$pkgver.tar.gz")
 sha256sums=('2f3b71906151d12fe72888fda0ed87aad07c250561c1b0cb6c4eb0962c56b4b8')
 
-prepare() {
-    cd "PrismLauncher-$pkgver"
-    sed -i 's/-target 7 -source 7/-target 8 -source 8/g' libraries/{javacheck,launcher}/CMakeLists.txt
-}
-
 build() {
-  CFLAGS="${CFLAGS/-D_FORTIFY_SOURCE=3/-D_FORTIFY_SOURCE=2}"
-  CXXFLAGS="${CXXFLAGS/-D_FORTIFY_SOURCE=3/-D_FORTIFY_SOURCE=2}"
+  export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
 
   cmake -S "PrismLauncher-$pkgver" -B build -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
