@@ -11,7 +11,8 @@ on:
           [
             "kwin",
             "plasma-workspace",
-            "plasma-desktop"
+            "plasma-desktop",
+            "spectacle"
           ]
 
 jobs:

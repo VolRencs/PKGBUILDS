@@ -1,0 +1,61 @@
+# Maintainer: Antonio Rojas <arojas@archlinux.org>
+
+pkgname=spectacle
+pkgver=6.6.3
+_dirver=$(echo $pkgver | cut -d. -f1-3)
+pkgrel=1
+epoch=1
+pkgdesc='KDE screenshot capture utility'
+arch=(x86_64)
+url='https://kde.org/plasma-desktop/'
+license=(GPL-2.0-or-later)
+depends=(gcc-libs
+         glibc
+         kconfig
+         kconfigwidgets
+         kcoreaddons
+         kcrash
+         kdbusaddons
+         kglobalaccel
+         kguiaddons
+         ki18n
+         kio
+         kirigami
+         kjobwidgets
+         knotifications
+         kpipewire
+         kquickimageeditor
+         kservice
+         kstatusnotifieritem
+         kwidgetsaddons
+         kwindowsystem
+         kxmlgui
+         layer-shell-qt
+         libxcb
+         prison
+         purpose
+         qt6-base
+         qt6-declarative
+         qt6-imageformats
+         qt6-multimedia
+         wayland
+         xcb-util
+         xcb-util-cursor
+         xcb-util-image)
+makedepends=(extra-cmake-modules
+             plasma-wayland-protocols)
+optdepends=('tesseract: OCR text extraction')
+groups=(plasma)
+source=(https://download.kde.org/stable/plasma/$_dirver/$pkgname-$pkgver.tar.xz)
+sha256sums=('beceaffae061676215582227208b8a29e9dce1689480ba86e76ec8afa0fef13d')
+
+build() {
+  cmake -B build -S $pkgname-$pkgver \
+   -DBUILD_TESTING=OFF
+  cmake --build build
+}
+
+package() {
+  DESTDIR="$pkgdir" cmake --install build
+}
+
