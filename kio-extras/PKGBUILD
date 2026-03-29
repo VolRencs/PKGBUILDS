@@ -4,7 +4,7 @@
 
 pkgname=kio-extras
 pkgver=25.12.3
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc='Additional components to increase the functionality of KIO'
 arch=(x86_64)
@@ -31,7 +31,6 @@ depends=(gcc-libs
          plasma-activities
          qt6-base
          qt6-svg
-         ripgrep-all
          sh
          solid
          syntax-highlighting)
