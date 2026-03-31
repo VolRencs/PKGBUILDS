@@ -56,7 +56,6 @@ depends=(accountsservice
          ksystemstats
          ktexteditor
          ktextwidgets
-         kuserfeedback
          kwallet
          kwayland
          kwidgetsaddons
@@ -83,7 +82,6 @@ depends=(accountsservice
          qt6-positioning
          qt6-svg
          qt6-tools
-         sh
          solid
          systemd-libs
          wayland
