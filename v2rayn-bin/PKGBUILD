@@ -10,7 +10,7 @@ options=("!strip")
 
 source=(
   "v2rayN-linux-64-${pkgver}.zip::https://github.com/2dust/v2rayN/releases/download/${pkgver}/v2rayN-linux-64.zip"
-  "v2rayN.svg"
+  "v2rayn.svg"
   "v2rayn-bin.desktop"
 )
 sha256sums=(
@@ -22,7 +22,7 @@ sha256sums=(
 package() {
   local _install_dir="${pkgdir}/opt/${pkgname}"
 
-  install -Dm644 "${srcdir}/v2rayN.svg" "${pkgdir}/usr/share/icons/hicolor/scalable/apps/v2rayN.svg"
+  install -Dm644 "${srcdir}/v2rayn.svg" "${pkgdir}/usr/share/icons/hicolor/scalable/apps/v2rayN.svg"
   install -Dm644 "${srcdir}/v2rayn-bin.desktop"  "${pkgdir}/usr/share/applications/v2rayn-bin.desktop"
 
   install -dm755 "${_install_dir}"
