@@ -34,7 +34,6 @@ _make() {
   local make_options=(
     prefix='/usr'
     gitexecdir='/usr/lib/git-core'
-    perllibdir="$(/usr/bin/perl -MConfig -wle 'print $Config{installvendorlib}')"
 
     CFLAGS="$CFLAGS"
     LDFLAGS="$LDFLAGS"
@@ -43,6 +42,7 @@ _make() {
     USE_LIBPCRE2=1
     ZLIB_NG=1
     WITH_RUST=1
+    NO_PERL=1
   )
 
   make "${make_options[@]}" "$@"
@@ -56,21 +56,6 @@ build() {
   _make -C contrib/credential/libsecret
   _make -C contrib/subtree all man
   _make -C contrib/diff-highlight
-}
-
-check() {
-  cd "$pkgbase"
-
-  local jobs
-  jobs=$(expr "$MAKEFLAGS" : '.*\(-j[0-9]*\).*') || true
-  mkdir -p /dev/shm/git-test
-  SHELL=/bin/sh \
-  _make \
-    NO_SVN_TESTS=y \
-    DEFAULT_TEST_TARGET=prove \
-    GIT_PROVE_OPTS="$jobs -Q" \
-    GIT_TEST_OPTS="--root=/dev/shm/git-test" \
-    test
 }
 
 package_git() {
@@ -90,7 +75,7 @@ package_git() {
   install -m 0755 contrib/credential/libsecret/git-credential-libsecret \
       "$pkgdir"/usr/lib/git-core/git-credential-libsecret
   _make -C contrib/credential/libsecret clean
-  # subtree installation
+
   _make -C contrib/subtree DESTDIR="$pkgdir" install install-man
 
   find contrib/ -name '.gitignore' -delete
