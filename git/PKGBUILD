@@ -21,7 +21,7 @@ makedepends=('python'
              'rust')
 checkdepends=('openssh')
 install=git.install
-source=("git+https://github.com/git/git#tag=v${pkgver}?signed"
+source=("git+https://github.com/git/git#tag=v${pkgver}"
         'git-daemon@.service'
         'git-daemon.socket'
         'git-sysusers.conf')
