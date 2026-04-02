@@ -17,7 +17,8 @@ on:
             "libinput",
             "obs-studio",
             "onlyoffice",
-            "prismlauncher"
+            "prismlauncher",
+            "git"
           ]
       force_release:
         description: "Force release even if version is unchanged"
