@@ -1,7 +1,7 @@
 pkgbase=git
 pkgname=git
 pkgver=2.53.0
-pkgrel=2
+pkgrel=3
 epoch=1
 pkgdesc='the fast distributed version control system'
 arch=('x86_64')
@@ -34,48 +34,40 @@ sha256sums=('9a01c7ee4b1d39392b1f0216c2548f3de1805bed6976140b0509f24751de0a6f'
 
 build() {
   cd "$pkgbase"
-
   meson setup build \
     --prefix=/usr \
     --libexecdir=/usr/lib/git-core \
-    -Dc_args="-Wno-discarded-qualifiers" \
     --buildtype=release \
+    --strip \
     -Dperl=disabled \
     -Dgitweb=disabled \
     -Dtests=false \
-    -Dbenchmarks=disabled \
     -Ddocs=[] \
-    --strip \
     -Dpcre2=enabled \
     -Dzlib_backend=zlib-ng \
     -Dcurl=enabled \
     -Dexpat=enabled \
-    -Drust=enabled 
+    -Drust=enabled \
+    -Dcontrib=['completion','subtree'] \
+    -Dcredential_helpers=['libsecret']
   meson compile -C build
 }
 
-
 package_git() {
   cd "$pkgbase"
-
   DESTDIR="$pkgdir" meson install -C build
 
-  install -Dm644 contrib/completion/git-completion.bash \
-    "$pkgdir/usr/share/bash-completion/completions/git"
-
-  install -Dm644 contrib/completion/git-prompt.sh \
-    "$pkgdir/usr/share/git/git-prompt.sh"
-
-  find contrib/ -name '.gitignore' -o -name '*.o' -o \
-    -name '*.c' -o -name 'Makefile' | xargs rm -f
-  cp -a contrib/* "$pkgdir/usr/share/git/"
+  local main="$pkgdir/usr/lib/git-core/git"
+  find "$pkgdir/usr/lib/git-core/" -type f ! -name 'git' | while read -r f; do
+    if cmp -s "$f" "$main"; then
+      ln -sf git "$f"
+    fi
+  done
 
   install -Dm644 "$srcdir/git-daemon@.service" \
     "$pkgdir/usr/lib/systemd/system/git-daemon@.service"
-
   install -Dm644 "$srcdir/git-daemon.socket" \
     "$pkgdir/usr/lib/systemd/system/git-daemon.socket"
-
   install -Dm644 "$srcdir/git-sysusers.conf" \
     "$pkgdir/usr/lib/sysusers.d/git.conf"
 }
