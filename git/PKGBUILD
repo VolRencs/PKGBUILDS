@@ -39,10 +39,12 @@ build() {
     --prefix=/usr \
     --libexecdir=/usr/lib/git-core \
     -Dc_args="-Wno-discarded-qualifiers" \
+    --buildtype=release \
     -Dperl=disabled \
     -Dgitweb=disabled \
     -Dtests=false \
     -Dbenchmarks=disabled \
+    -Ddocs=man \
     -Dpcre2=enabled \
     -Dzlib_backend=zlib-ng \
     -Dcurl=enabled \
