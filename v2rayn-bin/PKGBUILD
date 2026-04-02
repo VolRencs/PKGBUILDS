@@ -1,5 +1,5 @@
 pkgname="v2rayn-bin"
-pkgver=7.19.5
+pkgver=7.20.1
 pkgrel=1
 epoch=1
 pkgdesc="A GUI client for Windows and Linux, support Xray core and others"
@@ -14,7 +14,7 @@ source=(
   "v2rayn-bin.desktop"
 )
 sha256sums=(
-  "cfe01326c30d9ff4fda7235e57b97a6972106e485dd0b72ec5f21509d60d5059"
+  "e0255836331fcad219bf4f14b1f83b3cdbcf6421d9749fc22f52d75afc2c98e3"
   "SKIP"
   "SKIP"
 )
