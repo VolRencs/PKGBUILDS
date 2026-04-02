@@ -38,6 +38,7 @@ build() {
   meson setup build \
     --prefix=/usr \
     --libexecdir=/usr/lib/git-core \
+    -Dc_args="-Wno-discarded-qualifiers" \
     -Dperl=disabled \
     -Dgitweb=disabled \
     -Dtests=false \
@@ -62,14 +63,6 @@ package_git() {
 
   install -Dm644 contrib/completion/git-prompt.sh \
     "$pkgdir/usr/share/git/git-prompt.sh"
-
-  install -Dm755 build/contrib/credential/libsecret/git-credential-libsecret \
-    "$pkgdir/usr/lib/git-core/git-credential-libsecret"
-
-  if [ -f build/contrib/subtree/git-subtree ]; then
-    install -Dm755 build/contrib/subtree/git-subtree \
-      "$pkgdir/usr/lib/git-core/git-subtree"
-  fi
 
   find contrib/ -name '.gitignore' -delete
   cp -a contrib/* "$pkgdir/usr/share/git/"
