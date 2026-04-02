@@ -1,5 +1,5 @@
 pkgbase=git
-pkgname=(git)
+pkgname=git
 pkgver=2.53.0
 pkgrel=1
 epoch=1
