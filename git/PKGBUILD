@@ -53,7 +53,8 @@ build() {
     -Dcurl=enabled \
     -Dexpat=enabled \
     -Drust=enabled \
-    -Db_lto=thin
+    -Db_lto=true \
+    -Db_lto_mode=thin
   meson compile -C build
 }
 
