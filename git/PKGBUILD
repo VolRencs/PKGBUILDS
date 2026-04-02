@@ -46,9 +46,7 @@ build() {
     -Dzlib_backend=zlib-ng \
     -Dcurl=enabled \
     -Dexpat=enabled \
-    -Drust=enabled \
-    -Dgit_gui=disabled \
-    -Dgitk=disabled
+    -Drust=enabled
 
   meson compile -C build
 }
