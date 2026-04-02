@@ -18,7 +18,8 @@ on:
             "obs-studio",
             "onlyoffice",
             "prismlauncher",
-            "git"
+            "git",
+            "v2rayn-bin"
           ]
       force_release:
         description: "Force release even if version is unchanged"

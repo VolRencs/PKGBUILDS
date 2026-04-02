@@ -1,0 +1,35 @@
+pkgname="v2rayn-bin"
+pkgver=7.19.5
+pkgrel=1
+pkgdesc="A GUI client for Windows and Linux, support Xray core and others"
+arch=("x86_64")
+license=("GPL-3.0-only")
+url="https://github.com/2dust/v2rayN"
+options=("!strip")
+
+source=(
+  "v2rayN-linux-64-${pkgver}.zip::https://github.com/2dust/v2rayN/releases/download/${pkgver}/v2rayN-linux-64.zip"
+  "v2rayN.png"
+  "v2rayn-bin.desktop"
+)
+sha256sums=(
+  "cfe01326c30d9ff4fda7235e57b97a6972106e485dd0b72ec5f21509d60d5059"
+  "f762fd95d93c2287f55ebb742716a54aa6b507ff8c8d75aec7256fabc93192ee"
+  "307cbfaf4aabf2a36f72d66963f04604f71bc068361e5d0eb8feaff8feeaf21a"
+)
+
+package() {
+  local _install_dir="${pkgdir}/opt/${pkgname}"
+
+  install -Dm644 "${srcdir}/v2rayN.png"         "${pkgdir}/usr/share/pixmaps/v2rayN.png"
+  install -Dm644 "${srcdir}/v2rayn-bin.desktop"  "${pkgdir}/usr/share/applications/v2rayn-bin.desktop"
+
+  install -dm755 "${_install_dir}"
+  cp -a "${srcdir}/v2rayN-linux-64/." "${_install_dir}/"
+
+  find "${_install_dir}" -type f ! -name "v2rayN" -exec chmod 644 {} +
+  chmod 755 "${_install_dir}/v2rayN"
+
+  install -dm755 "${pkgdir}/usr/bin"
+  ln -s "/opt/${pkgname}/v2rayN" "${pkgdir}/usr/bin/v2rayn"
+}
