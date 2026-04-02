@@ -109,20 +109,17 @@ build() {
     export CGO_CPPFLAGS="${CPPFLAGS}"
     export CGO_CFLAGS="${CFLAGS}"
     export CGO_CXXFLAGS="${CXXFLAGS}"
+    export CGO_LDFLAGS="${LDFLAGS}"
     export GOFLAGS="-trimpath -mod=readonly -modcacherw"
     export GOTOOLCHAIN="go1.25.6"
-
-    local GO_LDFLAGS='-w -s -checklinkname=0 -buildid='
-    local CGO_LINKER_FLAGS="-fuse-ld=lld"
-
-    local TAGS='with_gvisor,with_quic,with_wireguard,with_utls,with_clash_api,with_grpc,with_awg,tfogo_checklinkname0,with_naive_outbound,with_conntrack'
+    TAGS='with_gvisor,with_quic,with_wireguard,with_utls,with_clash_api,with_grpc,with_awg,tfogo_checklinkname0,with_conntrack'
 
     CGO_ENABLED=1 \
     CGO_LDFLAGS="${CGO_LINKER_FLAGS}" \
     go build \
         -buildmode=c-shared \
         -trimpath \
-        -ldflags "${GO_LDFLAGS}" \
+        -ldflags "-linkmode=external -w -s -checklinkname=0" \
         -tags "${TAGS}" \
         -o bin/lib/hiddify-core.so \
         ./platform/desktop
@@ -134,7 +131,7 @@ build() {
     CGO_LDFLAGS="${CGO_LINKER_FLAGS} ./lib/hiddify-core.so -Wl,-rpath,\$ORIGIN/lib" \
     go build \
         -trimpath \
-        -ldflags "${GO_LDFLAGS}" \
+        -ldflags "-linkmode=external -w -s" \
         -tags "${TAGS}" \
         -o bin/HiddifyCli \
         ./cmd/bydll
