@@ -48,8 +48,8 @@ build() {
     -Dcurl=enabled \
     -Dexpat=enabled \
     -Drust=enabled \
-    -Dcontrib=['completion','subtree'] \
-    -Dcredential_helpers=['libsecret']
+    -Dcontrib=completion,subtree \
+    -Dcredential_helpers=libsecret
   meson compile -C build
 }
 
