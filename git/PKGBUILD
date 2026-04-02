@@ -18,7 +18,9 @@ makedepends=('python'
              'xmlto'
              'asciidoc'
              'git'
-             'rust')
+             'rust'
+             'meson'
+             'ninja')
 checkdepends=('openssh')
 install=git.install
 source=("git+https://github.com/git/git#tag=v${pkgver}"
@@ -30,60 +32,57 @@ sha256sums=('9a01c7ee4b1d39392b1f0216c2548f3de1805bed6976140b0509f24751de0a6f'
             'ac4c90d62c44926e6d30d18d97767efc901076d4e0283ed812a349aece72f203'
             '7630e8245526ad80f703fac9900a1328588c503ce32b37b9f8811674fcda4a45')
 
-_make() {
-  local make_options=(
-    prefix='/usr'
-    gitexecdir='/usr/lib/git-core'
-
-    CFLAGS="$CFLAGS"
-    LDFLAGS="$LDFLAGS"
-    INSTALL_SYMLINKS=1
-    MAN_BOLD_LITERAL=1
-    USE_LIBPCRE2=1
-    ZLIB_NG=1
-    WITH_RUST=1
-    NO_PERL=1
-  )
-
-  make "${make_options[@]}" "$@"
-}
-
 build() {
   cd "$pkgbase"
 
-  _make all man
+  meson setup build \
+    --prefix=/usr \
+    --libexecdir=/usr/lib/git-core \
+    -Dperl=disabled \
+    -Dgitweb=disabled \
+    -Dtests=false \
+    -Dbenchmarks=disabled \
+    -Dpcre2=enabled \
+    -Dzlib_backend=zlib-ng \
+    -Dcurl=enabled \
+    -Dexpat=enabled \
+    -Drust=enabled \
+    -Dgit_gui=disabled \
+    -Dgitk=disabled
 
-  _make -C contrib/credential/libsecret
-  _make -C contrib/subtree all man
-  _make -C contrib/diff-highlight
+  meson compile -C build
 }
 
-package_git() {
 
+package_git() {
   cd "$pkgbase"
 
-  _make \
-    DESTDIR="$pkgdir" \
-    install install-man
+  DESTDIR="$pkgdir" meson install -C build
 
-  mkdir -p "$pkgdir"/usr/share/bash-completion/completions/
-  install -m 0644 ./contrib/completion/git-completion.bash "$pkgdir"/usr/share/bash-completion/completions/git
+  install -Dm644 contrib/completion/git-completion.bash \
+    "$pkgdir/usr/share/bash-completion/completions/git"
 
-  mkdir -p "$pkgdir"/usr/share/git/
-  install -m 0644 ./contrib/completion/git-prompt.sh "$pkgdir"/usr/share/git/git-prompt.sh
+  install -Dm644 contrib/completion/git-prompt.sh \
+    "$pkgdir/usr/share/git/git-prompt.sh"
 
-  install -m 0755 contrib/credential/libsecret/git-credential-libsecret \
-      "$pkgdir"/usr/lib/git-core/git-credential-libsecret
-  _make -C contrib/credential/libsecret clean
+  install -Dm755 build/contrib/credential/libsecret/git-credential-libsecret \
+    "$pkgdir/usr/lib/git-core/git-credential-libsecret"
 
-  _make -C contrib/subtree DESTDIR="$pkgdir" install install-man
+  if [ -f build/contrib/subtree/git-subtree ]; then
+    install -Dm755 build/contrib/subtree/git-subtree \
+      "$pkgdir/usr/lib/git-core/git-subtree"
+  fi
 
   find contrib/ -name '.gitignore' -delete
-  cp -a ./contrib/* "$pkgdir"/usr/share/git/
+  cp -a contrib/* "$pkgdir/usr/share/git/"
 
-  install -D -m 0644 "$srcdir"/git-daemon@.service "$pkgdir"/usr/lib/systemd/system/git-daemon@.service
-  install -D -m 0644 "$srcdir"/git-daemon.socket "$pkgdir"/usr/lib/systemd/system/git-daemon.socket
+  install -Dm644 "$srcdir/git-daemon@.service" \
+    "$pkgdir/usr/lib/systemd/system/git-daemon@.service"
 
-  install -D -m 0644 "$srcdir"/git-sysusers.conf "$pkgdir"/usr/lib/sysusers.d/git.conf
+  install -Dm644 "$srcdir/git-daemon.socket" \
+    "$pkgdir/usr/lib/systemd/system/git-daemon.socket"
+
+  install -Dm644 "$srcdir/git-sysusers.conf" \
+    "$pkgdir/usr/lib/sysusers.d/git.conf"
 }
 
