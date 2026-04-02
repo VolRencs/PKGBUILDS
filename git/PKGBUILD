@@ -20,9 +20,7 @@ makedepends=('python'
              'git'
              'rust'
              'meson'
-             'ninja'
-             'clang'
-             'lld')
+             'ninja')
 checkdepends=('openssh')
 install=git.install
 source=("git+https://github.com/git/git#tag=v${pkgver}"
@@ -37,11 +35,10 @@ sha256sums=('9a01c7ee4b1d39392b1f0216c2548f3de1805bed6976140b0509f24751de0a6f'
 build() {
   cd "$pkgbase"
 
-  CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld" \
   meson setup build \
     --prefix=/usr \
     --libexecdir=/usr/lib/git-core \
-    -Dc_args="-Os -pipe -fno-plt -Wno-discarded-qualifiers" \
+    -Dc_args="-Wno-discarded-qualifiers" \
     --buildtype=release \
     -Dperl=disabled \
     -Dgitweb=disabled \
@@ -52,9 +49,7 @@ build() {
     -Dzlib_backend=zlib-ng \
     -Dcurl=enabled \
     -Dexpat=enabled \
-    -Drust=enabled \
-    -Db_lto=true \
-    -Db_lto_mode=thin
+    -Drust=enabled 
   meson compile -C build
 }
 
