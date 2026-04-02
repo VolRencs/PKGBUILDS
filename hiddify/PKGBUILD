@@ -128,9 +128,10 @@ build() {
     cp bin/lib/hiddify-core.so lib/
 
     CGO_ENABLED=1 \
-    CGO_LDFLAGS="${CGO_LINKER_FLAGS} ./lib/hiddify-core.so -Wl,-rpath,\$ORIGIN/lib" \
+    CGO_LDFLAGS+=" ./bin/lib/hiddify-core.so" \
     go build \
         -trimpath \
+        -buildmode=pie \
         -ldflags "-linkmode=external -w -s" \
         -tags "${TAGS}" \
         -o bin/HiddifyCli \
