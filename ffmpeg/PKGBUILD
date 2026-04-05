@@ -1,6 +1,6 @@
 pkgname=ffmpeg
 pkgver=8.1
-pkgrel=3
+pkgrel=4
 epoch=3
 pkgdesc='Complete solution to record, convert and stream audio and video'
 arch=(x86_64)
@@ -21,7 +21,7 @@ depends=(
   gmp
   gnutls
   harfbuzz
-  jack
+  pipewire
   lame
   lcms2
   libass
@@ -31,11 +31,9 @@ depends=(
   libjxl
   libopenmpt
   libplacebo
-  libpulse
   librsvg
   libsoxr
   libssh
-  libtheora
   libva
   libvdpau
   libvorbis
@@ -45,16 +43,11 @@ depends=(
   libxcb
   libxext
   libxml2
-  libxv
-  ocl-icd
-  onevpl
   openjpeg2
   opus
   rav1e
   rubberband
   snappy
-  sndio
-  speex
   srt
   svt-av1
   v4l-utils
@@ -64,7 +57,6 @@ depends=(
   vulkan-icd-loader
   x264
   x265
-  xvidcore
   xz
   zimg
   zlib
@@ -79,16 +71,13 @@ makedepends=(
   ladspa
   mesa
   nasm
-  opencl-headers
   vulkan-headers
 )
 optdepends=(
   'avisynthplus: AviSynthPlus support'
-  'frei0r-plugins: Frei0r video effects support'
-  'intel-media-sdk: Intel QuickSync support (legacy)'
+  'frei0r-plugins: Frei0r video effects support'T
   'ladspa: LADSPA filters'
   'nvidia-utils: Nvidia NVDEC/NVENC support'
-  'onevpl-intel-gpu: Intel QuickSync support'
 )
 provides=(
   libavdevice.so
@@ -146,40 +135,34 @@ build() {
     --enable-libfribidi \
     --enable-libglslang \
     --enable-libharfbuzz \
-    --enable-libjack \
     --enable-libjxl \
     --enable-libmp3lame \
     --enable-libopenjpeg \
     --enable-libopenmpt \
     --enable-libopus \
     --enable-libplacebo \
-    --enable-libpulse \
+    --enable-libpipewire \
     --enable-librav1e \
     --enable-librsvg \
     --enable-librubberband \
     --enable-libsnappy \
     --enable-libsoxr \
-    --enable-libspeex \
     --enable-libsrt \
     --enable-libssh \
     --enable-libsvtav1 \
-    --enable-libtheora \
     --enable-libv4l2 \
     --enable-libvidstab \
     --enable-libvmaf \
     --enable-libvorbis \
-    --enable-libvpl \
     --enable-libvpx \
     --enable-libwebp \
     --enable-libx264 \
     --enable-libx265 \
     --enable-libxcb \
     --enable-libxml2 \
-    --enable-libxvid \
     --enable-libzimg \
     --enable-nvdec \
     --enable-nvenc \
-    --enable-opencl \
     --enable-opengl \
     --enable-shared \
     --enable-vapoursynth \
@@ -212,7 +195,6 @@ package() {
     libvpx.so
     libx264.so
     libx265.so
-    libxvidcore.so
     libzimg.so
   )
 
