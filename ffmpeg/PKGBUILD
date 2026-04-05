@@ -1,6 +1,6 @@
 pkgname=ffmpeg
 pkgver=8.1
-pkgrel=1
+pkgrel=2
 epoch=3
 pkgdesc='Complete solution to record, convert and stream audio and video'
 arch=(x86_64)
@@ -26,17 +26,14 @@ depends=(
   lame
   lcms2
   libass
-  libavc1394
   libbs2b
   libdrm
   libgl
-  libiec61883
   libjxl
   libmodplug
   libopenmpt
   libplacebo
   libpulse
-  libraw1394
   librsvg
   libsoxr
   libssh
@@ -72,7 +69,6 @@ depends=(
   x265
   xvidcore
   xz
-  zeromq
   zimg
   zlib
 )
@@ -98,7 +94,6 @@ optdepends=(
   'onevpl-intel-gpu: Intel QuickSync support'
 )
 provides=(
-  libavcodec.so
   libavdevice.so
   libavfilter.so
   libavformat.so
@@ -155,7 +150,6 @@ build() {
     --enable-libglslang \
     --enable-libgsm \
     --enable-libharfbuzz \
-    --enable-libiec61883 \
     --enable-libjack \
     --enable-libjxl \
     --enable-libmodplug \
@@ -190,7 +184,6 @@ build() {
     --enable-libxml2 \
     --enable-libxvid \
     --enable-libzimg \
-    --enable-libzmq \
     --enable-nvdec \
     --enable-nvenc \
     --enable-opencl \
@@ -228,7 +221,6 @@ package() {
     libx265.so
     libxvidcore.so
     libzimg.so
-    libzmq.so
   )
 
   make DESTDIR="${pkgdir}" -C ffmpeg install install-man
