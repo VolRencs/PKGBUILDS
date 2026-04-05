@@ -1,6 +1,6 @@
 pkgname=ffmpeg
 pkgver=8.1
-pkgrel=2
+pkgrel=3
 epoch=3
 pkgdesc='Complete solution to record, convert and stream audio and video'
 arch=(x86_64)
@@ -20,7 +20,6 @@ depends=(
   glslang
   gmp
   gnutls
-  gsm
   harfbuzz
   jack
   lame
@@ -30,7 +29,6 @@ depends=(
   libdrm
   libgl
   libjxl
-  libmodplug
   libopenmpt
   libplacebo
   libpulse
@@ -50,7 +48,6 @@ depends=(
   libxv
   ocl-icd
   onevpl
-  opencore-amr
   openjpeg2
   opus
   rav1e
@@ -148,14 +145,10 @@ build() {
     --enable-libfreetype \
     --enable-libfribidi \
     --enable-libglslang \
-    --enable-libgsm \
     --enable-libharfbuzz \
     --enable-libjack \
     --enable-libjxl \
-    --enable-libmodplug \
     --enable-libmp3lame \
-    --enable-libopencore_amrnb \
-    --enable-libopencore_amrwb \
     --enable-libopenjpeg \
     --enable-libopenmpt \
     --enable-libopus \
