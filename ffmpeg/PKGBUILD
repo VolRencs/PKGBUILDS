@@ -115,6 +115,9 @@ build() {
     --disable-debug \
     --disable-static \
     --disable-stripping \
+    --disable-sndio \
+    --disable-decoder=theora \
+    --disable-decoder=speex \
     --enable-amf \
     --enable-avisynth \
     --enable-cuda-llvm \
