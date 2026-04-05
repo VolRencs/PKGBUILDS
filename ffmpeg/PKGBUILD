@@ -21,7 +21,7 @@ depends=(
   gmp
   gnutls
   harfbuzz
-  pipewire
+  libpulse
   lame
   lcms2
   libass
@@ -141,7 +141,7 @@ build() {
     --enable-libopenmpt \
     --enable-libopus \
     --enable-libplacebo \
-    --enable-libpipewire \
+    --enable-libpulse \
     --enable-librav1e \
     --enable-librsvg \
     --enable-librubberband \
