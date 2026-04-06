@@ -1,6 +1,6 @@
 pkgname=ffmpeg
 pkgver=8.1
-pkgrel=4
+pkgrel=5
 epoch=3
 pkgdesc='Complete solution to record, convert and stream audio and video'
 arch=(x86_64)
@@ -8,7 +8,6 @@ url=https://ffmpeg.org
 license=(GPL-3.0-only)
 depends=(
   alsa-lib
-  aom
   bzip2
   cairo
   dav1d
@@ -23,9 +22,7 @@ depends=(
   harfbuzz
   libpulse
   lame
-  lcms2
   libass
-  libbs2b
   libdrm
   libgl
   libjxl
@@ -33,7 +30,6 @@ depends=(
   libplacebo
   librsvg
   libsoxr
-  libssh
   libva
   libvdpau
   libvorbis
@@ -45,8 +41,6 @@ depends=(
   libxml2
   openjpeg2
   opus
-  rav1e
-  rubberband
   snappy
   srt
   svt-av1
@@ -129,10 +123,7 @@ build() {
     --enable-gnutls \
     --enable-gpl \
     --enable-ladspa \
-    --enable-lcms2 \
-    --enable-libaom \
     --enable-libass \
-    --enable-libbs2b \
     --enable-libdav1d \
     --enable-libdrm \
     --enable-libfreetype \
@@ -146,13 +137,10 @@ build() {
     --enable-libopus \
     --enable-libplacebo \
     --enable-libpulse \
-    --enable-librav1e \
     --enable-librsvg \
-    --enable-librubberband \
     --enable-libsnappy \
     --enable-libsoxr \
     --enable-libsrt \
-    --enable-libssh \
     --enable-libsvtav1 \
     --enable-libv4l2 \
     --enable-libvidstab \
@@ -179,16 +167,13 @@ build() {
 package() {
   depends+=(
     libass.so
-    libbs2b.so
     libdav1d.so
     libfreetype.so
     libharfbuzz.so
     libjxl.so
     libopenmpt.so
     libplacebo.so
-    librav1e.so
     librsvg-2.so
-    librubberband.so
     libva.so
     libva-drm.so
     libva-x11.so
