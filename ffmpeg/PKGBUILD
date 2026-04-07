@@ -1,6 +1,6 @@
 pkgname=ffmpeg
 pkgver=8.1
-pkgrel=7
+pkgrel=8
 epoch=3
 pkgdesc='Complete solution to record, convert and stream audio and video'
 arch=(x86_64)
@@ -17,8 +17,6 @@ depends=(
   glib2
   glibc
   glslang
-  gmp
-  gnutls
   harfbuzz
   libpulse
   lame
@@ -38,6 +36,7 @@ depends=(
   libxcb
   libxml2
   openjpeg2
+  openssl
   opus
   snappy
   svt-av1
@@ -110,14 +109,14 @@ build() {
     --disable-sdl2 \
     --disable-ffplay \
     --disable-vdpau \
+    --disable-gnutls \
+    --disable-gmp \
     --enable-amf \
     --enable-avisynth \
     --enable-cuda-llvm \
     --enable-lto \
     --enable-fontconfig \
     --enable-frei0r \
-    --enable-gmp \
-    --enable-gnutls \
     --enable-gpl \
     --enable-ladspa \
     --enable-libass \
@@ -151,6 +150,7 @@ build() {
     --enable-nvdec \
     --enable-nvenc \
     --enable-opengl \
+    --enable-openssl \
     --enable-shared \
     --enable-version3 \
     --enable-vulkan
