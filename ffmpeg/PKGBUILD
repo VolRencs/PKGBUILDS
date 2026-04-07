@@ -1,6 +1,6 @@
 pkgname=ffmpeg
 pkgver=8.1
-pkgrel=6
+pkgrel=7
 epoch=3
 pkgdesc='Complete solution to record, convert and stream audio and video'
 arch=(x86_64)
@@ -109,6 +109,7 @@ build() {
     --disable-decoder=speex \
     --disable-sdl2 \
     --disable-ffplay \
+    --disable-vdpau \
     --enable-amf \
     --enable-avisynth \
     --enable-cuda-llvm \
