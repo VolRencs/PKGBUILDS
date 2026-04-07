@@ -1,6 +1,6 @@
 pkgname=ffmpeg
 pkgver=8.1
-pkgrel=5
+pkgrel=6
 epoch=3
 pkgdesc='Complete solution to record, convert and stream audio and video'
 arch=(x86_64)
@@ -31,22 +31,18 @@ depends=(
   librsvg
   libsoxr
   libva
-  libvdpau
   libvorbis
   libvpx
   libwebp
   libx11
   libxcb
-  libxext
   libxml2
   openjpeg2
   opus
   snappy
-  srt
   svt-av1
   v4l-utils
   vid.stab
-  vmaf
   vulkan-icd-loader
   x264
   x265
@@ -140,11 +136,9 @@ build() {
     --enable-librsvg \
     --enable-libsnappy \
     --enable-libsoxr \
-    --enable-libsrt \
     --enable-libsvtav1 \
     --enable-libv4l2 \
     --enable-libvidstab \
-    --enable-libvmaf \
     --enable-libvorbis \
     --enable-libvpx \
     --enable-libwebp \
