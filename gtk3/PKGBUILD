@@ -25,6 +25,7 @@ depends=(
   libepoxy
   libgl
   librsvg
+  libxkbcommon
   pango
   shared-mime-info
   wayland
