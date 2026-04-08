@@ -8,6 +8,7 @@ url="https://www.gtk.org/"
 arch=(x86_64)
 license=(LGPL-2.1-or-later)
 depends=(
+  at-spi2-core
   cairo
   dconf
   desktop-file-utils
@@ -24,17 +25,6 @@ depends=(
   libepoxy
   libgl
   librsvg
-  libx11
-  libxcomposite
-  libxcursor
-  libxdamage
-  libxext
-  libxfixes
-  libxi
-  libxinerama
-  libxkbcommon
-  libxrandr
-  libxrender
   pango
   shared-mime-info
   wayland
@@ -57,13 +47,14 @@ b2sums=('b351d0e48b074ea0b6d75dd8b47bd5ff5897dce01b2c69894a5d20fff0205b8cfc4603c
 
 build() {
   local meson_options=(
-    -D broadway_backend=true
+    -D broadway_backend=false
     -D cloudproviders=false
     -D colord=yes
     -D gtk_doc=false
     -D introspection=true
     -D man=false
     -D tracker3=false
+    -D x11_backend=false
   )
 
   CFLAGS+=" -DG_DISABLE_CAST_CHECKS"
@@ -98,14 +89,6 @@ END
   install -Dm644 gtk-query-immodules-3.0.hook -t "$pkgdir/usr/share/libalpm/hooks"
 
   cd "$pkgdir"
-
-  _pick demo usr/bin/gtk3-{demo,demo-application,icon-browser,widget-factory}
-  _pick demo usr/share/applications/gtk3-{demo,icon-browser,widget-factory}.desktop
-  _pick demo usr/share/glib-2.0/schemas/org.gtk.{Demo,exampleapp}.gschema.xml
-  _pick demo usr/share/icons/hicolor/*/apps/gtk3-{demo,widget-factory}[-.]*
-  _pick demo usr/share/man/man1/gtk3-{demo,demo-application,icon-browser,widget-factory}.1
-
-  _pick docs usr/share/gtk-doc
 
   # Built by GTK 4, shared with GTK 3
   rm usr/bin/gtk-update-icon-cache
