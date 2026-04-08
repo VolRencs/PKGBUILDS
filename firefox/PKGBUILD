@@ -1,7 +1,7 @@
 # Maintainer: VolRen <VolRencs@proton.me>
 
 pkgname=firefox
-pkgver=149.0
+pkgver=149.0.2
 pkgrel=1
 epoch=1
 pkgdesc="Fast, Private & Safe Web Browser"
@@ -67,8 +67,8 @@ source=(
   Patch3.patch
   Patch4.patch
 )
-sha256sums=('b861fdee999d9b6404e1e865d6f707c41b4bded1b5ea62affc176288c1484b8a'
-            '6b7f64ea9407dd1635f3c29b685676cdf7692bf3cf7a8be4a3ed938082e035ca'
+sha256sums=('6a931a2cf087164c689099c3856b3091a7e156a7b94fab8ab5712affe87870ce'
+            '40bd843fde669f32c1ce9153513830ad134eb8439cd6e3f30aa72c21fb6fe597'
             'a9b8b4a0a1f4a7b4af77d5fc70c2686d624038909263c795ecc81e0aec7711e9'
             '381a0bb236513a48596fcd17115629b19c5d862ce845144c7dfb61cd8903b1b8'
             'ef63a12975f108f30b00bb3290d9ca76f311d8af9c1d5dfc0d8335ad57e8f77c'
