@@ -64,7 +64,6 @@ build() {
     -D introspection=true
     -D man=false
     -D tracker3=false
-    -D x11-backend=false
   )
 
   CFLAGS+=" -DG_DISABLE_CAST_CHECKS"
