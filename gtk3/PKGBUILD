@@ -24,6 +24,17 @@ depends=(
   libepoxy
   libgl
   librsvg
+  libx11
+  libxcomposite
+  libxcursor
+  libxdamage
+  libxext
+  libxfixes
+  libxi
+  libxinerama
+  libxkbcommon
+  libxrandr
+  libxrender
   pango
   shared-mime-info
   wayland
@@ -51,7 +62,7 @@ build() {
     -D colord=yes
     -D gtk_doc=false
     -D introspection=true
-    -D man=true
+    -D man=false
     -D tracker3=false
     -D x11-backend=false
   )
