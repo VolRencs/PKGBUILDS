@@ -52,7 +52,6 @@ build() {
     -D gtk_doc=false
     -D introspection=true
     -D man=true
-    -D tracker=false
     -D tracker3=false
     -D x11-backend=false
   )
