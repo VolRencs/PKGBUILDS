@@ -1,7 +1,7 @@
 pkgbase=git
 pkgname=git
 pkgver=2.53.0
-pkgrel=3
+pkgrel=4
 epoch=1
 pkgdesc='the fast distributed version control system'
 arch=('x86_64')
@@ -15,8 +15,6 @@ depends=('curl'
          'shadow'
          'zlib-ng')
 makedepends=('python'
-             'xmlto'
-             'asciidoc'
              'git'
              'rust'
              'meson'

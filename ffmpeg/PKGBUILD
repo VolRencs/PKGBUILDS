@@ -1,6 +1,6 @@
 pkgname=ffmpeg
 pkgver=8.1
-pkgrel=8
+pkgrel=9
 epoch=3
 pkgdesc='Complete solution to record, convert and stream audio and video'
 arch=(x86_64)
@@ -24,7 +24,6 @@ depends=(
   libdrm
   libgl
   libjxl
-  libopenmpt
   libplacebo
   librsvg
   libsoxr
@@ -50,8 +49,6 @@ depends=(
   zlib
 )
 makedepends=(
-  amf-headers
-  avisynthplus
   clang
   ffnvcodec-headers
   frei0r-plugins
@@ -62,7 +59,6 @@ makedepends=(
   vulkan-headers
 )
 optdepends=(
-  'avisynthplus: AviSynthPlus support'
   'frei0r-plugins: Frei0r video effects support'
   'ladspa: LADSPA filters'
   'nvidia-utils: Nvidia NVDEC/NVENC support'
@@ -111,8 +107,6 @@ build() {
     --disable-vdpau \
     --disable-gnutls \
     --disable-gmp \
-    --enable-amf \
-    --enable-avisynth \
     --enable-cuda-llvm \
     --enable-lto \
     --enable-fontconfig \
@@ -129,7 +123,6 @@ build() {
     --enable-libjxl \
     --enable-libmp3lame \
     --enable-libopenjpeg \
-    --enable-libopenmpt \
     --enable-libopus \
     --enable-libplacebo \
     --enable-libpulse \
@@ -166,7 +159,6 @@ package() {
     libfreetype.so
     libharfbuzz.so
     libjxl.so
-    libopenmpt.so
     libplacebo.so
     librsvg-2.so
     libva.so
