@@ -1,6 +1,6 @@
 pkgname=ffmpeg
 pkgver=8.1
-pkgrel=9
+pkgrel=10
 epoch=3
 pkgdesc='Complete solution to record, convert and stream audio and video'
 arch=(x86_64)
@@ -20,7 +20,6 @@ depends=(
   harfbuzz
   libpulse
   lame
-  libass
   libdrm
   libgl
   libjxl
@@ -107,13 +106,13 @@ build() {
     --disable-vdpau \
     --disable-gnutls \
     --disable-gmp \
+    --disable-libass \
     --enable-cuda-llvm \
     --enable-lto \
     --enable-fontconfig \
     --enable-frei0r \
     --enable-gpl \
     --enable-ladspa \
-    --enable-libass \
     --enable-libdav1d \
     --enable-libdrm \
     --enable-libfreetype \
@@ -154,7 +153,6 @@ build() {
 
 package() {
   depends+=(
-    libass.so
     libdav1d.so
     libfreetype.so
     libharfbuzz.so
