@@ -30,6 +30,7 @@ makedepends=(
   jdk8-openjdk
   gamemode
   ninja
+  vulkan-headers
 )
 optdepends=(
   'glfw: to use system GLFW libraries'
