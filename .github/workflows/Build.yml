@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       packages:
-        description: "Directories to build (newline-separated)"
+        description: "Directories to build"
         required: true
         type: string
         default: |
@@ -84,7 +84,15 @@ jobs:
           PKGBUILD="${{ matrix.pkg }}/PKGBUILD"
 
           get_field() {
-            grep -m1 "^${1}=" "$2" | cut -d= -f2- | tr -d "\"'() " | awk '{print $1}'
+            local val
+            val=$(grep -m1 "^${1}=" "$2" | cut -d= -f2- | tr -d "\"'() " | awk '{print $1}')
+            if [ -z "$val" ]; then
+              val=$(awk -v key="^${1}=(" '
+                $0 ~ key { found=1; next }
+                found && /^[[:space:]]*[^)[:space:]]/ { gsub(/[[:space:]]/, ""); print; exit }
+              ' "$2")
+            fi
+            echo "$val"
           }
 
           PKGBASE=$(get_field pkgbase "$PKGBUILD")
