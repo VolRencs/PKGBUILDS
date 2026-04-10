@@ -77,7 +77,7 @@ build() {
 
     -D vapi=true
     -D docs=false
-    -D tests=false
+    -D tests=no
     -D more_asserts=no
     -D more_logging=false
     -D qt=false
