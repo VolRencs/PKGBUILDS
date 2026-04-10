@@ -1,16 +1,44 @@
-pkgbase=networkmanager
-pkgname=(
-  networkmanager
-  libnm
-)
+pkgname=networkmanager
 pkgver=1.56.0
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="Network connection manager and user applications"
 url="https://networkmanager.dev/"
 arch=(x86_64)
-license=(LGPL-2.1-or-later)
-
+license=(LGPL-2.1-or-later GPL-2.0-or-later)
+depends=(
+  audit
+  curl
+  glib2
+  glibc
+  iproute2
+  jansson
+  libgcc
+  libmm-glib
+  libndp
+  libpsl
+  mobile-broadband-provider-info
+  nspr
+  nss
+  readline
+  systemd-libs
+  util-linux-libs
+  wpa_supplicant
+)
+optdepends=(
+  'bluez: Bluetooth support'
+  'dhcpcd: alternative DHCP client'
+  'dnsmasq: connection sharing'
+  'firewalld: firewall support'
+  'iptables: connection sharing'
+  'iwd: wpa_supplicant alternative'
+  'modemmanager: cellular network support'
+  'nftables: connection sharing'
+  'polkit: let non-root users control networking'
+)
+provides=(libnm libnm.so)
+conflicts=(libnm)
+replaces=(libnm)
 makedepends=(
   glib2
   glib2-devel
@@ -49,7 +77,7 @@ makedepends=(
   readline
   vala
 )
-
+backup=(etc/NetworkManager/NetworkManager.conf)
 source=("git+https://gitlab.freedesktop.org/NetworkManager/NetworkManager.git#tag=${pkgver/[a-z]/-&}")
 b2sums=('43aee5cce5e92861f89520fbb2174ed54a89adc89d6b903b40feddf3f8ab5b0f97559a90efc83cb2919e3eca01700726b8d2f665621bcf3a491127981625e136')
 
@@ -65,16 +93,13 @@ build() {
     -D suspend_resume=systemd
     -D modify_system=true
     -D selinux=false
-
     -D iwd=true
     -D teamdctl=false
     -D nmtui=false
-
     -D config_plugins_default=keyfile
     -D ifupdown=false
     -D netconfig=no
     -D config_dns_rc_manager_default=symlink
-
     -D vapi=true
     -D docs=false
     -D tests=no
@@ -82,62 +107,11 @@ build() {
     -D more_logging=false
     -D qt=false
   )
-
   arch-meson NetworkManager build "${meson_options[@]}"
   meson compile -C build
 }
 
-_pick() {
-  local p="$1" f d; shift
-  for f; do
-    d="$srcdir/$p/${f#$pkgdir/}"
-    mkdir -p "$(dirname "$d")"
-    mv "$f" "$d"
-    rmdir -p --ignore-fail-on-non-empty "$(dirname "$f")"
-  done
-}
-
-package_networkmanager() {
-  license+=(GPL-2.0-or-later)
-
-  depends=(
-    audit
-    curl
-    glib2
-    glibc
-    iproute2
-    jansson
-    libgcc
-    libmm-glib
-    libndp
-    libnm
-    libpsl
-    mobile-broadband-provider-info
-    nspr
-    nss
-    readline
-    systemd-libs
-    wpa_supplicant
-  )
-
-  optdepends=(
-    'bluez: Bluetooth support'
-    'dhcpcd: alternative DHCP client'
-    'dnsmasq: connection sharing'
-    'firewalld: firewall support'
-    'iptables: connection sharing'
-    'iwd: wpa_supplicant alternative'
-    'libnvme: NBFT support'
-    'modemmanager: cellular network support'
-    'nftables: connection sharing'
-    'openresolv: alternative resolv.conf manager'
-    'pacrunner: PAC proxy support'
-    'polkit: let non-root users control networking'
-    'ppp: dialup connection support'
-  )
-
-  backup=(etc/NetworkManager/NetworkManager.conf)
-
+package() {
   meson install -C build --destdir "$pkgdir"
 
   cd "$pkgdir"
@@ -158,37 +132,9 @@ END
 uri=http://ping.archlinux.org/nm-check.txt
 END
 
-  shopt -s globstar
-
-  _pick libnm usr/include/libnm
-  _pick libnm usr/lib/girepository-1.0/NM-*
-  _pick libnm usr/lib/libnm.*
-  _pick libnm usr/lib/nm-libnm-helper
-  _pick libnm usr/lib/pkgconfig/libnm.pc
-  _pick libnm usr/share/gir-1.0/NM-*
-  _pick libnm usr/share/vala/vapi/libnm.*
-
-  # Not packaged (https://bugs.archlinux.org/task/69138)
-  _pick ovs usr/lib/systemd/system/NetworkManager.service.d/NetworkManager-ovs.conf
-
   # Restore empty dir
   install -d usr/lib/NetworkManager/dispatcher.d/no-wait.d
-}
 
-package_libnm() {
-  pkgdesc="NetworkManager client library"
-
-  depends=(
-    glib2
-    glibc
-    libgcc
-    nspr
-    nss
-    systemd-libs
-    util-linux-libs
-  )
-
-  provides=(libnm.so)
-
-  mv libnm/* "$pkgdir"
+  # Drop unpackaged OVS file
+  rm -f usr/lib/systemd/system/NetworkManager.service.d/NetworkManager-ovs.conf
 }
