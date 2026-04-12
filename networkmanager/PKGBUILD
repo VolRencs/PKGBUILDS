@@ -80,8 +80,16 @@ build() {
     -D suspend_resume=systemd
     -D modify_system=true
     -D selinux=false
-    -D iwd=false
     -D wifi=false
+    -D iwd=false
+    -D wext=false
+    -D bluez5_dun=false
+    -D modem_manager=false
+    -D ofono=false
+    -D ppp=false
+    -D ovs=false
+    -D nm_cloud_setup=false
+    -D nbft=false
     -D teamdctl=false
     -D nmtui=false
     -D config_plugins_default=keyfile
@@ -94,10 +102,6 @@ build() {
     -D more_asserts=no
     -D more_logging=false
     -D qt=false
-    -D modem_manager=false
-    -D bluez5_dun=false
-    -D ofono=false
-    -D ppp=false
   )
   arch-meson NetworkManager build "${meson_options[@]}"
   meson compile -C build
@@ -126,7 +130,4 @@ END
 
   # Restore empty dir
   install -d usr/lib/NetworkManager/dispatcher.d/no-wait.d
-
-  # Drop unpackaged OVS file
-  rm -f usr/lib/systemd/system/NetworkManager.service.d/NetworkManager-ovs.conf
 }
