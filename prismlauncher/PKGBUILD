@@ -1,5 +1,5 @@
 pkgname=prismlauncher
-pkgver=11.0.0
+pkgver=11.0.1
 pkgrel=1
 epoch=1
 pkgdesc="Minecraft launcher with ability to manage multiple instances"
@@ -39,7 +39,7 @@ optdepends=(
   'flite: minecraft voice narration'
 )
 source=("https://github.com/PrismLauncher/PrismLauncher/releases/download/$pkgver/PrismLauncher-$pkgver.tar.gz")
-sha256sums=('e6ec10c6e537ffaf020a20353f02de09fbe006c131090b4db6ff961bd5f2cd27')
+sha256sums=('8dc12c1d5bfd67b1e07047313c606826da0079f214a81311d6f5e24005894e8d')
 
 build() {
   export JAVA_HOME=/usr/lib/jvm/java-8-openjdk

@@ -1,6 +1,6 @@
 pkgname=networkmanager
 pkgver=1.56.0
-pkgrel=2
+pkgrel=3
 epoch=1
 pkgdesc="Network connection manager and user applications"
 url="https://networkmanager.dev/"
@@ -14,25 +14,19 @@ depends=(
   iproute2
   jansson
   libgcc
-  libmm-glib
   libndp
   libpsl
-  mobile-broadband-provider-info
   nspr
   nss
   readline
   systemd-libs
   util-linux-libs
-  wpa_supplicant
 )
 optdepends=(
-  'bluez: Bluetooth support'
   'dhcpcd: alternative DHCP client'
   'dnsmasq: connection sharing'
   'firewalld: firewall support'
   'iptables: connection sharing'
-  'iwd: wpa_supplicant alternative'
-  'modemmanager: cellular network support'
   'nftables: connection sharing'
   'polkit: let non-root users control networking'
 )
@@ -51,21 +45,14 @@ makedepends=(
   dnsmasq
   iproute2
   iptables
-  iwd
   libndp
   libpsl
   nftables
   openresolv
-  pacrunner
-  wpa_supplicant
-  libmm-glib
-  libnvme
-  modemmanager
   audit
   nspr
   nss
   polkit
-  ppp
   bash
   git
   gobject-introspection
@@ -93,7 +80,8 @@ build() {
     -D suspend_resume=systemd
     -D modify_system=true
     -D selinux=false
-    -D iwd=true
+    -D iwd=false
+    -D wifi=false
     -D teamdctl=false
     -D nmtui=false
     -D config_plugins_default=keyfile
@@ -106,6 +94,10 @@ build() {
     -D more_asserts=no
     -D more_logging=false
     -D qt=false
+    -D modem_manager=false
+    -D bluez5=false
+    -D ofono=false
+    -D ppp=false
   )
   arch-meson NetworkManager build "${meson_options[@]}"
   meson compile -C build
