@@ -95,7 +95,7 @@ build() {
     -D more_logging=false
     -D qt=false
     -D modem_manager=false
-    -D bluez5=false
+    -D bluez5_dun=false
     -D ofono=false
     -D ppp=false
   )
