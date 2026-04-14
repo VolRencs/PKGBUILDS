@@ -18,6 +18,7 @@ makedepends=(
   meson
   glib2-devel
   systemd
+  libxslt
 )
 provides=(libmm-glib)
 conflicts=(libmm-glib modemmanager-docs)
@@ -32,53 +33,20 @@ build() {
     -D dist_version="$pkgver-$pkgrel"
     
     -D polkit=no
+    
     -D mbim=false
     -D qmi=false
     -D qrtr=false
     
     -D plugin_generic=disabled
-    -D plugin_altair_lte=disabled
-    -D plugin_anydata=disabled
-    -D plugin_broadmobi=disabled
-    -D plugin_cellient=disabled
-    -D plugin_cinterion=disabled
-    -D plugin_dell=disabled
-    -D plugin_dlink=disabled
-    -D plugin_fibocom=disabled
     -D plugin_foxconn=disabled
-    -D plugin_gosuncn=disabled
-    -D plugin_haier=disabled
+    -D plugin_fibocom=disabled
     -D plugin_huawei=disabled
-    -D plugin_intel=disabled
-    -D plugin_iridium=disabled
-    -D plugin_linktop=disabled
-    -D plugin_longcheer=disabled
-    -D plugin_mbm=disabled
-    -D plugin_motorola=disabled
-    -D plugin_mtk_legacy=disabled
-    -D plugin_mtk=disabled
-    -D plugin_netprisma=disabled
-    -D plugin_nokia=disabled
-    -D plugin_nokia_icera=disabled
-    -D plugin_novatel=disabled
-    -D plugin_novatel_lte=disabled
-    -D plugin_option=disabled
-    -D plugin_option_hso=disabled
-    -D plugin_pantech=disabled
-    -D plugin_qcom_soc=disabled
-    -D plugin_quectel=disabled
-    -D plugin_rolling=disabled
-    -D plugin_samsung=disabled
-    -D plugin_sierra_legacy=disabled
     -D plugin_sierra=disabled
-    -D plugin_simtech=disabled
+    -D plugin_novatel=disabled
+    -D plugin_quectel=disabled
     -D plugin_telit=disabled
-    -D plugin_thuraya=disabled
-    -D plugin_tplink=disabled
     -D plugin_ublox=disabled
-    -D plugin_via=disabled
-    -D plugin_wavecom=disabled
-    -D plugin_x22x=disabled
     -D plugin_zte=disabled
 
     -D introspection=false
@@ -88,8 +56,6 @@ build() {
     -D man=false
     -D gtk_doc=false
     -D bash_completion=false
-    
-    -D systemd_journal=true
     
     -D udevdir=/usr/lib/udev
     -D systemdsystemunitdir=/usr/lib/systemd/system
@@ -102,6 +68,9 @@ build() {
 package() {
   meson install -C build --destdir "$pkgdir"
 
+  # Тотальная зачистка после установки
   rm -rf "$pkgdir/usr/share/icons"
   rm -rf "$pkgdir/usr/share/ModemManager"
+  rm -rf "$pkgdir/usr/share/man"
+  rm -rf "$pkgdir/usr/include/ModemManager"
 }
