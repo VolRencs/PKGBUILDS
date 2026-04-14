@@ -31,15 +31,21 @@ build() {
     -D dbus_policy_dir=/usr/share/dbus-1/system.d
     -D dist_version="$pkgver-$pkgrel"
     
-    -D qmi=false
-    -D mbim=false
-    -D qrtr=false
     -D polkit=no
-    -D ppp=false
+    -D mbim=false
+    -D qmi=false
+    -D qrtr=false
+    
     -D introspection=false
     -D vapi=false
+    -D examples=false
+    -D tests=false
+    -D man=false
     -D gtk_doc=false
     -D bash_completion=false
+    
+    -D systemd_journal=true
+    
     -D udevdir=/usr/lib/udev
     -D systemdsystemunitdir=/usr/lib/systemd/system
   )
