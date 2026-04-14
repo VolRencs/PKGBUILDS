@@ -32,6 +32,8 @@ build() {
     -D dbus_policy_dir=/usr/share/dbus-1/system.d
     -D dist_version="$pkgver-$pkgrel"
     
+    --auto-features=disabled
+
     -D polkit=no
     -D mbim=false
     -D qmi=false
