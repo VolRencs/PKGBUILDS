@@ -26,7 +26,6 @@ depends=(
 makedepends=(
   cmake
   extra-cmake-modules
-  git
   jdk17-openjdk
   gamemode
   ninja
@@ -56,6 +55,7 @@ build() {
   )
 
   cmake "${cmake_options[@]}"
+  cmake --build build
 }
 
 package() {
