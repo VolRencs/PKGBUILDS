@@ -30,7 +30,7 @@ b2sums=('SKIP')
 build() {
   local meson_options=(
     -D dbus_policy_dir=/usr/share/dbus-1/system.d
-    -D dist_version="$pkgver-$pkgrel"
+    -D dist_version="\"$pkgver-$pkgrel\""
 
     -D polkit=no
     -D mbim=false
