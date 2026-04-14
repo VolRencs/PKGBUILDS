@@ -34,7 +34,7 @@ build() {
     -D qmi=false
     -D mbim=false
     -D qrtr=false
-    -D polkit=none
+    -D polkit=no
     -D ppp=false
     -D introspection=false
     -D vapi=false
