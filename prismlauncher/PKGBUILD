@@ -1,5 +1,5 @@
 pkgname=prismlauncher
-pkgver=11.0.1
+pkgver=11.0.2
 pkgrel=1
 epoch=1
 pkgdesc="Minecraft launcher with ability to manage multiple instances"
@@ -27,7 +27,7 @@ makedepends=(
   cmake
   extra-cmake-modules
   git
-  jdk8-openjdk
+  jdk17-openjdk
   gamemode
   ninja
   vulkan-headers
@@ -39,17 +39,23 @@ optdepends=(
   'flite: minecraft voice narration'
 )
 source=("https://github.com/PrismLauncher/PrismLauncher/releases/download/$pkgver/PrismLauncher-$pkgver.tar.gz")
-sha256sums=('8dc12c1d5bfd67b1e07047313c606826da0079f214a81311d6f5e24005894e8d')
+sha256sums=('8956e9351bcb0472fc9c2c61ae68aa2960f27f7cabb1cacd86dd2af1c233a064')
 
 build() {
-  export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
+  export PATH="/usr/lib/jvm/java-17-openjdk/bin/:$PATH"
 
-  cmake -S "PrismLauncher-$pkgver" -B build -G Ninja \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX="/usr" \
-    -DLauncher_BUILD_PLATFORM="archlinux" \
-    -DLauncher_ENABLE_JAVA_DOWNLOADER=ON 
-  cmake --build build
+  local cmake_options=(
+    -B build
+    -S "PrismLauncher-$pkgver"
+    -G Ninja
+    -D Launcher_BUILD_PLATFORM=archlinux
+    -D Launcher_ENABLE_JAVA_DOWNLOADER=ON
+    -W no-dev
+    -D CMAKE_BUILD_TYPE=None
+    -D CMAKE_INSTALL_PREFIX=/usr
+  )
+
+  cmake "${cmake_options[@]}"
 }
 
 package() {
