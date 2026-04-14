@@ -31,18 +31,16 @@ build() {
   local meson_options=(
     -D dbus_policy_dir=/usr/share/dbus-1/system.d
     -D dist_version="$pkgver-$pkgrel"
-    
-    --auto-features=disabled
 
     -D polkit=no
     -D mbim=false
     -D qmi=false
     -D qrtr=false
-    
+
     -D plugin_qcom_soc=disabled
     -D plugin_foxconn=disabled
     -D plugin_dell=disabled
-    
+
     -D plugin_generic=disabled
     -D plugin_huawei=disabled
     -D plugin_sierra=disabled
@@ -51,7 +49,7 @@ build() {
     -D plugin_telit=disabled
     -D plugin_ublox=disabled
     -D plugin_zte=disabled
-    
+
     -D introspection=false
     -D vapi=false
     -D examples=false
@@ -59,7 +57,7 @@ build() {
     -D man=false
     -D gtk_doc=false
     -D bash_completion=false
-    
+
     -D udevdir=/usr/lib/udev
     -D systemdsystemunitdir=/usr/lib/systemd/system
   )
