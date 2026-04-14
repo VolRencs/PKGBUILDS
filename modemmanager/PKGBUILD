@@ -1,0 +1,56 @@
+pkgname=modemmanager
+pkgver=1.24.2
+pkgrel=1
+epoch=1
+pkgdesc="Minimal ModemManager (Stub for wired systems)"
+arch=(x86_64)
+url="https://www.freedesktop.org/wiki/Software/ModemManager/"
+license=(GPL-2.0-or-later)
+depends=(
+  glib2
+  glibc
+  libgcc
+  libgudev
+  systemd-libs
+)
+makedepends=(
+  git
+  meson
+  glib2-devel
+  systemd
+)
+provides=(libmm-glib)
+conflicts=(libmm-glib modemmanager-docs)
+replaces=(libmm-glib modemmanager-docs)
+
+source=("git+https://gitlab.freedesktop.org/mobile-broadband/ModemManager.git#tag=${pkgver/[a-z]/-&}")
+b2sums=('SKIP')
+
+build() {
+  local meson_options=(
+    -D dbus_policy_dir=/usr/share/dbus-1/system.d
+    -D dist_version="$pkgver-$pkgrel"
+    
+    -D qmi=false
+    -D mbim=false
+    -D qrtr=false
+    -D polkit=none
+    -D ppp=false
+    -D introspection=false
+    -D vapi=false
+    -D gtk_doc=false
+    -D bash_completion=false
+    -D udevdir=/usr/lib/udev
+    -D systemdsystemunitdir=/usr/lib/systemd/system
+  )
+
+  arch-meson ModemManager build "${meson_options[@]}"
+  meson compile -C build
+}
+
+package() {
+  meson install -C build --destdir "$pkgdir"
+
+  rm -rf "$pkgdir/usr/share/icons"
+  rm -rf "$pkgdir/usr/share/ModemManager"
+}
