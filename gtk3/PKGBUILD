@@ -1,5 +1,5 @@
 pkgname=gtk3
-pkgver=3.24.53
+pkgver=3.24.52
 pkgrel=1
 epoch=2
 pkgdesc="GObject-based multi-platform GUI toolkit"
