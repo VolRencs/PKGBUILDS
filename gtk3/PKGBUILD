@@ -66,7 +66,6 @@ build() {
     -D man=false
     -D print_backends=file,lpr
     -D tests=false
-    -D tracker=false
     -D tracker3=false
   )
   CFLAGS+=" -DG_DISABLE_CAST_CHECKS"
