@@ -1,6 +1,6 @@
 pkgname=gtk3
 pkgver=3.24.52
-pkgrel=1
+pkgrel=2
 epoch=2
 pkgdesc="GObject-based multi-platform GUI toolkit"
 url="https://www.gtk.org/"
@@ -9,24 +9,12 @@ license=(LGPL-2.1-or-later)
 depends=(
   at-spi2-core
   cairo
-  fontconfig
   fribidi
   gdk-pixbuf2
   glib2
   glibc
-  harfbuzz
   libepoxy
-  libx11
-  libxcomposite
-  libxcursor
-  libxdamage
-  libxext
-  libxfixes
-  libxi
-  libxinerama
   libxkbcommon
-  libxrandr
-  libxrender
   pango
   wayland
 )
@@ -55,6 +43,7 @@ b2sums=('b351d0e48b074ea0b6d75dd8b47bd5ff5897dce01b2c69894a5d20fff0205b8cfc4603c
 
 build() {
   local meson_options=(
+    -D x11_backend=false
     -D broadway_backend=false
     -D cloudproviders=false
     -D colord=no
@@ -64,7 +53,7 @@ build() {
     -D installed_tests=false
     -D introspection=false
     -D man=false
-    -D print_backends=file,lpr
+    -D print_backends=file
     -D tests=false
     -D tracker3=false
   )
