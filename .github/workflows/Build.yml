@@ -11,14 +11,7 @@ on:
         required: true
         type: string
         default: |
-          brush-settings
-          cachyfetch
-          libinput
-          obs-studio
-          onlyoffice
-          prismlauncher
-          git
-          v2rayn-bin
+          name
       force_release:
         description: "Force release even if version is unchanged"
         required: false
