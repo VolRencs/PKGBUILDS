@@ -1,19 +1,22 @@
+# Maintainer: Ваш Ник <ваш@email.com>
+
 pkgname=libreoffice-bin
 _lo_ver=26.2.2
 pkgver=${_lo_ver}
 pkgrel=1
-pkgdesc="LibreOffice productivity suite (binary) - Minimal package with Russian language only"
+pkgdesc="LibreOffice productivity suite (binary) - Minimal package with Russian language only (DEB-based)"
 arch=('x86_64')
 url="https://www.libreoffice.org/"
 license=('LGPL')
 
-depends=('fontconfig' 'freetype2' 'nss' 'curl' 'dbus' 'libcups' 'glibc' 'zlib')
+# Минимум зависимостей для работы GUI и системных функций
+depends=('fontconfig' 'freetype2' 'nss' 'curl' 'dbus' 'libcups' 'glibc' 'zlib' 'libx11' 'libxext' 'libsm')
 provides=('libreoffice')
 conflicts=('libreoffice-fresh' 'libreoffice-still' 'libreoffice-bin')
 
-_base_url="https://download.documentfoundation.org/libreoffice/stable/${_lo_ver}/rpm/x86_64"
-_pkg_main="LibreOffice_${_lo_ver}_Linux_x86-64_rpm"
-_pkg_lang="LibreOffice_${_lo_ver}_Linux_x86-64_rpm_langpack_ru"
+_base_url="https://download.documentfoundation.org/libreoffice/stable/${_lo_ver}/deb/x86_64"
+_pkg_main="LibreOffice_${_lo_ver}_Linux_x86-64_deb"
+_pkg_lang="LibreOffice_${_lo_ver}_Linux_x86-64_deb_langpack_ru"
 
 source=("${_base_url}/${_pkg_main}.tar.gz"
         "${_base_url}/${_pkg_lang}.tar.gz")
@@ -26,26 +29,32 @@ package() {
     
     install -dm755 "$pkgdir/usr/bin"
     install -dm755 "$pkgdir/usr/share/applications"
+
+    msg2 "Распаковка основных и языковых .deb пакетов..."
     
-    msg2 "Извлекаем основные RPM-пакеты и русский языковой пакет..."
-    for rpm in ${_pkg_main}/RPMS/*.rpm ${_pkg_lang}/RPMS/*.rpm; do
-        if [[ "$rpm" == *"freedesktop-menus"* || "$rpm" == *"mandriva"* || "$rpm" == *"redhat"* || "$rpm" == *"suse"* || "$rpm" == *"debian"* ]]; then
-            continue
-        fi
-        bsdtar -xf "$rpm" -C "$pkgdir"
+    local deb_files=(
+        "${srcdir}/${_pkg_main}/DEBS"/*.deb
+        "${srcdir}/${_pkg_lang}/DEBS"/*.deb
+    )
+
+    for deb in "${deb_files[@]}"; do
+        ar x "$deb" data.tar.xz 2>/dev/null || ar x "$deb" data.tar.gz
+        tar -xf data.tar.* -C "$pkgdir"
+        rm data.tar.*
     done
 
     _lo_dir_name=$(ls -1 "$pkgdir/opt/" | grep -i libreoffice | head -n 1)
 
-    msg2 "Создаем симлинки (ярлыки) для запуска команд из терминала..."
+    msg2 "Создание симлинков и исправление ярлыков..."
+
     ln -s "/opt/${_lo_dir_name}/program/soffice" "$pkgdir/usr/bin/libreoffice"
+
     for app in base calc draw impress math writer; do
         ln -s "/opt/${_lo_dir_name}/program/s${app}" "$pkgdir/usr/bin/libreoffice-${app}"
     done
 
-    msg2 "Копируем и исправляем .desktop файлы для системного меню..."
     cp -r "$pkgdir/opt/${_lo_dir_name}/share/xdg/"*.desktop "$pkgdir/usr/share/applications/" 2>/dev/null || true
-    
+
     _lo_exec_ver=$(echo "$_lo_ver" | cut -d'.' -f1,2)
     sed -i "s|Exec=libreoffice${_lo_exec_ver}|Exec=libreoffice|g" "$pkgdir/usr/share/applications/"*.desktop
 }
