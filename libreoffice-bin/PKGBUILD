@@ -8,8 +8,6 @@ pkgdesc="LibreOffice productivity suite (binary) - Minimal package with Russian 
 arch=('x86_64')
 url="https://www.libreoffice.org/"
 license=('LGPL')
-
-# Минимум зависимостей для работы GUI и системных функций
 depends=('fontconfig' 'freetype2' 'nss' 'curl' 'dbus' 'libcups' 'glibc' 'zlib' 'libx11' 'libxext' 'libsm')
 provides=('libreoffice')
 conflicts=('libreoffice-fresh' 'libreoffice-still' 'libreoffice-bin')
@@ -25,36 +23,38 @@ sha256sums=('SKIP'
             'SKIP')
 
 package() {
-    cd "$srcdir"
-    
     install -dm755 "$pkgdir/usr/bin"
     install -dm755 "$pkgdir/usr/share/applications"
 
-    msg2 "Распаковка основных и языковых .deb пакетов..."
-    
-    local deb_files=(
-        "${srcdir}/${_pkg_main}/DEBS"/*.deb
-        "${srcdir}/${_pkg_lang}/DEBS"/*.deb
-    )
+    msg2 "Поиск и распаковка всех .deb пакетов в $srcdir..."
 
-    for deb in "${deb_files[@]}"; do
-        ar x "$deb" data.tar.xz 2>/dev/null || ar x "$deb" data.tar.gz
-        tar -xf data.tar.* -C "$pkgdir"
-        rm data.tar.*
+    find "$srcdir" -name "*.deb" | while read -r deb_file; do
+        msg3 "Обработка: $(basename "$deb_file")"
+        
+        bsdtar -xf "$deb_file" -O data.tar.xz 2>/dev/null | tar -xJ -C "$pkgdir" 2>/dev/null || \
+        bsdtar -xf "$deb_file" -O data.tar.gz 2>/dev/null | tar -xz -C "$pkgdir" 2>/dev/null
     done
 
-    _lo_dir_name=$(ls -1 "$pkgdir/opt/" | grep -i libreoffice | head -n 1)
+    _lo_full_path=$(find "$pkgdir/opt" -maxdepth 1 -type d -name "libreoffice*" | head -n 1)
+    _lo_dir_name=$(basename "$_lo_full_path")
 
-    msg2 "Создание симлинков и исправление ярлыков..."
+    if [ -z "$_lo_dir_name" ]; then
+        error "Директория LibreOffice в /opt не найдена. Распаковка не удалась."
+        return 1
+    fi
+
+    msg2 "Настройка симлинков и ярлыков для $_lo_dir_name..."
 
     ln -s "/opt/${_lo_dir_name}/program/soffice" "$pkgdir/usr/bin/libreoffice"
-
+    
     for app in base calc draw impress math writer; do
         ln -s "/opt/${_lo_dir_name}/program/s${app}" "$pkgdir/usr/bin/libreoffice-${app}"
     done
 
-    cp -r "$pkgdir/opt/${_lo_dir_name}/share/xdg/"*.desktop "$pkgdir/usr/share/applications/" 2>/dev/null || true
-
-    _lo_exec_ver=$(echo "$_lo_ver" | cut -d'.' -f1,2)
-    sed -i "s|Exec=libreoffice${_lo_exec_ver}|Exec=libreoffice|g" "$pkgdir/usr/share/applications/"*.desktop
+    if [ -d "$pkgdir/opt/${_lo_dir_name}/share/xdg" ]; then
+        cp "$pkgdir/opt/${_lo_dir_name}/share/xdg/"*.desktop "$pkgdir/usr/share/applications/"
+    fi
+    
+    _short_ver=$(echo "$_lo_ver" | cut -d'.' -f1,2)
+    sed -i "s|Exec=libreoffice${_short_ver}|Exec=libreoffice|g" "$pkgdir/usr/share/applications/"*.desktop
 }
