@@ -33,23 +33,23 @@ source=(
 sha256sums=('SKIP'
             'SKIP')
 
-_extract_deb() {
-    local tmp
-    tmp=$(mktemp -d)
-    ar x "$1" --output="$tmp"
-    bsdtar -xf "$tmp"/data.tar.* -C "$2"
-    rm -rf "$tmp"
+prepare() {
+    mkdir -p _pkg
+    find "$srcdir" -name '*.deb' -print0 | while IFS= read -r -d '' deb; do
+        local tmp
+        tmp=$(mktemp -d)
+        bsdtar -xf "$deb" -C "$tmp"
+        bsdtar -xf "$tmp"/data.tar.* -C _pkg
+        rm -rf "$tmp"
+    done
 }
 
 package() {
-    find "$srcdir" -name '*.deb' -print0 | while IFS= read -r -d '' deb; do
-        _extract_deb "$deb" "$pkgdir"
-    done
+    cp -dr --no-preserve='ownership' _pkg/* "$pkgdir"
 
-    local lo_dir lo_name
-    lo_dir=$(find "$pkgdir/opt" -maxdepth 1 -type d -name 'libreoffice*' | head -n1)
-    [[ -z "$lo_dir" ]] && { error "LibreOffice directory not found in /opt"; return 1; }
-    lo_name=$(basename "$lo_dir")
+    local lo_name
+    lo_name=$(find "$pkgdir/opt" -maxdepth 1 -type d -name 'libreoffice*' -printf '%f\n' | head -n1)
+    [[ -z "$lo_name" ]] && { error "LibreOffice directory not found in /opt"; return 1; }
 
     install -dm755 "$pkgdir/usr/bin"
     ln -s "/opt/${lo_name}/program/soffice" "$pkgdir/usr/bin/libreoffice"
@@ -57,6 +57,11 @@ package() {
         ln -s "/opt/${lo_name}/program/s${app}" "$pkgdir/usr/bin/libreoffice-${app}"
     done
 
-    find "$pkgdir/usr/share/applications" -name '*.desktop' \
-        -exec sed -i 's|Exec=libreoffice[0-9.]*|Exec=libreoffice|g' {} +
+    local xdg_dir="$pkgdir/opt/${lo_name}/share/xdg"
+    if [[ -d "$xdg_dir" ]]; then
+        install -dm755 "$pkgdir/usr/share/applications"
+        install -m644 "$xdg_dir"/*.desktop "$pkgdir/usr/share/applications/"
+        sed -i 's|Exec=libreoffice[0-9.]*|Exec=libreoffice|g' \
+            "$pkgdir/usr/share/applications/"*.desktop
+    fi
 }
