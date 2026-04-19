@@ -1,6 +1,6 @@
 pkgname=libreoffice-bin
 pkgver=26.2.2
-pkgrel=2
+pkgrel=3
 pkgdesc='LibreOffice productivity suite with Russian language support'
 arch=('x86_64')
 url='https://www.libreoffice.org/'
@@ -59,5 +59,5 @@ package() {
     find "$pkgdir/opt/${lo_name}/share/xdg" -name '*.desktop' \
         -exec sed -i 's|Exec=libreoffice[0-9.]*|Exec=libreoffice|g' {} +
 
-    patchelf --remove-needed libXinerama.so.1 "$pkgdir/opt/${lo_name}/program/oosplash"
+    sed -i 's|Logo=1|Logo=0|' "$pkgdir/opt/${lo_name}/program/sofficerc"
 }
