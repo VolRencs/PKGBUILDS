@@ -1,60 +1,66 @@
-# Maintainer: Ваш Ник <ваш@email.com>
-
 pkgname=libreoffice-bin
-_lo_ver=26.2.2
-pkgver=${_lo_ver}
+pkgver=26.2.2
 pkgrel=1
-pkgdesc="LibreOffice productivity suite (binary) - Minimal package with Russian language only (DEB-based)"
+epoch=1
+pkgdesc='LibreOffice productivity suite with Russian language support'
 arch=('x86_64')
-url="https://www.libreoffice.org/"
-license=('LGPL')
-depends=('fontconfig' 'freetype2' 'nss' 'curl' 'dbus' 'libcups' 'glibc' 'zlib' 'libx11' 'libxext' 'libsm')
-provides=('libreoffice')
-conflicts=('libreoffice-fresh' 'libreoffice-still' 'libreoffice-bin')
+url='https://www.libreoffice.org/'
+license=('LGPL-2.1-or-later')
+depends=(
+  'fontconfig'
+  'freetype2'
+  'nss'
+  'curl'
+  'dbus'
+  'libcups'
+  'glibc'
+  'zlib'
+  'libx11'
+  'libxext'
+  'libsm'
+)
+makedepends=('binutils')
+provides=("libreoffice=${pkgver}")
+conflicts=('libreoffice-fresh' 'libreoffice-still')
+options=('!strip' '!emptydirs')
 
-_base_url="https://download.documentfoundation.org/libreoffice/stable/${_lo_ver}/deb/x86_64"
-_pkg_main="LibreOffice_${_lo_ver}_Linux_x86-64_deb"
-_pkg_lang="LibreOffice_${_lo_ver}_Linux_x86-64_deb_langpack_ru"
+_base_url="https://download.documentfoundation.org/libreoffice/stable/${pkgver}/deb/x86_64"
 
-source=("${_base_url}/${_pkg_main}.tar.gz"
-        "${_base_url}/${_pkg_lang}.tar.gz")
-
+source=(
+  "LibreOffice_${pkgver}_deb.tar.gz::${_base_url}/LibreOffice_${pkgver}_Linux_x86-64_deb.tar.gz"
+  "LibreOffice_${pkgver}_deb_ru.tar.gz::${_base_url}/LibreOffice_${pkgver}_Linux_x86-64_deb_langpack_ru.tar.gz"
+)
 sha256sums=('SKIP'
             'SKIP')
 
+_extract_deb() {
+    local tmp
+    tmp=$(mktemp -d)
+    ar x "$1" --output="$tmp"
+    bsdtar -xf "$tmp"/data.tar.* -C "$2"
+    rm -rf "$tmp"
+}
+
 package() {
+    find "$srcdir" -name '*.deb' -print0 | while IFS= read -r -d '' deb; do
+        _extract_deb "$deb" "$pkgdir"
+    done
+
+    local lo_dir lo_name
+    lo_dir=$(find "$pkgdir/opt" -maxdepth 1 -type d -name 'libreoffice*' | head -n1)
+    [[ -z "$lo_dir" ]] && { error "LibreOffice directory not found in /opt"; return 1; }
+    lo_name=$(basename "$lo_dir")
+
     install -dm755 "$pkgdir/usr/bin"
-    install -dm755 "$pkgdir/usr/share/applications"
-
-    msg2 "Поиск и распаковка всех .deb пакетов в $srcdir..."
-
-    find "$srcdir" -name "*.deb" | while read -r deb_file; do
-        msg3 "Обработка: $(basename "$deb_file")"
-        
-        bsdtar -xf "$deb_file" -O data.tar.xz 2>/dev/null | tar -xJ -C "$pkgdir" 2>/dev/null || \
-        bsdtar -xf "$deb_file" -O data.tar.gz 2>/dev/null | tar -xz -C "$pkgdir" 2>/dev/null
-    done
-
-    _lo_full_path=$(find "$pkgdir/opt" -maxdepth 1 -type d -name "libreoffice*" | head -n 1)
-    _lo_dir_name=$(basename "$_lo_full_path")
-
-    if [ -z "$_lo_dir_name" ]; then
-        error "Директория LibreOffice в /opt не найдена. Распаковка не удалась."
-        return 1
-    fi
-
-    msg2 "Настройка симлинков и ярлыков для $_lo_dir_name..."
-
-    ln -s "/opt/${_lo_dir_name}/program/soffice" "$pkgdir/usr/bin/libreoffice"
-    
+    ln -s "/opt/${lo_name}/program/soffice" "$pkgdir/usr/bin/libreoffice"
     for app in base calc draw impress math writer; do
-        ln -s "/opt/${_lo_dir_name}/program/s${app}" "$pkgdir/usr/bin/libreoffice-${app}"
+        ln -s "/opt/${lo_name}/program/s${app}" "$pkgdir/usr/bin/libreoffice-${app}"
     done
 
-    if [ -d "$pkgdir/opt/${_lo_dir_name}/share/xdg" ]; then
-        cp "$pkgdir/opt/${_lo_dir_name}/share/xdg/"*.desktop "$pkgdir/usr/share/applications/"
+    local xdg_dir="$pkgdir/opt/${lo_name}/share/xdg"
+    if [[ -d "$xdg_dir" ]]; then
+        install -dm755 "$pkgdir/usr/share/applications"
+        install -m644 "$xdg_dir"/*.desktop "$pkgdir/usr/share/applications/"
+        sed -i 's|Exec=libreoffice[0-9.]*|Exec=libreoffice|g' "$pkgdir/usr/share/applications/"*.desktop
     fi
-    
-    _short_ver=$(echo "$_lo_ver" | cut -d'.' -f1,2)
-    sed -i "s|Exec=libreoffice${_short_ver}|Exec=libreoffice|g" "$pkgdir/usr/share/applications/"*.desktop
 }
