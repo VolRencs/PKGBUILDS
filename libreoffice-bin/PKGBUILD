@@ -57,10 +57,6 @@ package() {
         ln -s "/opt/${lo_name}/program/s${app}" "$pkgdir/usr/bin/libreoffice-${app}"
     done
 
-    local xdg_dir="$pkgdir/opt/${lo_name}/share/xdg"
-    if [[ -d "$xdg_dir" ]]; then
-        install -dm755 "$pkgdir/usr/share/applications"
-        install -m644 "$xdg_dir"/*.desktop "$pkgdir/usr/share/applications/"
-        sed -i 's|Exec=libreoffice[0-9.]*|Exec=libreoffice|g' "$pkgdir/usr/share/applications/"*.desktop
-    fi
+    find "$pkgdir/usr/share/applications" -name '*.desktop' \
+        -exec sed -i 's|Exec=libreoffice[0-9.]*|Exec=libreoffice|g' {} +
 }
