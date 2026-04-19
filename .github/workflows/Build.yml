@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       packages:
-        description: "Directories to build"
+        description: "Directories to build (one per line)"
         required: true
         type: string
         default: |
@@ -26,44 +26,32 @@ on:
         default: false
 
 jobs:
-
   prepare:
-    name: Prepare matrix
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
-
     steps:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - name: Resolve package list
-        id: set-matrix
+      - id: set-matrix
         run: |
-          set -euo pipefail
-
           if [ "${{ github.event_name }}" = "push" ]; then
             BEFORE="${{ github.event.before }}"
             if [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
-              PKGS=$(find . -name PKGBUILD -printf '%h\n' | sed 's|^\./||' | sort -u | jq -R . | jq -sc .)
+              PKGS=$(find . -name PKGBUILD -printf '%h\n' | sed 's|^\./||')
             else
               PKGS=$(git diff --name-only "$BEFORE" "${{ github.sha }}" \
-                | grep 'PKGBUILD$' | xargs -I{} dirname {} | sed 's|^\./||' | sort -u \
-                | jq -R . | jq -sc .)
+                | grep 'PKGBUILD$' | xargs -I{} dirname {} | sed 's|^\./||')
             fi
           else
-            PKGS=$(printf '%s\n' '${{ inputs.packages }}' \
-              | sed 's/^[[:space:]]*//; s/[[:space:]]*$//' | grep -v '^$' \
-              | jq -R . | jq -sc .)
+            PKGS=$(printf '%s' '${{ inputs.packages }}' | grep -v '^$')
           fi
 
-          echo "Packages: $PKGS"
-          [ "$PKGS" = "[]" ] && echo "::warning::No packages found — nothing to do."
-          echo "matrix=$PKGS" >> "$GITHUB_OUTPUT"
+          echo "matrix=$(echo "$PKGS" | sort -u | jq -R . | jq -sc .)" >> "$GITHUB_OUTPUT"
 
   build:
-    name: "${{ matrix.pkg }}"
     needs: prepare
     if: needs.prepare.outputs.matrix != '[]' && needs.prepare.outputs.matrix != ''
     runs-on: ubuntu-latest
@@ -71,76 +59,51 @@ jobs:
       matrix:
         pkg: ${{ fromJson(needs.prepare.outputs.matrix) }}
       fail-fast: false
-
     steps:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - name: Detect version change
+      - name: Check version
         id: version
         run: |
-          set -euo pipefail
           PKGBUILD="${{ matrix.pkg }}/PKGBUILD"
 
-          get_field() {
-            local val
-            val=$(grep -m1 "^${1}=" "$2" | cut -d= -f2- | tr -d "\"'() " | awk '{print $1}')
-            if [ -z "$val" ]; then
-              val=$(awk -v key="^${1}=(" '
-                $0 ~ key { found=1; next }
-                found && /^[[:space:]]*[^)[:space:]]/ { gsub(/[[:space:]]/, ""); print; exit }
-              ' "$2")
-            fi
-            echo "$val"
-          }
+          get_field() { grep -m1 "^${1}=" "$PKGBUILD" | cut -d= -f2- | tr -d "\"' "; }
 
-          PKGBASE=$(get_field pkgbase "$PKGBUILD")
-          [ -z "$PKGBASE" ] && PKGBASE=$(get_field pkgname "$PKGBUILD")
-
-          PKGVER=$(get_field pkgver  "$PKGBUILD")
-          PKGREL=$(get_field pkgrel  "$PKGBUILD")
-          EPOCH=$(get_field  epoch   "$PKGBUILD")
-
+          PKGBASE=$(get_field pkgbase)
+          [ -z "$PKGBASE" ] && PKGBASE=$(get_field pkgname)
+          PKGVER=$(get_field pkgver)
+          PKGREL=$(get_field pkgrel)
+          EPOCH=$(get_field epoch)
           FULLVER="${EPOCH:+${EPOCH}:}${PKGVER}-${PKGREL}"
           TAG="${PKGBASE}-v${FULLVER//:/_}"
 
-          echo "pkgbase=$PKGBASE" >> "$GITHUB_OUTPUT"
-          echo "fullver=$FULLVER" >> "$GITHUB_OUTPUT"
-          echo "tag=$TAG"         >> "$GITHUB_OUTPUT"
+          echo "pkgbase=$PKGBASE"  >> "$GITHUB_OUTPUT"
+          echo "fullver=$FULLVER"  >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG"          >> "$GITHUB_OUTPUT"
 
-          LAST_TAG=$(git tag --list "${PKGBASE}-v*" --sort=-version:refname | head -1 || true)
-
+          LAST_TAG=$(git tag --list "${PKGBASE}-v*" --sort=-version:refname | head -1)
           if [ -z "$LAST_TAG" ]; then
-            echo "::notice::No previous tag for $PKGBASE — first release."
             echo "should_release=true" >> "$GITHUB_OUTPUT"
             echo "prev_ver=(none)"     >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
           PREV_BUILD=$(git show "${LAST_TAG}:${PKGBUILD}" 2>/dev/null || true)
-          if [ -z "$PREV_BUILD" ]; then
-            echo "::notice::PKGBUILD not found at $LAST_TAG — treating as new."
-            echo "should_release=true"  >> "$GITHUB_OUTPUT"
-            echo "prev_ver=(unknown)"   >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          prev_field() { echo "$PREV_BUILD" | grep -m1 "^${1}=" | cut -d= -f2- | tr -d "\"'() "; }
+          prev_field() { echo "$PREV_BUILD" | grep -m1 "^${1}=" | cut -d= -f2- | tr -d "\"' "; }
           PREV_EPOCH=$(prev_field epoch)
           PREV_FULLVER="${PREV_EPOCH:+${PREV_EPOCH}:}$(prev_field pkgver)-$(prev_field pkgrel)"
 
           echo "prev_ver=$PREV_FULLVER" >> "$GITHUB_OUTPUT"
-          echo "Current: $FULLVER  |  Previous: $PREV_FULLVER"
 
           if [ "$FULLVER" != "$PREV_FULLVER" ] || [ "${{ inputs.force_release }}" = "true" ]; then
             echo "should_release=true"  >> "$GITHUB_OUTPUT"
           else
-            echo "::notice::Version unchanged for $PKGBASE ($FULLVER) — skipping."
             echo "should_release=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Build package
+      - name: Build
         if: steps.version.outputs.should_release == 'true'
         run: |
           docker run --rm \
@@ -148,7 +111,6 @@ jobs:
             -w /workspace \
             -e PACKAGE_DIR="${{ matrix.pkg }}" \
             archlinux:latest bash -c '
-              set -euo pipefail
               pacman -Syu --noconfirm base-devel
               useradd -m builder
               chown -R builder:builder /workspace
@@ -156,40 +118,25 @@ jobs:
               su builder -c "cd \"$PACKAGE_DIR\" && makepkg -s --noconfirm"
             '
 
-      - name: Find built artifacts
+      - name: Collect artifacts
         if: steps.version.outputs.should_release == 'true'
         id: artifact
         run: |
-          set -euo pipefail
-
-          FILES=$(find "${{ matrix.pkg }}" -maxdepth 1 -name "*.pkg.tar.*" ! -name "*.sig" \
-            | paste -sd ',' -)
-          if [ -z "$FILES" ]; then
-            echo "::error::No artifacts found in ${{ matrix.pkg }}/"
-            ls -la "${{ matrix.pkg }}/"
-            exit 1
-          fi
+          FILES=$(find "${{ matrix.pkg }}" -maxdepth 1 -name "*.pkg.tar.*" ! -name "*.sig" | paste -sd,)
+          [ -z "$FILES" ] && { echo "::error::No artifacts found"; exit 1; }
           echo "files=$FILES" >> "$GITHUB_OUTPUT"
-          echo "Found: $FILES"
 
-      - name: Fix git ownership
-        if: steps.version.outputs.should_release == 'true'
-        run: sudo chown -R "$(whoami):$(whoami)" .git
-
-      - name: Create and push tag
+      - name: Push tag
         if: steps.version.outputs.should_release == 'true'
         run: |
+          sudo chown -R "$(whoami):$(whoami)" .git
           git config user.name  "GitHub Actions"
           git config user.email "actions@github.com"
           TAG="${{ steps.version.outputs.tag }}"
-          if git rev-parse "$TAG" >/dev/null 2>&1; then
-            echo "::notice::Tag $TAG already exists — reusing."
-          else
-            git tag -a "$TAG" -m "Release $TAG"
-            git push origin "$TAG"
-          fi
+          git rev-parse "$TAG" >/dev/null 2>&1 \
+            || git tag -a "$TAG" -m "Release $TAG" && git push origin "$TAG"
 
-      - name: Publish release
+      - name: Release
         if: steps.version.outputs.should_release == 'true'
         uses: ncipollo/release-action@v1
         with:
@@ -199,23 +146,17 @@ jobs:
             **Package:** `${{ steps.version.outputs.pkgbase }}`
             **Version:** `${{ steps.version.outputs.fullver }}`
             **Previous:** `${{ steps.version.outputs.prev_ver }}`
-          artifacts:             ${{ steps.artifact.outputs.files }}
-          generateReleaseNotes:  true
-          skipIfReleaseExists:   true
+          artifacts:            ${{ steps.artifact.outputs.files }}
+          generateReleaseNotes: true
+          skipIfReleaseExists:  true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Job summary
+      - name: Summary
         if: always()
         run: |
-          PKG="${{ steps.version.outputs.pkgbase }}"
-          VER="${{ steps.version.outputs.fullver }}"
-          PREV="${{ steps.version.outputs.prev_ver }}"
-          {
-            echo "## $PKG"
-            if [ "${{ steps.version.outputs.should_release }}" = "true" ]; then
-              echo "✅ Released \`$VER\` (was \`$PREV\`)"
-            else
-              echo "⏭️ Skipped — \`$VER\` unchanged"
-            fi
-          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ steps.version.outputs.should_release }}" = "true" ]; then
+            echo "## ✅ ${{ steps.version.outputs.pkgbase }} — released \`${{ steps.version.outputs.fullver }}\` (was \`${{ steps.version.outputs.prev_ver }}\`)" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "## ⏭️ ${{ steps.version.outputs.pkgbase }} — skipped, version \`${{ steps.version.outputs.fullver }}\` unchanged" >> "$GITHUB_STEP_SUMMARY"
+          fi
