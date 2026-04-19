@@ -1,6 +1,6 @@
 pkgname=libreoffice-bin
 pkgver=26.2.2
-pkgrel=3
+pkgrel=1
 pkgdesc='LibreOffice productivity suite with Russian language support'
 arch=('x86_64')
 url='https://www.libreoffice.org/'
@@ -17,6 +17,7 @@ depends=(
   'libx11'
   'libxext'
   'libsm'
+  'libxinerama'
 )
 makedepends=('patchelf')
 provides=("libreoffice=${pkgver}")
@@ -58,6 +59,4 @@ package() {
 
     find "$pkgdir/opt/${lo_name}/share/xdg" -name '*.desktop' \
         -exec sed -i 's|Exec=libreoffice[0-9.]*|Exec=libreoffice|g' {} +
-
-    sed -i 's|Logo=1|Logo=0|' "$pkgdir/opt/${lo_name}/program/sofficerc"
 }
