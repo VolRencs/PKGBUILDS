@@ -37,7 +37,11 @@ sha256sums=(
 )
 
 prepare() {
-  git -C "$pkgname" apply ../0001-fix-optional-submodules.patch
+  sed -i 's/message(FATAL_ERROR "Required submodule .obs-browser. not available.")/if(ENABLE_BROWSER)\n        message(FATAL_ERROR "Required submodule '\''obs-browser'\'' not available.")\n      endif()/' \
+    "$pkgname/plugins/CMakeLists.txt"
+
+  sed -i 's/message(FATAL_ERROR "Required submodule .obs-websocket. not available.")/if(ENABLE_WEBSOCKET)\n    message(FATAL_ERROR "Required submodule '\''obs-websocket'\'' not available.")\n  endif()/' \
+    "$pkgname/plugins/CMakeLists.txt"
 }
 
 build() {
