@@ -25,6 +25,7 @@ makedepends=(
   'uthash'
   'vulkan-headers'
   'ninja'
+  'git'
 )
 source=("$pkgname::git+https://github.com/obsproject/obs-studio#tag=$pkgver")
 sha256sums=('0fe20e08702bfa655e1b942922cb804024200e4a47c4b8b82674432c7c480196')
