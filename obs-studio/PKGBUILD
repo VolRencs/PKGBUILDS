@@ -27,14 +27,8 @@ makedepends=(
   'ninja'
   'git'
 )
-source=(
-  "$pkgname::git+https://github.com/obsproject/obs-studio#tag=$pkgver"
-  "0001-fix-optional-submodules.patch"
-)
-sha256sums=(
-  '5d515107c68006319c91d24a3a661f6fc4c1a619ebbac85a567fb6f5fec1e2c4'
-  'SKIP'
-)
+source=("$pkgname::git+https://github.com/obsproject/obs-studio#tag=$pkgver")
+sha256sums=('5d515107c68006319c91d24a3a661f6fc4c1a619ebbac85a567fb6f5fec1e2c4')
 
 prepare() {
   sed -i 's/message(FATAL_ERROR "Required submodule .obs-browser. not available.")/if(ENABLE_BROWSER)\n        message(FATAL_ERROR "Required submodule '\''obs-browser'\'' not available.")\n      endif()/' \
