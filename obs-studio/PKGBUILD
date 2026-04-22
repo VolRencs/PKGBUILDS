@@ -27,8 +27,18 @@ makedepends=(
   'ninja'
   'git'
 )
-source=("$pkgname::git+https://github.com/obsproject/obs-studio#tag=$pkgver")
-sha256sums=('5d515107c68006319c91d24a3a661f6fc4c1a619ebbac85a567fb6f5fec1e2c4')
+source=(
+  "$pkgname::git+https://github.com/obsproject/obs-studio#tag=$pkgver"
+  "0001-fix-optional-submodules.patch"
+)
+sha256sums=(
+  '5d515107c68006319c91d24a3a661f6fc4c1a619ebbac85a567fb6f5fec1e2c4'
+  'SKIP'
+)
+
+prepare() {
+  git -C "$pkgname" apply ../0001-fix-optional-submodules.patch
+}
 
 build() {
   local cmake_options=(
