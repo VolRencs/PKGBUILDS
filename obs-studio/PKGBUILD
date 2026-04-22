@@ -1,7 +1,7 @@
 # Maintainer: VolRen <VolRencs@proton.me>
 
 pkgname=obs-studio
-pkgver=32.1.1
+pkgver=32.1.2
 pkgrel=1
 epoch=1
 pkgdesc="Free and open source software for video recording and live streaming"
@@ -26,31 +26,34 @@ makedepends=(
   'vulkan-headers'
   'ninja'
 )
-source=("$pkgname-$pkgver.tar.gz::https://github.com/obsproject/obs-studio/releases/download/$pkgver/OBS-Studio-$pkgver-Sources.tar.gz")
-sha256sums=('f4c17e1aa2a00efd8729ed6cfef9308bc6a2b6c583c187d7959eaa72eb2e3676')
+source=("$pkgname::git+https://github.com/obsproject/obs-studio#tag=$pkgver")
+sha256sums=('0fe20e08702bfa655e1b942922cb804024200e4a47c4b8b82674432c7c480196')
 
 build() {
-  cmake -B build -S "$pkgname-$pkgver-sources" -G Ninja \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DENABLE_AJA=OFF \
-    -DENABLE_ALSA=OFF \
-    -DENABLE_BROWSER=OFF \
-    -DENABLE_DECKLINK=OFF \
-    -DENABLE_JACK=OFF \
-    -DENABLE_LIBFDK=OFF \
-    -DENABLE_NEW_MPEGTS_OUTPUT=OFF \
-    -DENABLE_SCRIPTING=OFF \
-    -DENABLE_SNDIO=OFF \
-    -DENABLE_V4L2=OFF \
-    -DENABLE_VLC=OFF \
-    -DENABLE_VST=OFF \
-    -DENABLE_WEBRTC=OFF \
-    -DENABLE_WEBSOCKET=OFF \
-    -DENABLE_QSV11=OFF \
-    -DOBS_VERSION_OVERRIDE="$pkgver" \
+  local cmake_options=(
+    -B build
+    -S $pkgname
+    -G Ninja
+    -DCMAKE_INSTALL_PREFIX=/usr
+    -DENABLE_AJA=OFF
+    -DENABLE_ALSA=OFF
+    -DENABLE_BROWSER=OFF
+    -DENABLE_DECKLINK=OFF
+    -DENABLE_JACK=OFF
+    -DENABLE_LIBFDK=OFF
+    -DENABLE_NEW_MPEGTS_OUTPUT=OFF
+    -DENABLE_SCRIPTING=OFF
+    -DENABLE_SNDIO=OFF
+    -DENABLE_V4L2=OFF
+    -DENABLE_VLC=OFF
+    -DENABLE_VST=OFF
+    -DENABLE_WEBRTC=OFF
+    -DENABLE_WEBSOCKET=OFF
+    -DENABLE_QSV11=OFF
+    -DOBS_VERSION_OVERRIDE="$pkgver"
     -Wno-dev
-
+  )
+  cmake "${cmake_options[@]}"
   cmake --build build
 }
 package() {
