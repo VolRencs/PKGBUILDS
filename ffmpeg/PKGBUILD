@@ -1,6 +1,6 @@
 pkgname=ffmpeg
 pkgver=8.1
-pkgrel=11
+pkgrel=12
 epoch=3
 pkgdesc='Complete solution to record, convert and stream audio and video'
 arch=(x86_64)
@@ -38,7 +38,6 @@ depends=(
   opus
   snappy
   svt-av1
-  v4l-utils
   vid.stab
   vulkan-icd-loader
   x264
@@ -125,7 +124,6 @@ build() {
     --enable-libsnappy \
     --enable-libsoxr \
     --enable-libsvtav1 \
-    --enable-libv4l2 \
     --enable-libvidstab \
     --enable-libvorbis \
     --enable-libvpx \
