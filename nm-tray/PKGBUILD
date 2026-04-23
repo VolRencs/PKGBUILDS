@@ -1,5 +1,4 @@
-_pkgname="nm-tray"
-pkgname="$_pkgname"
+pkgname=nm-tray
 pkgver=0.5.1
 pkgrel=1
 epoch=1
@@ -7,8 +6,8 @@ pkgdesc='Simple Qt-based frontend for NetworkManager with icon in system tray'
 url='https://github.com/palinek/nm-tray'
 license=('GPL-2.0-or-later')
 arch=('x86_64' 'aarch64')
-
 depends=(
+  'qt6-base'
   'networkmanager-qt'
 )
 makedepends=(
@@ -16,19 +15,16 @@ makedepends=(
   'ninja'
   'qt6-tools'
 )
-
-_pkgsrc="$pkgname-$pkgver"
 source=(
   "$pkgname-$pkgver.tar.gz"::"https://github.com/palinek/nm-tray/archive/$pkgver.tar.gz"
 )
 sha256sums=(
   '482ff25dff752ca5e43e9e475afab95fbb28da88e3c87bc4afa3d789a99d5aac'
 )
-
 build() {
   local _cmake_options=(
     -B build
-    -S "$_pkgsrc"
+    -S "$pkgname-$pkgver"
     -G Ninja
     -DCMAKE_INSTALL_PREFIX='/usr'
     -DNM_TRAY_XDG_AUTOSTART_DIR='/etc/xdg/autostart'
@@ -38,8 +34,7 @@ build() {
   cmake "${_cmake_options[@]}"
   cmake --build build
 }
-
 package() {
   DESTDIR="$pkgdir" cmake --install build
-  install -Dm644 "$_pkgsrc/COPYING" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 "$pkgname-$pkgver/COPYING" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
