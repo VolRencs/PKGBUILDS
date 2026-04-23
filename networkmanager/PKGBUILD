@@ -87,6 +87,7 @@ build() {
     -D tests=no
     -D more_asserts=no
     -D more_logging=false
+    -D man=false
     -D qt=false
   )
   arch-meson NetworkManager build "${meson_options[@]}"
