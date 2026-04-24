@@ -48,7 +48,7 @@ build() {
     -DWITH_VTK=OFF \
     -DWITH_EIGEN=OFF \
     -DWITH_JPEGXL=OFF \
-    -CPU_BASELINE_DISABLE=SSE3 \
+    -DCPU_BASELINE_DISABLE=SSE3 \
     -DCPU_BASELINE_REQUIRE=SSE2
   cmake --build build
 }
