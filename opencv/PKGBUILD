@@ -13,10 +13,11 @@ depends=(abseil-cpp
          libpng
          libtiff
          libwebp
-         tbb
+         onetbb
          zlib)
 makedepends=(cmake
-             git)
+             git
+             onetbb)
 source=(git+https://github.com/opencv/opencv#tag=$pkgver)
 sha256sums=('efc754fc3888944007586133fc225f0136d1767020564b81e4d90f51e9d68b60')
 options=(!lto)
