@@ -13,17 +13,17 @@ depends=(abseil-cpp
          libpng
          libtiff
          libwebp
-         onetbb
+         tbb
          zlib)
 makedepends=(cmake
              git
-             onetbb)
+             ninja)
 source=(git+https://github.com/opencv/opencv#tag=$pkgver)
 sha256sums=('efc754fc3888944007586133fc225f0136d1767020564b81e4d90f51e9d68b60')
 options=(!lto)
 
 build() {
-  cmake -B build -S $pkgname \
+  cmake -B build -S $pkgname -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_CXX_STANDARD=17 \
     -DBUILD_LIST=core,imgproc \
