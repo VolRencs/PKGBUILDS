@@ -1,7 +1,7 @@
 # Maintainer: VolRen <VolRencs@proton.me>
 
 pkgname=firefox
-pkgver=149.0.2
+pkgver=150.0
 pkgrel=1
 epoch=1
 pkgdesc="Fast, Private & Safe Web Browser"
@@ -63,26 +63,26 @@ source=(
   $pkgname-symbolic.svg
   $pkgname.desktop
   Install-under-remoting-name.patch
-  Patch2.patch
-  Patch3.patch
-  Patch4.patch
+  patch1.patch
+  patch2.patch
+  patch3.patch
 )
-sha256sums=('6a931a2cf087164c689099c3856b3091a7e156a7b94fab8ab5712affe87870ce'
-            '40bd843fde669f32c1ce9153513830ad134eb8439cd6e3f30aa72c21fb6fe597'
+sha256sums=('fbe43df4c8a135cee4b29c375574bd9f609ee37a9f3b43bb96a83680e8ef3994'
+            '00cd52b9e5eabf4219f668215e47734caada4c373ddfa10d100e1bce326a6849'
             'a9b8b4a0a1f4a7b4af77d5fc70c2686d624038909263c795ecc81e0aec7711e9'
             '381a0bb236513a48596fcd17115629b19c5d862ce845144c7dfb61cd8903b1b8'
             'ef63a12975f108f30b00bb3290d9ca76f311d8af9c1d5dfc0d8335ad57e8f77c'
-            '7e8ee1997aa0c6db7de6fe5da0bca88b5c1c3aa2db0b18950e24e5cbe4df8d84'
-            'bf4a7667fb7d7a64795a6ea3d34515c55f46e42872fd3c5a8e8e99964bb3c4e8'
-            '28b086f5492d8e6731fe0dfe34a2e4c6d4d502a9eefa15a31e44b5788cf4df89')
+            '9f10d9bfcaa3a8dd86a8654431f820716a45a72a885c29fd6359bccc7bcdaefa'
+            'f579e02644ef9c29da5cd61d2c9213ba1c3f7a1aa8abf601bdf07cbbbadb1ce3'
+            'd6e1dbafe56bc52c8ab6cbf9542cf80e89c1857a71ce08bbbd82804909bcb76f')
 
 prepare() {
   cd firefox-$pkgver
 
   patch -Np1 -i ../Install-under-remoting-name.patch
-  patch -Np1 -i ../Patch2.patch
-  patch -Np1 -i ../Patch3.patch
-  patch -Np1 -i ../Patch4.patch
+  patch -Np1 -i ../patch1.patch
+  patch -Np1 -i ../patch2.patch
+  patch -Np1 -i ../patch3.patch
 
   cat >mozconfig <<END
 ac_add_options --enable-application=browser
