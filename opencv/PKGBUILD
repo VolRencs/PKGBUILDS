@@ -1,6 +1,6 @@
 pkgname=opencv
 pkgver=4.13.0
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc='Open Source Computer Vision Library (spectacle)'
 arch=(x86_64)
@@ -13,7 +13,6 @@ depends=(abseil-cpp
          libpng
          libtiff
          libwebp
-         tbb
          zlib)
 makedepends=(cmake
              git
@@ -27,7 +26,7 @@ build() {
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_CXX_STANDARD=17 \
     -DBUILD_LIST=core,imgproc \
-    -DWITH_TBB=ON \
+    -DWITH_TBB=OFF \
     -DBUILD_TESTS=OFF \
     -DBUILD_PERF_TESTS=OFF \
     -DBUILD_EXAMPLES=OFF \
