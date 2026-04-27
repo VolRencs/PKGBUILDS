@@ -9,10 +9,6 @@ url='https://opencv.org/'
 depends=(abseil-cpp
          gcc-libs
          glibc
-         libjpeg-turbo
-         libpng
-         libtiff
-         libwebp
          zlib)
 makedepends=(cmake
              git
@@ -31,7 +27,10 @@ build() {
     -DBUILD_PERF_TESTS=OFF \
     -DBUILD_EXAMPLES=OFF \
     -DBUILD_PROTOBUF=OFF \
+    -DBUILD_OPENJPEG=OFF \
+    -DBUILD_OPENEXR=OFF \
     -DBUILD_WITH_DEBUG_INFO=OFF \
+    -DBUILD_opencv_apps=OFF \
     -DINSTALL_C_EXAMPLES=OFF \
     -DINSTALL_PYTHON_EXAMPLES=OFF \
     -DOPENCV_SKIP_PYTHON_LOADER=ON \
@@ -47,6 +46,7 @@ build() {
     -DWITH_VTK=OFF \
     -DWITH_EIGEN=OFF \
     -DWITH_JPEGXL=OFF \
+    -DCV_TRACE=OFF \
     -DCPU_BASELINE_DISABLE=SSE3 \
     -DCPU_BASELINE_REQUIRE=SSE2
   cmake --build build
