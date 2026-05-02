@@ -1,5 +1,5 @@
 pkgname=libreoffice-bin
-pkgver=26.2.2
+pkgver=26.2.3
 pkgrel=1
 pkgdesc='LibreOffice productivity suite with Russian language support'
 arch=('x86_64')
