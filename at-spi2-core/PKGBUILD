@@ -1,6 +1,6 @@
 pkgname=at-spi2-core
 pkgver=2.60.2
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="Protocol definitions and daemon for D-Bus at-spi"
 url="https://gitlab.gnome.org/GNOME/at-spi2-core"
@@ -61,4 +61,8 @@ package() {
     'atk<=2.38.0-2'
   )
   meson install -C build --destdir "$pkgdir"
+
+  rm -f "$pkgdir/usr/share/dbus-1/services/org.a11y.Bus.service"
+  rm -f "$pkgdir/usr/lib/systemd/user/at-spi-dbus-bus.service"
+  rm -f "$pkgdir/etc/xdg/autostart/at-spi-dbus-bus.desktop"
 }
