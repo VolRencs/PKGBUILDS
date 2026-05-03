@@ -34,6 +34,7 @@ build() {
     -D docs=false
     -D gtk2_atk_adaptor=false
     -D x11=disabled
+    -D introspection=disabled
   )
   arch-meson at-spi2-core build "${meson_options[@]}"
   meson compile -C build
