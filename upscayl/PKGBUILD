@@ -1,50 +1,56 @@
-pkgname='upscayl'
+# Maintainer: Kevin MacMartin <prurigro@gmail.com>
+# Contributor: bionade24
+# Contributor: vivaeltopo
+# Contributor: aliu
+# Contributor: chrrybmb
+
+_pkgname=upscayl
+pkgname=$_pkgname-bin
+pkgver=2.15.0
+pkgrel=1
 pkgdesc='Free and Open Source AI Image Upscaler'
-pkgver='2.15.0'
-pkgrel='1'
-arch=('x86_64')
 url='https://github.com/upscayl/upscayl'
-license=('AGPL3')
-depends=('bash')
-makedepends=(
-  'fuse2'
-  'zlib'
-  'findutils'
-)
+license=('AGPL-3.0-only')
+arch=('x86_64')
+depends=('libvips' 'openjpeg2' 'electron39' 'nodejs' 'vulkan-driver')
+makedepends=('unzip')
+provides=($_pkgname)
+conflicts=($_pkgname)
+noextract=("upscayl-${pkgver}-linux.zip")
+
 source=(
-  "https://github.com/upscayl/upscayl/releases/download/v$pkgver/upscayl-$pkgver-linux.AppImage"
-  'upscayl.desktop'
-  'upscayl'
-)
-sha256sums=(
-  '6459457e589bcb99e779ea442dce608bacda33916b7019a8862b7c6252aa8229'
-  '944415997b67911834f89698ec506e050d04fb65306f65bd74e0476b84137567'
-  '7014b447ea16dfc8a5b64fdcfb03b838af4f03f7c0ddbfad773bd848e0e9a315'
+  "https://github.com/upscayl/upscayl/releases/download/v${pkgver}/upscayl-${pkgver}-linux.zip"
+  "$_pkgname"
+  'org.upscayl.Upscayl.desktop'
 )
 
-build() {
-  chmod +x "./upscayl-$pkgver-linux.AppImage"
-  "./upscayl-$pkgver-linux.AppImage" --appimage-extract
-  chmod 755 squashfs-root
+sha512sums=(
+  '2500a453c8eb9014d958a278ad8557c34085ce80dd2fce112b12e1643a1c37469ec09914c8ad06795cbf6ad23bd30ba6cb4290f0933b1cd37cc1a8724ac61553'
+  'd2c825f204bc6986b209143363c915419caf42d310cb06b9628af083e5b99d32a199afcc9c4eeb73359862e1363a01f5ecbf576d8b2a92e807b8b9236b402635'
+  '51387f42e9b389a599c17690ce2004c51292a4732642fe0c1f6347baecdac719ef88c1fd66b24a5999b13282d3834c75d4047f34fda8ef5783c9e82ed261240e'
+)
+
+prepare() {
+  cd "$srcdir"
+  unzip ${_pkgname}-${pkgver}-linux.zip -x resources/128x128.png -d ${_pkgname}-${pkgver}
 }
 
 package() {
-  install -d "$pkgdir/opt"
+  cd "$srcdir"
 
-  cp -a squashfs-root "$pkgdir/opt/upscayl"
+  # Launcher script, symlink to the cli and xdg desktop file
+  install -Dm755 "$_pkgname" "$pkgdir"/usr/bin/$_pkgname
+  ln -s /usr/share/upscayl/bin/upscayl-bin "$pkgdir"/usr/bin/${_pkgname}-ncnn
+  install -Dm644 org.upscayl.Upscayl.desktop "$pkgdir"/usr/share/applications/org.upscayl.Upscayl.desktop
 
-  install -Dm755 upscayl         "$pkgdir/usr/bin/upscayl"
-  install -Dm644 upscayl.desktop "$pkgdir/usr/share/applications/upscayl.desktop"
+  # Enter the package folder
+  cd ${_pkgname}-${pkgver}/resources
 
-  for size in '0x0' '128x128' '512x512'; do
-    local suffix="usr/share/icons/hicolor/$size/apps"
-    install -d "$pkgdir/$suffix"
-    ln -s "/opt/upscayl/$suffix/upscayl.png" "$pkgdir/$suffix/upscayl.png"
-  done
+  # XDG launcher
+  install -dm755 "$pkgdir"/usr/share/pixmaps
+  mv 512x512.png "$pkgdir"/usr/share/pixmaps/org.upscayl.Upscayl.png
 
-  find "$pkgdir" -not -type l \( -type d -o -perm /111 \) \
-    -print0 | while IFS= read -r -d '' f; do chmod 755 "$f"; done
-
-  find "$pkgdir" -not -type l -type f -not -perm /111 \
-    -print0 | while IFS= read -r -d '' f; do chmod 644 "$f"; done
+  # App directory
+  install -dm755 "$pkgdir"/usr/share/$_pkgname
+  mv * "$pkgdir"/usr/share/${_pkgname}/
 }
