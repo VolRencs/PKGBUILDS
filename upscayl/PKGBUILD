@@ -1,0 +1,50 @@
+pkgname='upscayl'
+pkgdesc='Free and Open Source AI Image Upscaler'
+pkgver='2.15.0'
+pkgrel='1'
+arch=('x86_64')
+url='https://github.com/upscayl/upscayl'
+license=('AGPL3')
+depends=('bash')
+makedepends=(
+  'fuse2'
+  'zlib'
+  'findutils'
+)
+source=(
+  "https://github.com/upscayl/upscayl/releases/download/v$pkgver/upscayl-$pkgver-linux.AppImage"
+  'upscayl.desktop'
+  'upscayl'
+)
+sha256sums=(
+  '6459457e589bcb99e779ea442dce608bacda33916b7019a8862b7c6252aa8229'
+  '944415997b67911834f89698ec506e050d04fb65306f65bd74e0476b84137567'
+  '7014b447ea16dfc8a5b64fdcfb03b838af4f03f7c0ddbfad773bd848e0e9a315'
+)
+
+build() {
+  chmod +x "./upscayl-$pkgver-linux.AppImage"
+  "./upscayl-$pkgver-linux.AppImage" --appimage-extract
+  chmod 755 squashfs-root
+}
+
+package() {
+  install -d "$pkgdir/opt"
+
+  cp -a squashfs-root "$pkgdir/opt/upscayl"
+
+  install -Dm755 upscayl         "$pkgdir/usr/bin/upscayl"
+  install -Dm644 upscayl.desktop "$pkgdir/usr/share/applications/upscayl.desktop"
+
+  for size in '0x0' '128x128' '512x512'; do
+    local suffix="usr/share/icons/hicolor/$size/apps"
+    install -d "$pkgdir/$suffix"
+    ln -s "/opt/upscayl/$suffix/upscayl.png" "$pkgdir/$suffix/upscayl.png"
+  done
+
+  find "$pkgdir" -not -type l \( -type d -o -perm /111 \) \
+    -print0 | while IFS= read -r -d '' f; do chmod 755 "$f"; done
+
+  find "$pkgdir" -not -type l -type f -not -perm /111 \
+    -print0 | while IFS= read -r -d '' f; do chmod 644 "$f"; done
+}
