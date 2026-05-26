@@ -1,11 +1,4 @@
-# Maintainer: Kevin MacMartin <prurigro@gmail.com>
-# Contributor: bionade24
-# Contributor: vivaeltopo
-# Contributor: aliu
-# Contributor: chrrybmb
-
-_pkgname=upscayl
-pkgname=$_pkgname-bin
+pkgname=upscayl-bin
 pkgver=2.15.0
 pkgrel=1
 pkgdesc='Free and Open Source AI Image Upscaler'
@@ -14,13 +7,13 @@ license=('AGPL-3.0-only')
 arch=('x86_64')
 depends=('libvips' 'openjpeg2' 'electron39' 'nodejs' 'vulkan-driver')
 makedepends=('unzip')
-provides=($_pkgname)
-conflicts=($_pkgname)
+provides=('upscayl')
+conflicts=('upscayl')
 noextract=("upscayl-${pkgver}-linux.zip")
 
 source=(
   "https://github.com/upscayl/upscayl/releases/download/v${pkgver}/upscayl-${pkgver}-linux.zip"
-  "$_pkgname"
+  'upscayl'
   'org.upscayl.Upscayl.desktop'
 )
 
@@ -31,26 +24,17 @@ sha512sums=(
 )
 
 prepare() {
-  cd "$srcdir"
-  unzip ${_pkgname}-${pkgver}-linux.zip -x resources/128x128.png -d ${_pkgname}-${pkgver}
+  unzip upscayl-${pkgver}-linux.zip -x resources/128x128.png -d upscayl-${pkgver}
 }
 
 package() {
-  cd "$srcdir"
+  install -Dm755 upscayl          "$pkgdir/usr/bin/upscayl"
+  install -Dm644 org.upscayl.Upscayl.desktop "$pkgdir/usr/share/applications/org.upscayl.Upscayl.desktop"
+  ln -s /usr/share/upscayl/bin/upscayl-bin "$pkgdir/usr/bin/upscayl-ncnn"
 
-  # Launcher script, symlink to the cli and xdg desktop file
-  install -Dm755 "$_pkgname" "$pkgdir"/usr/bin/$_pkgname
-  ln -s /usr/share/upscayl/bin/upscayl-bin "$pkgdir"/usr/bin/${_pkgname}-ncnn
-  install -Dm644 org.upscayl.Upscayl.desktop "$pkgdir"/usr/share/applications/org.upscayl.Upscayl.desktop
+  cd upscayl-${pkgver}/resources
+  install -Dm644 512x512.png "$pkgdir/usr/share/pixmaps/org.upscayl.Upscayl.png"
 
-  # Enter the package folder
-  cd ${_pkgname}-${pkgver}/resources
-
-  # XDG launcher
-  install -dm755 "$pkgdir"/usr/share/pixmaps
-  mv 512x512.png "$pkgdir"/usr/share/pixmaps/org.upscayl.Upscayl.png
-
-  # App directory
-  install -dm755 "$pkgdir"/usr/share/$_pkgname
-  mv * "$pkgdir"/usr/share/${_pkgname}/
+  install -dm755 "$pkgdir/usr/share/upscayl"
+  mv * "$pkgdir/usr/share/upscayl/"
 }
