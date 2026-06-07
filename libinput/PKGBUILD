@@ -1,5 +1,5 @@
 pkgname=libinput
-pkgver=1.31.1
+pkgver=1.31.3
 pkgrel=1
 epoch=1
 pkgdesc="Input device management and event handling library"
@@ -10,16 +10,11 @@ depends=(
   glibc
   libevdev
   libgcc
-  mtdev
   systemd-libs
 )
 makedepends=(
-  cairo
-  check
   git
   glib2
-  gtk4
-  libx11
   meson
   python
   python-libevdev
@@ -32,14 +27,18 @@ checkdepends=(python-pytest)
 source=(
   "git+https://gitlab.freedesktop.org/libinput/libinput.git#tag=$pkgver"
 )
-b2sums=('613a9cfd81792982f15bf6429f71222d5bf067599464136961948b4f99603e3fc066dfea4e5af3780632ce2c654a118aaa764ff9222fef0038ff37110937ed23')
+b2sums=('197f8c4d6be126e8b8a4825109dd37405a1205f80b25595c259d42606e317525aae5def846f4bb3c3cfad09ccd9d65b53d39d34127623ea6c47db6e8cfaf3188')
 
 
 build() {
   local meson_options=(
+    -D debug-gui=disabled
     -D documentation=false
     -D libwacom=false
     -D lua-plugins=disabled
+    -D mtdev=false
+    -D tests=false
+    -D zshcompletiondir=no
   )
 
   arch-meson libinput build "${meson_options[@]}"

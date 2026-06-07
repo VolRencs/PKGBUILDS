@@ -1,13 +1,12 @@
 pkgname=networkmanager
-pkgver=1.56.0
-pkgrel=4
+pkgver=1.56.1
+pkgrel=1
 epoch=1
 pkgdesc="Network connection manager and user applications"
 url="https://networkmanager.dev/"
 arch=(x86_64)
 license=(LGPL-2.1-or-later GPL-2.0-or-later)
 depends=(
-  audit
   curl
   glib2
   glibc
@@ -29,32 +28,16 @@ provides=(libnm libnm.so)
 conflicts=(libnm)
 replaces=(libnm)
 makedepends=(
-  glib2
-  glib2-devel
-  glibc
-  libgcc
-  systemd
-  systemd-libs
-  curl
-  iproute2
-  libndp
-  audit
-  nspr
-  nss
-  polkit
   bash
   git
-  jansson
+  glib2-devel
   meson
-  readline
+  polkit
+  systemd
 )
 backup=(etc/NetworkManager/NetworkManager.conf)
 source=("git+https://gitlab.freedesktop.org/NetworkManager/NetworkManager.git#tag=${pkgver/[a-z]/-&}")
-b2sums=('43aee5cce5e92861f89520fbb2174ed54a89adc89d6b903b40feddf3f8ab5b0f97559a90efc83cb2919e3eca01700726b8d2f665621bcf3a491127981625e136')
-
-prepare() {
-  cd NetworkManager
-}
+b2sums=('fbd3fd7ca98b75cddc61c85e888f10f103dfed2405e9798a6bfc988788312b47b3b5f011664db303939c75ca404e258a23b8515a308cbf77ecfc29188524e20e')
 
 build() {
   local meson_options=(
@@ -64,7 +47,9 @@ build() {
     -D suspend_resume=systemd
     -D modify_system=true
     -D selinux=false
+    -D libaudit=no
     -D libpsl=false
+    -D firewalld_zone=false
     -D wifi=false
     -D iwd=false
     -D introspection=false
@@ -76,8 +61,10 @@ build() {
     -D ovs=false
     -D nm_cloud_setup=false
     -D nbft=false
+    -D clat=false
     -D teamdctl=false
     -D nmtui=false
+    -D ebpf=false
     -D config_plugins_default=keyfile
     -D ifupdown=false
     -D netconfig=no
@@ -85,7 +72,7 @@ build() {
     -D vapi=false
     -D docs=false
     -D tests=no
-    -D more_asserts=no
+    -D more_asserts=0
     -D more_logging=false
     -D man=false
     -D qt=false
@@ -99,22 +86,18 @@ package() {
 
   cd "$pkgdir"
 
-  # Create config directories
   install -d etc/NetworkManager/{conf,dnsmasq}.d
   install -dm700 etc/NetworkManager/system-connections
 
-  # Default config file
   install -m644 /dev/stdin etc/NetworkManager/NetworkManager.conf <<END
 # Configuration file for NetworkManager.
 # See "man 5 NetworkManager.conf" for details.
 END
 
-  # Connectivity check
   install -Dm644 /dev/stdin usr/lib/NetworkManager/conf.d/20-connectivity.conf <<END
 [connectivity]
 uri=http://ping.archlinux.org/nm-check.txt
 END
 
-  # Restore empty dir
   install -d usr/lib/NetworkManager/dispatcher.d/no-wait.d
 }
