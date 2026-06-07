@@ -61,7 +61,6 @@ build() {
     -D ovs=false
     -D nm_cloud_setup=false
     -D nbft=false
-    -D clat=false
     -D teamdctl=false
     -D nmtui=false
     -D ebpf=false

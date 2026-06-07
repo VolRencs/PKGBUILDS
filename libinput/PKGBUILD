@@ -32,7 +32,7 @@ b2sums=('197f8c4d6be126e8b8a4825109dd37405a1205f80b25595c259d42606e317525aae5def
 
 build() {
   local meson_options=(
-    -D debug-gui=disabled
+    -D debug-gui=false
     -D documentation=false
     -D libwacom=false
     -D lua-plugins=disabled
