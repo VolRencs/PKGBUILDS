@@ -62,6 +62,7 @@ build() {
     -D udevrulesdir=/usr/lib/udev/rules.d
     -D v4l2=disabled
     -D x11=disabled
+    -D x11-xfixes=disabled
   )
 
   arch-meson pipewire build "${meson_options[@]}"
