@@ -69,6 +69,7 @@ build() {
     -D jack=disabled
     -D libmysofa=disabled
     -D ebur128=disabled
+    -D onnxruntime=disabled
   )
 
   arch-meson pipewire build "${meson_options[@]}"
