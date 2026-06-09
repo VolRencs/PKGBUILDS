@@ -58,6 +58,7 @@ build() {
     -D selinux=disabled
     -D session-managers=[]
     -D snap=disabled
+    -D sdl2=disabled
     -D udevrulesdir=/usr/lib/udev/rules.d
     -D v4l2=disabled
     -D x11=disabled
