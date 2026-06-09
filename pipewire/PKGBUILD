@@ -47,14 +47,12 @@ build() {
   local meson_options=(
     -D bluez5=disabled
     -D docs=disabled
-    -D ffado=disabled
     -D gstreamer=disabled
     -D jack-devel=true
     -D libcamera=disabled
     -D libjack-path=/usr/lib
     -D lv2=disabled
     -D man=disabled
-    -D onnx=disabled
     -D rlimits-install=false
     -D roc=disabled
     -D selinux=disabled
