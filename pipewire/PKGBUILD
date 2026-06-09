@@ -68,7 +68,7 @@ build() {
     -D libffado=disabled
     -D jack=disabled
     -D libmysofa=disabled
-    -D libebur128=disabled
+    -D ebur128=disabled
   )
 
   arch-meson pipewire build "${meson_options[@]}"
