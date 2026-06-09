@@ -64,6 +64,7 @@ build() {
     -D x11=disabled
     -D x11-xfixes=disabled
     -D libcanberra=disabled
+    -D gstreamer-device-provider=disabled
   )
 
   arch-meson pipewire build "${meson_options[@]}"
