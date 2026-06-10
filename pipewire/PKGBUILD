@@ -66,9 +66,16 @@ provides=(
   pulse-native-provider
 )
 conflicts=(
+  alsa-card-profiles
   jack
   jack2
+  libpipewire
+  pipewire-alsa
+  pipewire-audio
+  pipewire-jack
   pipewire-jack-client
+  pipewire-pulse
+  pipewire-session-manager
   pulseaudio
 )
 install=pipewire.install
