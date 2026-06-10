@@ -137,5 +137,5 @@ package() {
   # Config override directories
   mkdir -p etc/pipewire/{client-rt,client,jack,minimal,pipewire,pipewire-pulse}.conf.d
 
-  install -Dt usr/share/licenses/$pkgname -m644 ../pipewire/COPYING
+  install -Dt usr/share/licenses/$pkgname -m644 "$srcdir/pipewire/COPYING"
 }
