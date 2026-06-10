@@ -1,21 +1,11 @@
-pkgbase=pipewire
-pkgname=(
-  pipewire
-  libpipewire
-  alsa-card-profiles
-  pipewire-audio
-  pipewire-alsa
-  pipewire-jack
-  pipewire-pulse
-  pipewire-session-manager
-)
+pkgname=pipewire
 pkgver=1.6.6
 pkgrel=1
 epoch=2
 pkgdesc="Low-latency audio/video router and processor"
 url="https://pipewire.org"
 arch=(x86_64)
-license=(MIT)
+license=(MIT LGPL-2.1-or-later GPL-2.0-only)
 makedepends=(
   alsa-lib
   avahi
@@ -36,6 +26,52 @@ makedepends=(
   systemd
   webrtc-audio-processing-1
 )
+depends=(
+  alsa-lib libasound.so
+  avahi libavahi-{client,common}.so
+  dbus libdbus-1.so
+  dconf
+  fftw libfftw3f.so
+  glib2 libg{lib,object,io}-2.0.so
+  glibc
+  libgcc
+  libpulse libpulse.so
+  libsndfile libsndfile.so
+  libstdc++
+  libusb libusb-1.0.so
+  ncurses libncursesw.so
+  opus libopus.so
+  readline libreadline.so
+  sh
+  systemd-libs libsystemd.so libudev.so
+  webrtc-audio-processing-1 libwebrtc-audio-processing-1.so
+  wireplumber
+)
+optdepends=(
+  'realtime-privileges: realtime privileges with rt module'
+  'rtkit: realtime privileges with rtkit module'
+)
+provides=(
+  jack
+  ladspa-host
+  libpipewire
+  libpipewire-0.3.so
+  libjack.so
+  libjacknet.so
+  libjackserver.so
+  pipewire-alsa
+  pipewire-audio
+  pipewire-jack
+  pipewire-pulse
+  pulse-native-provider
+)
+conflicts=(
+  jack
+  jack2
+  pipewire-jack-client
+  pulseaudio
+)
+install=pipewire.install
 source=(
   "git+https://gitlab.freedesktop.org/pipewire/pipewire.git#tag=$pkgver"
 )
@@ -76,243 +112,30 @@ build() {
   meson compile -C build
 }
 
-_pick() {
-  local p="$1" f d; shift
-  for f; do
-    d="$srcdir/$p/${f#$pkgdir/}"
-    mkdir -p "$(dirname "$d")"
-    mv "$f" "$d"
-    rmdir -p --ignore-fail-on-non-empty "$(dirname "$f")"
-  done
-}
-
-_pwname=pipewire-0.3
-_spaname=spa-0.2
-
-package_pipewire() {
-  license+=(LGPL-2.1-or-later)
-  depends=(
-    "libpipewire=$epoch:$pkgver-$pkgrel" lib$_pwname.so
-    dbus libdbus-1.so
-    glib2 libglib-2.0.so
-    glibc
-    libgcc
-    ncurses libncursesw.so
-    readline libreadline.so
-    systemd-libs libsystemd.so libudev.so
-  )
-  optdepends=(
-    'pipewire-alsa: ALSA configuration'
-    'pipewire-audio: Audio support'
-    'pipewire-jack: JACK replacement'
-    'pipewire-pulse: PulseAudio replacement'
-    'pipewire-session-manager: Session manager'
-    'realtime-privileges: realtime privileges with rt module'
-    'rtkit: realtime privileges with rtkit module'
-  )
-  install=pipewire.install
-
+package() {
   meson install -C build --destdir "$pkgdir"
 
-  (
-    cd "$pkgdir"
+  cd "$pkgdir"
 
-    # Replace copies with symlinks
-    for _f in pipewire-{aes67,avb,pulse}; do
-      cmp usr/bin/pipewire usr/bin/$_f
-      ln -sf pipewire usr/bin/$_f
-    done
+  # Replace copies with symlinks
+  for _f in pipewire-{aes67,avb,pulse}; do
+    cmp usr/bin/pipewire usr/bin/$_f
+    ln -sf pipewire usr/bin/$_f
+  done
 
-    _pick lib usr/include/{$_pwname,$_spaname}
-    _pick lib usr/lib/$_spaname/libspa.so*
-    _pick lib usr/lib/lib$_pwname.so*
-    _pick lib usr/lib/pkgconfig/lib{$_pwname,$_spaname}.pc
-
-    _pick acp usr/lib/udev
-    _pick acp usr/share/alsa-card-profile
-
-    _pick audio usr/bin/pipewire-{aes67,avb}
-    _pick audio usr/bin/pw-{cat,loopback,mididump,midi2play,midi2record,sysex}
-    _pick audio usr/bin/pw-{dsd,enc,midi,}play
-    _pick audio usr/bin/pw-{midi,}record
-    _pick audio usr/bin/spa-{acp-tool,resample}
-    _pick audio usr/lib/alsa-lib
-    _pick audio usr/lib/$_pwname/libpipewire-module-avb.so
-    _pick audio usr/lib/$_pwname/libpipewire-module-echo-cancel.so
-    _pick audio usr/lib/$_pwname/libpipewire-module-fallback-sink.so
-    _pick audio usr/lib/$_pwname/libpipewire-module-filter-chain*.so
-    _pick audio usr/lib/$_pwname/libpipewire-module-loopback.so
-    _pick audio usr/lib/$_pwname/libpipewire-module-netjack2*.so
-    _pick audio usr/lib/$_pwname/libpipewire-module-parametric-equalizer.so
-    _pick audio usr/lib/$_pwname/libpipewire-module-pipe-tunnel.so
-    _pick audio usr/lib/$_pwname/libpipewire-module-protocol-simple.so
-    _pick audio usr/lib/$_pwname/libpipewire-module-rtp-{sap,sink,source}.so
-    _pick audio usr/lib/$_pwname/libpipewire-module-vban*.so
-    _pick audio usr/lib/$_spaname/{aec,alsa,audio*,avb,filter-graph}
-    _pick audio usr/lib/systemd/user/filter-chain.service
-    _pick audio usr/share/alsa
-    _pick audio usr/share/pipewire/filter-chain*
-    _pick audio usr/share/pipewire/pipewire-{aes67,avb}.conf
-
-    _pick jack usr/bin/pw-jack
-    _pick jack usr/include/jack
-    _pick jack usr/lib/libjack*
-    _pick jack usr/lib/pkgconfig/jack*.pc
-    _pick jack usr/share/pipewire/jack.conf
-
-    _pick pulse usr/bin/pipewire-pulse
-    _pick pulse usr/lib/$_pwname/libpipewire-module-protocol-pulse.so
-    _pick pulse usr/lib/$_pwname/libpipewire-module-pulse-tunnel.so
-    _pick pulse usr/lib/systemd/user/pipewire-pulse.*
-    _pick pulse usr/share/glib-2.0/schemas/org.freedesktop.pulseaudio.gschema.xml
-    _pick pulse usr/share/pipewire/pipewire-pulse.conf
-
-    # directories for overrides
-    mkdir -p etc/pipewire/{client-rt,client,minimal,pipewire}.conf.d
-  )
-
-  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 pipewire/COPYING
-}
-
-package_libpipewire() {
-  pkgdesc+=" - client library"
-  depends=(
-    glibc
-    libgcc
-  )
-  provides=(lib$_pwname.so)
-
-  mv lib/* "$pkgdir"
-
-  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 pipewire/COPYING
-}
-
-package_alsa-card-profiles() {
-  pkgdesc+=" - ALSA card profiles"
-  license=(LGPL-2.1-or-later)
-
-  mv acp/* "$pkgdir"
-}
-
-package_pipewire-audio() {
-  pkgdesc+=" - Audio support"
-  depends=(
-    "libpipewire=$epoch:$pkgver-$pkgrel" lib$_pwname.so
-    "pipewire=$epoch:$pkgver-$pkgrel"
-    alsa-card-profiles
-    alsa-lib libasound.so
-    dbus libdbus-1.so
-    fftw libfftw3f.so
-    glib2 libg{lib,object,io}-2.0.so
-    glibc
-    libsndfile libsndfile.so
-    libstdc++
-    libusb libusb-1.0.so
-    opus libopus.so
-    systemd-libs
-    webrtc-audio-processing-1 libwebrtc-audio-processing-1.so
-  )
-  provides=(
-    ladspa-host
-  )
-
-  mv audio/* "$pkgdir"
-
-  mkdir -p "$pkgdir/etc/alsa/conf.d"
-  ln -st "$pkgdir/etc/alsa/conf.d" \
-    /usr/share/alsa/alsa.conf.d/50-pipewire.conf
-
-  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 pipewire/COPYING
-}
-
-package_pipewire-alsa() {
-  pkgdesc+=" - ALSA configuration"
-  depends=(
-    "pipewire-audio=$epoch:$pkgver-$pkgrel"
-    "pipewire=$epoch:$pkgver-$pkgrel"
-    pipewire-session-manager
-  )
-
-  mkdir -p "$pkgdir/etc/alsa/conf.d"
-  ln -st "$pkgdir/etc/alsa/conf.d" \
+  # ALSA configuration symlinks (from former pipewire-audio + pipewire-alsa)
+  mkdir -p etc/alsa/conf.d
+  ln -st etc/alsa/conf.d \
+    /usr/share/alsa/alsa.conf.d/50-pipewire.conf \
     /usr/share/alsa/alsa.conf.d/99-pipewire-default.conf
 
-  install -Dm644 /dev/null \
-    "$pkgdir/usr/share/pipewire/media-session.d/with-alsa"
+  # Session manager markers
+  install -Dm644 /dev/null usr/share/pipewire/media-session.d/with-alsa
+  install -Dm644 /dev/null usr/share/pipewire/media-session.d/with-jack
+  install -Dm644 /dev/null usr/share/pipewire/media-session.d/with-pulseaudio
 
-  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 pipewire/COPYING
-}
+  # Config override directories
+  mkdir -p etc/pipewire/{client-rt,client,jack,minimal,pipewire,pipewire-pulse}.conf.d
 
-package_pipewire-jack() {
-  pkgdesc+=" - JACK replacement"
-  license+=(
-    GPL-2.0-only
-    LGPL-2.1-or-later
-  )
-  depends=(
-    "libpipewire=$epoch:$pkgver-$pkgrel" lib$_pwname.so
-    "pipewire-audio=$epoch:$pkgver-$pkgrel"
-    "pipewire=$epoch:$pkgver-$pkgrel"
-    glibc
-    pipewire-session-manager
-    sh
-  )
-  optdepends=(
-    'jack-example-tools: for official JACK example-clients and tools'
-  )
-  conflicts=(
-    jack
-    jack2
-    pipewire-jack-client
-  )
-  provides=(
-    jack
-    libjack.so
-    libjacknet.so
-    libjackserver.so
-  )
-
-  mv jack/* "$pkgdir"
-
-  install -Dm644 /dev/null \
-    "$pkgdir/usr/share/pipewire/media-session.d/with-jack"
-
-  mkdir -p "$pkgdir/etc/pipewire/jack.conf.d"
-
-  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 pipewire/COPYING
-}
-
-package_pipewire-pulse() {
-  pkgdesc+=" - PulseAudio replacement"
-  depends=(
-    "libpipewire=$epoch:$pkgver-$pkgrel" lib$_pwname.so
-    "pipewire-audio=$epoch:$pkgver-$pkgrel"
-    "pipewire=$epoch:$pkgver-$pkgrel"
-    avahi libavahi-{client,common}.so
-    dbus libdbus-1.so
-    dconf
-    glib2 libg{lib,object,io}-2.0.so
-    glibc
-    libgcc
-    libpulse libpulse.so
-    pipewire-session-manager
-  )
-  provides=(pulse-native-provider)
-  conflicts=(pulseaudio)
-  install=pipewire-pulse.install
-
-  mv pulse/* "$pkgdir"
-
-  mkdir -p "$pkgdir/etc/pipewire/pipewire-pulse.conf.d"
-
-  install -Dm644 /dev/null \
-    "$pkgdir/usr/share/pipewire/media-session.d/with-pulseaudio"
-
-  install -Dt "$pkgdir/usr/share/licenses/$pkgname" -m644 pipewire/COPYING
-}
-
-package_pipewire-session-manager() {
-  pkgdesc="Session manager for PipeWire (default provider)"
-  license=(CC0-1.0)
-  depends=(wireplumber)
+  install -Dt usr/share/licenses/$pkgname -m644 ../pipewire/COPYING
 }
