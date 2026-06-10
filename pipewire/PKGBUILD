@@ -64,6 +64,7 @@ provides=(
   pipewire-jack
   pipewire-pulse
   pulse-native-provider
+  pipewire-session-manager
 )
 conflicts=(
   alsa-card-profiles
