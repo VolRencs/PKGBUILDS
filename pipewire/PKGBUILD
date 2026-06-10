@@ -1,4 +1,8 @@
-pkgname=pipewire
+pkgbase=pipewire
+pkgname=(
+  pipewire
+  pipewire-session-manager
+)
 pkgver=1.6.6
 pkgrel=1
 epoch=2
@@ -26,60 +30,6 @@ makedepends=(
   systemd
   webrtc-audio-processing-1
 )
-depends=(
-  alsa-lib libasound.so
-  avahi libavahi-{client,common}.so
-  dbus libdbus-1.so
-  dconf
-  fftw libfftw3f.so
-  glib2 libg{lib,object,io}-2.0.so
-  glibc
-  libgcc
-  libpulse libpulse.so
-  libsndfile libsndfile.so
-  libstdc++
-  libusb libusb-1.0.so
-  ncurses libncursesw.so
-  opus libopus.so
-  readline libreadline.so
-  sh
-  systemd-libs libsystemd.so libudev.so
-  webrtc-audio-processing-1 libwebrtc-audio-processing-1.so
-  wireplumber
-)
-optdepends=(
-  'realtime-privileges: realtime privileges with rt module'
-  'rtkit: realtime privileges with rtkit module'
-)
-provides=(
-  jack
-  ladspa-host
-  libpipewire
-  libpipewire-0.3.so
-  libjack.so
-  libjacknet.so
-  libjackserver.so
-  pipewire-alsa
-  pipewire-audio
-  pipewire-jack
-  pipewire-pulse
-  pulse-native-provider
-  pipewire-session-manager
-)
-conflicts=(
-  alsa-card-profiles
-  jack
-  jack2
-  libpipewire
-  pipewire-alsa
-  pipewire-audio
-  pipewire-jack
-  pipewire-jack-client
-  pipewire-pulse
-  pipewire-session-manager
-  pulseaudio
-)
-install=pipewire.install
 source=(
   "git+https://gitlab.freedesktop.org/pipewire/pipewire.git#tag=$pkgver"
 )
@@ -120,7 +70,60 @@ build() {
   meson compile -C build
 }
 
-package() {
+package_pipewire() {
+  depends=(
+    alsa-lib libasound.so
+    avahi libavahi-{client,common}.so
+    dbus libdbus-1.so
+    dconf
+    fftw libfftw3f.so
+    glib2 libg{lib,object,io}-2.0.so
+    glibc
+    libgcc
+    libpulse libpulse.so
+    libsndfile libsndfile.so
+    libstdc++
+    libusb libusb-1.0.so
+    ncurses libncursesw.so
+    opus libopus.so
+    readline libreadline.so
+    sh
+    systemd-libs libsystemd.so libudev.so
+    webrtc-audio-processing-1 libwebrtc-audio-processing-1.so
+    pipewire-session-manager
+  )
+  optdepends=(
+    'realtime-privileges: realtime privileges with rt module'
+    'rtkit: realtime privileges with rtkit module'
+  )
+  provides=(
+    jack
+    ladspa-host
+    libpipewire
+    libpipewire-0.3.so
+    libjack.so
+    libjacknet.so
+    libjackserver.so
+    pipewire-alsa
+    pipewire-audio
+    pipewire-jack
+    pipewire-pulse
+    pulse-native-provider
+  )
+  conflicts=(
+    alsa-card-profiles
+    jack
+    jack2
+    libpipewire
+    pipewire-alsa
+    pipewire-audio
+    pipewire-jack
+    pipewire-jack-client
+    pipewire-pulse
+    pulseaudio
+  )
+  install=pipewire.install
+
   meson install -C build --destdir "$pkgdir"
 
   cd "$pkgdir"
@@ -146,4 +149,10 @@ package() {
   mkdir -p etc/pipewire/{client-rt,client,jack,minimal,pipewire,pipewire-pulse}.conf.d
 
   install -Dt usr/share/licenses/$pkgname -m644 "$srcdir/pipewire/COPYING"
+}
+
+package_pipewire-session-manager() {
+  pkgdesc="Session manager for PipeWire (default provider)"
+  license=(CC0-1.0)
+  depends=(wireplumber)
 }
