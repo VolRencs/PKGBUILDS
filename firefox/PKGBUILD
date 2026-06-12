@@ -133,7 +133,7 @@ ac_add_options --prefix=/usr
 
 mk_add_options MOZ_CRASHREPORTER=0
 mk_add_options MOZ_DATA_REPORTING=0
-mk_add_options MOZ_OBJDIR='/home/volren/Загрузки/Firefox/src/firefox-151.0.4'/obj
+mk_add_options MOZ_OBJDIR=${PWD@Q}/obj
 mk_add_options MOZ_SERVICES_HEALTHREPORT=0
 mk_add_options MOZ_TELEMETRY_REPORTING=0
 
