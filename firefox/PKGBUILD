@@ -1,7 +1,7 @@
 # Maintainer: VolRen <VolRencs@proton.me>
 
 pkgname=firefox
-pkgver=150.0
+pkgver=151.0.4
 pkgrel=1
 epoch=1
 pkgdesc="Fast, Private & Safe Web Browser"
@@ -62,26 +62,21 @@ source=(
   $pkgname-symbolic.svg
   $pkgname.desktop
   Install-under-remoting-name.patch
-  patch1.patch
-  patch2.patch
-  patch3.patch
+  Patch-glsl-optimizer-to-build-with-glibc-2.43.patch
+
 )
-sha256sums=('fbe43df4c8a135cee4b29c375574bd9f609ee37a9f3b43bb96a83680e8ef3994'
-            '00cd52b9e5eabf4219f668215e47734caada4c373ddfa10d100e1bce326a6849'
+sha256sums=('ffda1991cc3b9b35d3c034314d253a51d6a20f603b693db2f55a00fa840e83a7'
+            '9f75a77fedd450a1cd386865f9cc626bb47c1c22862ac675e23b1762fd36ba4f'
             'a9b8b4a0a1f4a7b4af77d5fc70c2686d624038909263c795ecc81e0aec7711e9'
             '381a0bb236513a48596fcd17115629b19c5d862ce845144c7dfb61cd8903b1b8'
-            'ef63a12975f108f30b00bb3290d9ca76f311d8af9c1d5dfc0d8335ad57e8f77c'
-            '9f10d9bfcaa3a8dd86a8654431f820716a45a72a885c29fd6359bccc7bcdaefa'
-            'f579e02644ef9c29da5cd61d2c9213ba1c3f7a1aa8abf601bdf07cbbbadb1ce3'
-            'd6e1dbafe56bc52c8ab6cbf9542cf80e89c1857a71ce08bbbd82804909bcb76f')
+            'f0118f1b092e471fe3c81c1e8b49a76a37f72f3263d00a18e939dcde80c90dac'
+            'c7d6572fe1ac76f6adbfb10102f284fd55690396ac0a275a5cfea9a2efa22b58')
 
 prepare() {
   cd firefox-$pkgver
 
   patch -Np1 -i ../Install-under-remoting-name.patch
-  patch -Np1 -i ../patch1.patch
-  patch -Np1 -i ../patch2.patch
-  patch -Np1 -i ../patch3.patch
+  patch -Np1 -i ../Patch-glsl-optimizer-to-build-with-glibc-2.43.patch
 
   cat >mozconfig <<END
 ac_add_options --enable-application=browser
@@ -92,8 +87,6 @@ ac_add_options --enable-linker=lld
 ac_add_options --enable-official-branding
 ac_add_options --enable-optimize="-O2 -march=native"
 ac_add_options --enable-release
-ac_add_options --enable-system-ffi
-ac_add_options --enable-system-pixman
 ac_add_options RUSTFLAGS="-C target-cpu=native"
 ac_add_options RUSTC_OPT_LEVEL="2"
 
@@ -106,9 +99,7 @@ ac_add_options --disable-debug-symbols
 ac_add_options --disable-dmd
 ac_add_options --disable-geckodriver
 ac_add_options --disable-install-strip
-ac_add_options --disable-necko-wifi
 ac_add_options --disable-parental-controls
-ac_add_options --disable-phc
 ac_add_options --disable-printing
 ac_add_options --disable-profiling
 ac_add_options --disable-rust-debug
@@ -119,6 +110,9 @@ ac_add_options --disable-updater
 ac_add_options --disable-warnings-as-errors
 ac_add_options --disable-webspeech
 ac_add_options --disable-webspeechtestbackend
+ac_add_options --disable-negotiateauth
+ac_add_options --disable-system-policies
+ac_add_options --disable-backgroundtasks
 
 ac_add_options --with-system-icu
 ac_add_options --with-system-jpeg
@@ -128,6 +122,9 @@ ac_add_options --with-system-nss
 ac_add_options --with-system-nspr
 ac_add_options --with-system-webp
 ac_add_options --with-system-zlib
+ac_add_options --with-system-pipewire
+
+ac_add_options --enable-system-ffi
 ac_add_options --without-wasm-sandboxed-libraries
 
 ac_add_options --allow-addon-sideload
@@ -136,12 +133,12 @@ ac_add_options --prefix=/usr
 
 mk_add_options MOZ_CRASHREPORTER=0
 mk_add_options MOZ_DATA_REPORTING=0
-mk_add_options MOZ_OBJDIR=${PWD@Q}/obj
+mk_add_options MOZ_OBJDIR='/home/volren/Загрузки/Firefox/src/firefox-151.0.4'/obj
 mk_add_options MOZ_SERVICES_HEALTHREPORT=0
 mk_add_options MOZ_TELEMETRY_REPORTING=0
 
 export MOZILLA_OFFICIAL=1
-export MOZ_APP_REMOTINGNAME=$pkgname
+export MOZ_APP_REMOTINGNAME=firefox
 
 END
 }
