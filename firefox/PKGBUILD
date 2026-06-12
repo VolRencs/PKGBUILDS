@@ -29,6 +29,7 @@ depends=(
   nss
   pango
   ttf-font
+  pipewire
 )
 makedepends=(
   cbindgen
