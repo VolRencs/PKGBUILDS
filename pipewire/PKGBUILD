@@ -24,7 +24,6 @@ makedepends=(
   readline
   rtkit
   systemd
-  webrtc-audio-processing
 )
 depends=(
   alsa-lib libasound.so
@@ -44,7 +43,6 @@ depends=(
   readline libreadline.so
   sh
   systemd-libs libsystemd.so libudev.so
-  webrtc-audio-processing libwebrtc-audio-processing-2.so
   wireplumber
 )
 optdepends=(
@@ -113,6 +111,7 @@ build() {
     -D libmysofa=disabled
     -D ebur128=disabled
     -D onnxruntime=disabled
+    -D echo-cancel-webrtc=disabled
   )
 
   arch-meson pipewire build "${meson_options[@]}"
