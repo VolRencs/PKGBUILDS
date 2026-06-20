@@ -132,8 +132,6 @@ build() {
     --enable-version3 \
     --enable-vulkan
   make
-  make tools/qt-faststart
-  make doc/ffmpeg.1
 }
 
 package() {
@@ -155,6 +153,5 @@ package() {
     libzimg.so
   )
 
-  make DESTDIR="${pkgdir}" -C ffmpeg install install-man
-  install -Dm 755 ffmpeg/tools/qt-faststart "${pkgdir}"/usr/bin/
+  make DESTDIR="${pkgdir}" -C ffmpeg install
 }
