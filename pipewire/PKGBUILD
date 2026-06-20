@@ -24,7 +24,7 @@ makedepends=(
   readline
   rtkit
   systemd
-  webrtc-audio-processing-1
+  webrtc-audio-processing
 )
 depends=(
   alsa-lib libasound.so
@@ -44,7 +44,7 @@ depends=(
   readline libreadline.so
   sh
   systemd-libs libsystemd.so libudev.so
-  webrtc-audio-processing-1 libwebrtc-audio-processing-1.so
+  webrtc-audio-processing libwebrtc-audio-processing-2.so
   wireplumber
 )
 optdepends=(

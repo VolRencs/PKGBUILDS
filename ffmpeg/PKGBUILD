@@ -66,7 +66,7 @@ provides=(
   libswscale.so
 )
 source=(
-  git+https://git.ffmpeg.org/ffmpeg.git?signed#tag=n${pkgver}
+  git+https://git.ffmpeg.org/ffmpeg.git#tag=n${pkgver}
   0001-Add-av_stream_get_first_dts-for-Chromium.patch
 )
 b2sums=('a2b77f48a12486d07965ffa2f4ff27e04e552b7c8d2dec4a8bf847088d93a5858982636836a13ade2765c8c976ded8908633a8c2f4142e4bbd4ed430f8cc91ce'
