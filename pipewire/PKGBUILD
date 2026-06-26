@@ -1,6 +1,6 @@
 pkgname=pipewire
 pkgver=1.6.7
-pkgrel=1
+pkgrel=2
 epoch=2
 pkgdesc="Low-latency audio/video router and processor"
 url="https://pipewire.org"
@@ -15,7 +15,6 @@ makedepends=(
   glib2
   glib2-devel
   libpulse
-  libsndfile
   libstdc++
   libusb
   meson
@@ -35,7 +34,6 @@ depends=(
   glibc
   libgcc
   libpulse libpulse.so
-  libsndfile libsndfile.so
   libstdc++
   libusb libusb-1.0.so
   ncurses libncursesw.so
@@ -83,8 +81,6 @@ source=(
 b2sums=('3f78ea22d5cd5ed949b678cfe3d0565e35bc82b36363699f848d81989d7ceea69928d8ea7f759f350e59f332550a5228fced2b2edef8fd2d2dc82569e698861b')
 
 build() {
-  # NOTE: verify all feature options against pipewire/meson_options.txt
-  # for the exact tagged release before adding new ones — HEAD and tag can differ.
   local meson_options=(
     -D bluez5=disabled
     -D docs=disabled
@@ -112,6 +108,7 @@ build() {
     -D ebur128=disabled
     -D onnxruntime=disabled
     -D echo-cancel-webrtc=disabled
+    -D sndfile=disabled
   )
 
   arch-meson pipewire build "${meson_options[@]}"
