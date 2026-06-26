@@ -1,6 +1,6 @@
 pkgname=ffmpeg
 pkgver=8.1.2
-pkgrel=2
+pkgrel=3
 epoch=3
 pkgdesc='Complete solution to record, convert and stream audio and video'
 arch=(x86_64)
@@ -19,7 +19,6 @@ depends=(
   glslang
   harfbuzz
   libpulse
-  lame
   libdrm
   libgl
   libjxl
@@ -96,6 +95,7 @@ build() {
     --disable-gnutls \
     --disable-gmp \
     --disable-libass \
+    --disable-libmp3lame \
     --enable-cuda-llvm \
     --enable-lto \
     --enable-fontconfig \
@@ -108,7 +108,6 @@ build() {
     --enable-libglslang \
     --enable-libharfbuzz \
     --enable-libjxl \
-    --enable-libmp3lame \
     --enable-libopenjpeg \
     --enable-libopus \
     --enable-libplacebo \
