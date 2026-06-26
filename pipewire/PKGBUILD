@@ -109,6 +109,7 @@ build() {
     -D onnxruntime=disabled
     -D echo-cancel-webrtc=disabled
     -D sndfile=disabled
+    -D pw-cat=disabled
   )
 
   arch-meson pipewire build "${meson_options[@]}"
