@@ -39,10 +39,8 @@ backup=(etc/pulse/client.conf)
 _commit=b096704c0d42c5e784deb781a07b23cfb5286a82
 source=(
   "git+https://gitlab.freedesktop.org/pulseaudio/pulseaudio.git#commit=$_commit"
-  0001-alsa-ucm-Fix-segfault-from-recursion-due-to-too-many.patch
 )
-b2sums=('3b800dc84b1ccb0f1252e9c55390842d0d63c004393f3271daa7dcdcaa6b2351ca129d2a268855c57ec6c03e14bf1a571deac6c4bb89ac1e08a83cf910834490'
-        '73f93801069b2c5b09646870269c0f42cefc2183a73b47c78fd160c978a841c11c5146b98351a11be24d4785181f361a455534e6f6ca2d977cf585044836f8ed')
+b2sums=('3b800dc84b1ccb0f1252e9c55390842d0d63c004393f3271daa7dcdcaa6b2351ca129d2a268855c57ec6c03e14bf1a571deac6c4bb89ac1e08a83cf910834490')
 
 pkgver() {
   cd pulseaudio
