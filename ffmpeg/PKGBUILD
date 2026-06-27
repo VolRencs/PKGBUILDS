@@ -1,6 +1,6 @@
 pkgname=ffmpeg
 pkgver=8.1.2
-pkgrel=3
+pkgrel=4
 epoch=3
 pkgdesc='Complete solution to record, convert and stream audio and video'
 arch=(x86_64)
@@ -19,17 +19,15 @@ depends=(
   glslang
   harfbuzz
   libpulse
+  lame
   libdrm
   libgl
   libjxl
   libplacebo
   librsvg
-  libsoxr
-  libva
   libvorbis
   libvpx
   libwebp
-  libx11
   libxcb
   libxml2
   openjpeg2
@@ -40,20 +38,17 @@ depends=(
   x264
   x265
   xz
-  zimg
   zlib
 )
 makedepends=(
   clang
   ffnvcodec-headers
   git
-  ladspa
   mesa
   nasm
   vulkan-headers
 )
 optdepends=(
-  'ladspa: LADSPA filters'
   'nvidia-utils: Nvidia NVDEC/NVENC support'
 )
 provides=(
@@ -95,12 +90,15 @@ build() {
     --disable-gnutls \
     --disable-gmp \
     --disable-libass \
-    --disable-libmp3lame \
+    --disable-ladspa \
+    --disable-libsoxr \
+    --disable-vaapi \
+    --disable-xlib \
+    --disable-libzimg \
     --enable-cuda-llvm \
     --enable-lto \
     --enable-fontconfig \
     --enable-gpl \
-    --enable-ladspa \
     --enable-libdav1d \
     --enable-libdrm \
     --enable-libfreetype \
@@ -108,12 +106,12 @@ build() {
     --enable-libglslang \
     --enable-libharfbuzz \
     --enable-libjxl \
+    --enable-libmp3lame \
     --enable-libopenjpeg \
     --enable-libopus \
     --enable-libplacebo \
     --enable-libpulse \
     --enable-librsvg \
-    --enable-libsoxr \
     --enable-libsvtav1 \
     --enable-libvorbis \
     --enable-libvpx \
@@ -122,7 +120,6 @@ build() {
     --enable-libx265 \
     --enable-libxcb \
     --enable-libxml2 \
-    --enable-libzimg \
     --enable-nvdec \
     --enable-nvenc \
     --enable-opengl \
@@ -141,15 +138,11 @@ package() {
     libjxl.so
     libplacebo.so
     librsvg-2.so
-    libva.so
-    libva-drm.so
-    libva-x11.so
     libvorbisenc.so
     libvorbis.so
     libvpx.so
     libx264.so
     libx265.so
-    libzimg.so
   )
 
   make DESTDIR="${pkgdir}" -C ffmpeg install
