@@ -108,7 +108,7 @@ build() {
     -D echo-cancel-webrtc=disabled
     -D sndfile=disabled
     -D pw-cat=disabled
-    -D fftw3=disabled
+    -D fftw=disabled
   )
 
   arch-meson pipewire build "${meson_options[@]}"
