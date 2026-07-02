@@ -8,6 +8,7 @@ arch=(x86_64)
 license=(LGPL-2.1-or-later)
 
 depends=(
+  alsa-lib
   glib2
   glibc
   graphene
@@ -47,6 +48,7 @@ conflicts=(
 )
 
 makedepends=(
+  alsa-lib
   bash-completion
   glib2
   glib2-devel
