@@ -1,0 +1,255 @@
+pkgname=gstreamer
+pkgver=1.28.4
+pkgrel=1
+epoch=1
+pkgdesc="Multimedia graph framework (core + base + bad libs, merged, trimmed)"
+url="https://gstreamer.freedesktop.org/"
+arch=(x86_64)
+license=(LGPL-2.1-or-later)
+
+depends=(
+  glib2
+  glibc
+  graphene
+  iso-codes
+  libcap
+  libdrm
+  libelf
+  libgcc
+  libglvnd
+  libgudev
+  libjpeg-turbo
+  libpng
+  libstdc++
+  libunwind
+  libusb
+  libx11
+  libxcb
+  libxext
+  libxi
+  libxkbcommon
+  libxkbcommon-x11
+  libxv
+  mesa
+  orc
+  vmaf
+  vulkan-icd-loader
+  wayland
+  zlib
+)
+provides=(
+  "gst-plugins-base-libs=$pkgver"
+  "gst-plugins-bad-libs=$pkgver"
+)
+conflicts=(
+  gst-plugins-base-libs
+  gst-plugins-bad-libs
+)
+
+makedepends=(
+  glib2
+  glib2-devel
+  glibc
+  graphene
+  iso-codes
+  libcap
+  libdrm
+  libelf
+  libgcc
+  libglvnd
+  libgudev
+  libjpeg-turbo
+  libpng
+  libstdc++
+  libunwind
+  libusb
+  libx11
+  libxcb
+  libxext
+  libxi
+  libxkbcommon
+  libxkbcommon-x11
+  libxv
+  meson
+  mesa
+  git
+  nasm
+  orc
+  python
+  python-setuptools
+  rust
+  systemd-libs
+  vmaf
+  vulkan-headers
+  vulkan-icd-loader
+  wayland
+  wayland-protocols
+  zlib
+)
+
+source=(
+  "git+https://gitlab.freedesktop.org/gstreamer/gstreamer.git#tag=$pkgver"
+)
+b2sums=('3a8a3d89bfc9be8b2b1cbd24b6e7e1dbea25c4619045dd97df4631b94ad5d59d9ac54ffc54eccdec10b0195aee87e0dadd8f560e5cdc499dee99b033d141f7e9')
+
+build() {
+  local meson_options=(
+    -D benchmarks=disabled
+    -D examples=disabled
+    -D glib_debug=disabled
+    -D gpl=enabled
+    -D gst-examples=disabled
+
+    -D gst-plugins-good=disabled
+    -D gst-plugins-ugly=disabled
+    -D gst-libav=disabled
+    -D gst-rtsp-server=disabled
+    -D gst-editing-services=disabled
+    -D gst-devtools=disabled
+    -D python=disabled
+    -D introspection=disabled
+
+    -D gst-plugins-bad:aja=disabled
+    -D gst-plugins-bad:amfcodec=disabled
+    -D gst-plugins-bad:androidmedia=disabled
+    -D gst-plugins-bad:cuda-nvmm=disabled
+    -D gst-plugins-bad:directfb=disabled
+    -D gst-plugins-bad:directshow=disabled
+    -D gst-plugins-bad:flite=disabled
+    -D gst-plugins-bad:gs=disabled
+    -D gst-plugins-bad:iqa=disabled
+    -D gst-plugins-bad:isac=disabled
+    -D gst-plugins-bad:lcevcdecoder=disabled
+    -D gst-plugins-bad:lcevcencoder=disabled
+    -D gst-plugins-bad:magicleap=disabled
+    -D gst-plugins-bad:mpeghdec=disabled
+    -D gst-plugins-bad:nvcomp=disabled
+    -D gst-plugins-bad:nvdswrapper=disabled
+    -D gst-plugins-bad:openni2=disabled
+    -D gst-plugins-bad:opensles=disabled
+    -D gst-plugins-bad:svtjpegxs=disabled
+    -D gst-plugins-bad:tflite=disabled
+    -D gst-plugins-bad:tinyalsa=disabled
+    -D gst-plugins-bad:voaacenc=disabled
+    -D gst-plugins-bad:voamrwbenc=disabled
+    -D gst-plugins-bad:wasapi2=disabled
+    -D gst-plugins-bad:wasapi=disabled
+    -D gst-plugins-bad:opencv=disabled
+    -D gst-plugins-bad:decklink=disabled
+    -D gst-plugins-bad:webrtc=disabled
+    -D gst-plugins-bad:dc1394=disabled
+    -D gst-plugins-bad:curl=disabled
+    -D gst-plugins-bad:sctp=disabled
+    -D gst-plugins-bad:qt6d3d11=disabled
+    -D gst-plugins-bad:va=disabled
+
+    -D gst-plugins-base:libvisual=disabled
+    -D gst-plugins-base:tremor=disabled
+
+    -D gstreamer:dbghelp=disabled
+    -D gstreamer:ptp-helper=disabled
+
+    -D libnice=disabled
+    -D orc-source=system
+    -D package-name="Arch Linux GStreamer (trimmed) $pkgver-$pkgrel"
+    -D package-origin="local"
+  )
+
+  export GI_SCANNER_DISABLE_CACHE=1
+  export CARGO_PROFILE_RELEASE_DEBUG=2 CARGO_PROFILE_RELEASE_STRIP=false
+  export CARGO_PROFILE_RELEASE_LTO=true CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
+
+  arch-meson gstreamer build "${meson_options[@]}"
+  meson compile -C build
+}
+
+_install() {
+  local src dir
+  for src in "${files[@]}"; do
+    dir="$pkgdir/$(dirname "$src")"
+    mkdir -p "$dir"
+    mv -v "$src" "$dir"
+  done
+}
+
+package() {
+  meson install -C build --destdir "$srcdir/root"
+  cd root
+
+  local files=(
+    # --- core ---
+    usr/include/gstreamer-1.0/gst/{base,check,controller,net,*.h}
+    usr/lib/libgst{reamer,base,check,controller,net}-1.0.so*
+    usr/lib/pkgconfig/gstreamer{,-base,-check,-controller,-net}-1.0.pc
+
+    usr/lib/gstreamer-1.0/gst-completion-helper
+    usr/lib/gstreamer-1.0/gst-{hotdoc-plugins,plugin}-scanner
+    usr/lib/gstreamer-1.0/libgstcoreelements.so
+    usr/lib/gstreamer-1.0/libgstcoretracers.so
+
+    usr/share/locale/*/LC_MESSAGES/gstreamer-1.0.mo
+
+    usr/bin/gst-{inspect,launch,stats,tester,typefind}-1.0
+    usr/share/man/man1/gst-{inspect,launch,stats,typefind}-1.0.1
+
+    usr/share/bash-completion/completions/gst-{inspect,launch}-1.0
+    usr/share/bash-completion/helpers/gst
+
+    usr/share/gdb/auto-load/usr/lib/libgstreamer-1.0.so*.py
+    usr/share/gstreamer-1.0/gdb/glib_gobject_helper.py
+    usr/share/gstreamer-1.0/gdb/gst_gdb.py
+
+    usr/share/aclocal/gst-element-check-1.0.m4
+    usr/share/cmake/FindGStreamer.cmake
+
+    # --- base ---
+    usr/include/gstreamer-1.0/gst/{allocators,app,audio,fft,gl,pbutils,riff,rtp,rtsp,sdp,tag,video}
+    usr/lib/libgst{allocators,app,audio,fft,gl,pbutils,riff,rtp,rtsp,sdp,tag,video}-1.0.so*
+    usr/lib/pkgconfig/gstreamer-{allocators,app,audio,fft,gl{,-egl,-prototypes,-wayland,-x11},pbutils,riff,rtp,rtsp,sdp,tag,video}-1.0.pc
+
+    usr/lib/pkgconfig/gstreamer-plugins-base-1.0.pc
+    usr/lib/gstreamer-1.0/include/gst/gl/gstglconfig.h
+    usr/lib/gstreamer-1.0/libgstadder.so
+    usr/lib/gstreamer-1.0/libgstapp.so
+    usr/lib/gstreamer-1.0/libgstaudioconvert.so
+    usr/lib/gstreamer-1.0/libgstaudiomixer.so
+    usr/lib/gstreamer-1.0/libgstaudiorate.so
+    usr/lib/gstreamer-1.0/libgstaudioresample.so
+    usr/lib/gstreamer-1.0/libgstaudiotestsrc.so
+    usr/lib/gstreamer-1.0/libgstbasedebug.so
+    usr/lib/gstreamer-1.0/libgstcompositor.so
+    usr/lib/gstreamer-1.0/libgstdsd.so
+    usr/lib/gstreamer-1.0/libgstencoding.so
+    usr/lib/gstreamer-1.0/libgstgio.so
+    usr/lib/gstreamer-1.0/libgstopengl.so
+    usr/lib/gstreamer-1.0/libgstoverlaycomposition.so
+    usr/lib/gstreamer-1.0/libgstpbtypes.so
+    usr/lib/gstreamer-1.0/libgstplayback.so
+    usr/lib/gstreamer-1.0/libgstrawparse.so
+    usr/lib/gstreamer-1.0/libgstsubparse.so
+    usr/lib/gstreamer-1.0/libgsttcp.so
+    usr/lib/gstreamer-1.0/libgsttypefindfunctions.so
+    usr/lib/gstreamer-1.0/libgstvideoconvertscale.so
+    usr/lib/gstreamer-1.0/libgstvideorate.so
+    usr/lib/gstreamer-1.0/libgstvideotestsrc.so
+    usr/lib/gstreamer-1.0/libgstvolume.so
+    usr/lib/gstreamer-1.0/libgstximagesink.so
+    usr/lib/gstreamer-1.0/libgstxvimagesink.so
+
+    usr/share/locale/*/LC_MESSAGES/gst-plugins-base-1.0.mo
+
+    usr/bin/gst-{device-monitor,discoverer,play}-1.0
+    usr/share/man/man1/gst-{device-monitor,discoverer,play}-1.0.1
+
+    usr/share/gst-plugins-base
+
+    # --- bad (WebRTC/ICE and VA-API dropped) ---
+    usr/include/gstreamer-1.0/gst/audio/{audio-bad-prelude,gstnonstreamaudiodecoder,gstplanaraudioadapter}.h
+    usr/include/gstreamer-1.0/gst/{analytics,basecamerabinsrc,codecparsers,cuda,insertbin,interfaces,isoff,mpegts,mse,play,player,transcoder,uridownloader,vulkan,wayland}
+    usr/lib/libgst{adaptivedemux,analytics,badaudio,basecamerabinsrc,codecparsers,codecs,cuda,dxva,insertbin,isoff,mpegts,mse}-1.0.so*
+    usr/lib/libgst{photography,play,player,transcoder,uridownloader,vulkan,wayland}-1.0.so*
+    usr/lib/pkgconfig/gstreamer-{analytics,bad-audio,codecparsers,cuda,insertbin,mpegts,mse,photography,play,player,transcoder,vulkan{,-wayland,-xcb},wayland}-1.0.pc
+  ); _install
+}
+
+# vim:set sw=2 sts=-1 et:
