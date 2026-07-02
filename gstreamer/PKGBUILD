@@ -47,6 +47,7 @@ conflicts=(
 )
 
 makedepends=(
+  bash-completion
   glib2
   glib2-devel
   glibc
