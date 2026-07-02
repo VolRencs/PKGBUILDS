@@ -73,6 +73,10 @@ makedepends=(
   libxkbcommon
   libxkbcommon-x11
   libxv
+  libogg
+  libvorbis
+  libtheora
+  opus
   meson
   mesa
   git
@@ -149,6 +153,8 @@ build() {
     -D gst-plugins-base:libvisual=disabled
     -D gst-plugins-base:tremor=disabled
     -D gst-plugins-base:cdparanoia=disabled
+    -D gst-plugins-base:libvisual=disabled
+    -D gst-plugins-base:tremor=disabled
 
     -D gstreamer:dbghelp=disabled
     -D gstreamer:ptp-helper=disabled
