@@ -100,12 +100,12 @@ build() {
     -D gpl=enabled
     -D gst-examples=disabled
 
-    -D gst-plugins-good=disabled
-    -D gst-plugins-ugly=disabled
-    -D gst-libav=disabled
-    -D gst-rtsp-server=disabled
-    -D gst-editing-services=disabled
-    -D gst-devtools=disabled
+    -D good=disabled
+    -D ugly=disabled
+    -D libav=disabled
+    -D devtools=disabled
+    -D ges=disabled
+    -D rtsp_server=disabled
     -D python=disabled
     -D introspection=disabled
 
@@ -177,7 +177,6 @@ package() {
   cd root
 
   local files=(
-    # --- core ---
     usr/include/gstreamer-1.0/gst/{base,check,controller,net,*.h}
     usr/lib/libgst{reamer,base,check,controller,net}-1.0.so*
     usr/lib/pkgconfig/gstreamer{,-base,-check,-controller,-net}-1.0.pc
@@ -195,14 +194,9 @@ package() {
     usr/share/bash-completion/completions/gst-{inspect,launch}-1.0
     usr/share/bash-completion/helpers/gst
 
-    usr/share/gdb/auto-load/usr/lib/libgstreamer-1.0.so*.py
-    usr/share/gstreamer-1.0/gdb/glib_gobject_helper.py
-    usr/share/gstreamer-1.0/gdb/gst_gdb.py
-
     usr/share/aclocal/gst-element-check-1.0.m4
     usr/share/cmake/FindGStreamer.cmake
 
-    # --- base ---
     usr/include/gstreamer-1.0/gst/{allocators,app,audio,fft,gl,pbutils,riff,rtp,rtsp,sdp,tag,video}
     usr/lib/libgst{allocators,app,audio,fft,gl,pbutils,riff,rtp,rtsp,sdp,tag,video}-1.0.so*
     usr/lib/pkgconfig/gstreamer-{allocators,app,audio,fft,gl{,-egl,-prototypes,-wayland,-x11},pbutils,riff,rtp,rtsp,sdp,tag,video}-1.0.pc
@@ -243,7 +237,6 @@ package() {
 
     usr/share/gst-plugins-base
 
-    # --- bad (WebRTC/ICE and VA-API dropped) ---
     usr/include/gstreamer-1.0/gst/audio/{audio-bad-prelude,gstnonstreamaudiodecoder,gstplanaraudioadapter}.h
     usr/include/gstreamer-1.0/gst/{analytics,basecamerabinsrc,codecparsers,cuda,insertbin,interfaces,isoff,mpegts,mse,play,player,transcoder,uridownloader,vulkan,wayland}
     usr/lib/libgst{adaptivedemux,analytics,badaudio,basecamerabinsrc,codecparsers,codecs,cuda,dxva,insertbin,isoff,mpegts,mse}-1.0.so*
@@ -252,4 +245,3 @@ package() {
   ); _install
 }
 
-# vim:set sw=2 sts=-1 et:
