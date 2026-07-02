@@ -148,6 +148,7 @@ build() {
 
     -D gst-plugins-base:libvisual=disabled
     -D gst-plugins-base:tremor=disabled
+    -D gst-plugins-base:cdparanoia=disabled
 
     -D gstreamer:dbghelp=disabled
     -D gstreamer:ptp-helper=disabled
