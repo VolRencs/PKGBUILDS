@@ -29,7 +29,7 @@ makedepends=(
   'git'
 )
 source=("$pkgname::git+https://github.com/obsproject/obs-studio#tag=$pkgver-rc1")
-sha256sums=('33fccf85f9c0b5babbdbce4d069eef80a5b289438b732df1198f10730293e56f')
+sha256sums=('SKIP')
 
 prepare() {
   sed -i 's/message(FATAL_ERROR "Required submodule .obs-browser. not available.")/if(ENABLE_BROWSER)\n        message(FATAL_ERROR "Required submodule '\''obs-browser'\'' not available.")\n      endif()/' \
