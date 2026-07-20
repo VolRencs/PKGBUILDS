@@ -13,6 +13,7 @@ depends=(
   iproute2
   jansson
   libgcc
+  libndp
   nspr
   nss
   readline
