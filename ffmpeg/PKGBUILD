@@ -1,6 +1,6 @@
 pkgname=ffmpeg
 pkgver=8.1.2
-pkgrel=5
+pkgrel=6
 epoch=3
 pkgdesc='Complete solution to record, convert and stream audio and video'
 arch=(x86_64)
@@ -12,12 +12,10 @@ depends=(
   dav1d
   glib2
   glibc
-  glslang
   libpulse
   lame
   libdrm
   libgl
-  libplacebo
   libvorbis
   libvpx
   libwebp
@@ -97,10 +95,8 @@ build() {
     --enable-gpl \
     --enable-libdav1d \
     --enable-libdrm \
-    --enable-libglslang \
     --enable-libmp3lame \
     --enable-libopus \
-    --enable-libplacebo \
     --enable-libpulse \
     --enable-libsvtav1 \
     --enable-libvorbis \
@@ -122,7 +118,6 @@ build() {
 package() {
   depends+=(
     libdav1d.so
-    libplacebo.so
     libvorbisenc.so
     libvorbis.so
     libvpx.so
