@@ -1,8 +1,8 @@
 # Maintainer: Peter Jung <admin@ptr1337.dev>
 
 pkgname=mysettings
-pkgver=1.0.2
-pkgrel=2
+pkgver=1.0.3
+pkgrel=1
 arch=('any')
 license=(GPL-1.0-only)
 makedepends=('coreutils' 'git')
