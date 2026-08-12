@@ -2,7 +2,7 @@
 
 pkgname=mysettings
 pkgver=1.0.2
-pkgrel=1
+pkgrel=2
 arch=('any')
 license=(GPL-1.0-only)
 makedepends=('coreutils' 'git')
@@ -12,7 +12,6 @@ install="$pkgname.install"
 sha256sums=('SKIP')
 depends=(
   zram-generator
-  inxi
   "systemd>=256"
 )
 provides=('ntsync-common')
