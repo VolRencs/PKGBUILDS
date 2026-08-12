@@ -1,7 +1,7 @@
 # Maintainer: Peter Jung <admin@ptr1337.dev>
 
 pkgname=mysettings
-pkgver=1.0.3
+pkgver=1.0.4
 pkgrel=1
 arch=('any')
 license=(GPL-1.0-only)
@@ -12,6 +12,7 @@ install="$pkgname.install"
 sha256sums=('SKIP')
 depends=(
   zram-generator
+  inxi
   "systemd>=256"
 )
 provides=('ntsync-common')
