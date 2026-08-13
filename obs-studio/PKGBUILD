@@ -2,7 +2,7 @@
 
 pkgname=obs-studio
 pkgver=32.2.1
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="Free and open source software for video recording and live streaming"
 arch=('x86_64')
@@ -14,7 +14,7 @@ depends=(
   'rnnoise'
   'speexdsp'
   'pciutils'
-  'mbedtls'
+  'openssl'
   'qt6-svg'
   'libxkbcommon'
 )
@@ -28,8 +28,14 @@ makedepends=(
   'ninja'
   'git'
 )
-source=("$pkgname::git+https://github.com/obsproject/obs-studio#tag=$pkgver")
-sha256sums=('5b11ccf5468654d19537db108443812db12767084eba295ee532d81c4834492a')
+source=(
+  "$pkgname::git+https://github.com/obsproject/obs-studio#tag=$pkgver"
+  "obs-openssl.patch"
+)
+sha256sums=(
+  '5b11ccf5468654d19537db108443812db12767084eba295ee532d81c4834492a'
+  'SKIP'
+)
 
 prepare() {
   sed -i 's/message(FATAL_ERROR "Required submodule .obs-browser. not available.")/if(ENABLE_BROWSER)\n        message(FATAL_ERROR "Required submodule '\''obs-browser'\'' not available.")\n      endif()/' \
@@ -37,6 +43,8 @@ prepare() {
 
   sed -i 's/message(FATAL_ERROR "Required submodule .obs-websocket. not available.")/if(ENABLE_WEBSOCKET)\n    message(FATAL_ERROR "Required submodule '\''obs-websocket'\'' not available.")\n  endif()/' \
     "$pkgname/plugins/CMakeLists.txt"
+
+  patch -d "$pkgname" -Np1 < "$srcdir/obs-openssl.patch"
 }
 
 build() {
@@ -60,6 +68,7 @@ build() {
     -DENABLE_WEBRTC=OFF
     -DENABLE_WEBSOCKET=OFF
     -DENABLE_QSV11=OFF
+    -DCRYPTO_BACKEND=openssl
     -DOBS_VERSION_OVERRIDE="$pkgver"
     -Wno-dev
   )
