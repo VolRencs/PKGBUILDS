@@ -1,5 +1,5 @@
 pkgname=ffmpeg
-pkgver=9.0
+pkgver=9.0.2
 pkgrel=1
 epoch=3
 pkgdesc='Complete solution to record, convert and stream audio and video'
@@ -53,7 +53,7 @@ source=(
   git+https://git.ffmpeg.org/ffmpeg.git#tag=n${pkgver}
   0001-Add-av_stream_get_first_dts-for-Chromium.patch
 )
-b2sums=('c15bec5d82a33d58d96bca03374b56bc1ffcfb9e9c705106eb05cba0dfd2d6003d3eb05bfc5b325ce1458fcff6bef93db75168da5640ea4dc5bd8b31294cfdd8'
+b2sums=('97bd244a79088e862f349ef91ae75f7a02c1a0c8c1e21601abf6fa5acae1d721d104c2afa4e6e955d7caf18ffd511c175b1a3965b99cc1122754f191b9098bc5'
         'e5f7b79f7731be9ee5a7280a9221fb531ac5a2d9820fc5870b68b0eabea667dfbe8f39f41c1e1763a4c84982896afaa54c81ff57847d203b70afafd726689e5d')
 
 prepare() {
