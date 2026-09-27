@@ -1,5 +1,5 @@
 pkgname=pipewire
-pkgver=1.6.8
+pkgver=1.6.9
 pkgrel=1
 epoch=2
 pkgdesc="Low-latency audio/video router and processor"
@@ -76,7 +76,7 @@ install=pipewire.install
 source=(
   "git+https://gitlab.freedesktop.org/pipewire/pipewire.git#tag=$pkgver"
 )
-b2sums=('f4425c8fa9ab33918e52bb0c1272079dd510e1c08b1d228802ad60e7080629f1e82ec30f19dd9e344cd6476803773d79f50957ddfeecfc01d657550a712fd6ba')
+b2sums=('85867001aac9e81a015eb042bc4766cbb6c1755a809d4fdbd838bf5433596648d222f5afb88c9a06786c76901f32a270c6cf5499fa7e2f29890357293fd5d6f7')
 
 build() {
   local meson_options=(
