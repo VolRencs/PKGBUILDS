@@ -56,6 +56,7 @@ build() {
     -DLIBAPPIMAGE_LIBRARIES=libappimage.so \
     -DCMAKE_INSTALL_LIBEXECDIR=lib \
     -DBUILD_TESTING=OFF
+    -DBUILD_DOC=OFF
   )
   cmake "${cmake_options[@]}"
   cmake --build build
