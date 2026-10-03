@@ -46,8 +46,7 @@ makedepends=(extra-cmake-modules
 groups=(kde-applications
         kde-network)
 source=(https://download.kde.org/stable/release-service/$pkgver/src/$pkgname-$pkgver.tar.xz)
-sha256sums=('8050c3dd33fed06a60dda8205f4e0134d3aac95f0647b1d9c05419845341397c'
-            'SKIP')
+sha256sums=('8050c3dd33fed06a60dda8205f4e0134d3aac95f0647b1d9c05419845341397c')
 
 build() {
   local cmake_options=(
