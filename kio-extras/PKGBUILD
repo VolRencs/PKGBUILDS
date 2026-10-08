@@ -1,5 +1,5 @@
 pkgname=kio-extras
-pkgver=26.08.1
+pkgver=26.08.2
 pkgrel=1
 epoch=1
 pkgdesc='Additional components to increase the functionality of KIO'
@@ -46,7 +46,7 @@ makedepends=(extra-cmake-modules
 groups=(kde-applications
         kde-network)
 source=(https://download.kde.org/stable/release-service/$pkgver/src/$pkgname-$pkgver.tar.xz)
-sha256sums=('8050c3dd33fed06a60dda8205f4e0134d3aac95f0647b1d9c05419845341397c')
+sha256sums=('b5fc98552eea1f9279fb1f03c7e3ffb36a46ffddd0bf0bba9868331d8c461e6e')
 
 build() {
   local cmake_options=(
