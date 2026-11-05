@@ -1,4 +1,4 @@
-From 096bdb25ebd2c3066e61c29539aa361a4a914798 Mon Sep 17 00:00:00 2001
+From e448eb4629c5c7dd762c56a63182e096a66c749b Mon Sep 17 00:00:00 2001
 From: Connor Cihula <connor.cihula@arm.com>
 Date: Thu, 2 Jul 2026 11:23:13 -0500
 Subject: [PATCH] cmake: Add OpenSSL as an alternative to MbedTLS
@@ -15,21 +15,21 @@ a backport from upstream, along with modifications to use non-deprecated
 OpenSSL APIs, per-RTMP TLS state, certificate verification, and frontend
 signature verification.
 ---
- CMakeLists.txt                              | 24 +++++
- frontend/cmake/feature-whatsnew.cmake       | 15 ++--
- frontend/cmake/os-windows.cmake             |  3 -
- frontend/utility/crypto-helpers-openssl.cpp | 52 +++++++++++
- plugins/CMakeLists.txt                      |  2 -
- plugins/obs-outputs/CMakeLists.txt          | 15 ++--
- plugins/obs-outputs/librtmp/handshake.h     | 81 +++++++++++++----
- plugins/obs-outputs/librtmp/hashswf.c       | 82 +++++++++++++----
- plugins/obs-outputs/librtmp/rtmp.c          | 98 +++++++++++++++++----
- plugins/obs-outputs/librtmp/rtmp.h          |  7 +-
- 10 files changed, 311 insertions(+), 68 deletions(-)
+ CMakeLists.txt                              |  24 ++++
+ frontend/cmake/feature-whatsnew.cmake       |  15 +-
+ frontend/cmake/os-windows.cmake             |   3 -
+ frontend/utility/crypto-helpers-openssl.cpp |  52 +++++++
+ plugins/CMakeLists.txt                      |   2 -
+ plugins/obs-outputs/CMakeLists.txt          |  15 +-
+ plugins/obs-outputs/librtmp/handshake.h     |  81 ++++++++---
+ plugins/obs-outputs/librtmp/hashswf.c       |  82 ++++++++---
+ plugins/obs-outputs/librtmp/rtmp.c          | 146 ++++++++++++++++----
+ plugins/obs-outputs/librtmp/rtmp.h          |   7 +-
+ 10 files changed, 353 insertions(+), 74 deletions(-)
  create mode 100644 frontend/utility/crypto-helpers-openssl.cpp
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 7ae56113192815..bdd101cb8bbac9 100644
+index 7ae56113192815..cd7c5b7e73fc9a 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -16,9 +16,33 @@ include(defaults)
@@ -57,7 +57,7 @@ index 7ae56113192815..bdd101cb8bbac9 100644
 +    if(NOT OS_LINUX)
 +      message(FATAL_ERROR "OpenSSL is only supported as a crypto backend on Linux.")
 +    endif()
-+    find_package(OpenSSL 1.1.0 REQUIRED)
++    find_package(OpenSSL 3.0 REQUIRED)
 +  else()
 +    message(FATAL_ERROR "Unsupported CRYPTO_BACKEND value: ${CRYPTO_BACKEND}. Expected 'mbedtls' or 'openssl'.")
 +  endif()
@@ -491,7 +491,7 @@ index b9cff31f85c2a2..5c8c9951766081 100644
  #endif
              *size = in.size;
 diff --git a/plugins/obs-outputs/librtmp/rtmp.c b/plugins/obs-outputs/librtmp/rtmp.c
-index 1898558f51927a..099b8a82fe36dc 100644
+index 1898558f51927a..2daff19ae9aa4b 100644
 --- a/plugins/obs-outputs/librtmp/rtmp.c
 +++ b/plugins/obs-outputs/librtmp/rtmp.c
 @@ -80,11 +80,13 @@ static const char *my_dhm_G = "4";
@@ -597,7 +597,7 @@ index 1898558f51927a..099b8a82fe36dc 100644
 +        hostname[r->Link.hostname.av_len] = 0;
 +
 +        if (SSL_set_tlsext_host_name(r->m_sb.sb_ssl, hostname) != 1 ||
-+            SSL_set1_host(r->m_sb.sb_ssl, hostname) != 1 ||
++            X509_VERIFY_PARAM_set1_host(SSL_get0_param(r->m_sb.sb_ssl), hostname, 0) != 1 ||
 +            TLS_setfd(r->m_sb.sb_ssl, r->m_sb.sb_socket) != 1) {
 +            free(hostname);
 +            TLS_close(r->m_sb.sb_ssl);
@@ -648,17 +648,31 @@ index 1898558f51927a..099b8a82fe36dc 100644
      BIO *bmem, *b64;
      BUF_MEM *bptr;
  
-@@ -2640,7 +2687,22 @@ typedef struct md5_ctx	MD5_CTX;
+@@ -2640,8 +2687,49 @@ typedef struct md5_ctx	MD5_CTX;
  #define MD5_Init(ctx)	md5_init(ctx)
  #define MD5_Update(ctx,data,len)	md5_update(ctx,len,data)
  #define MD5_Final(dig,ctx)	md5_digest(ctx,MD5_DIGEST_LENGTH,dig)
--#else
 +#elif defined(USE_OPENSSL)
 +typedef EVP_MD_CTX *MD5_CTX;
-+#define MD5_Init(ctx) do { \
-+    *(ctx) = EVP_MD_CTX_new(); \
-+    EVP_DigestInit_ex(*(ctx), EVP_md5(), NULL); \
-+} while (0)
++static inline int
++MD5_Init_openssl(MD5_CTX *ctx)
++{
++    *ctx = EVP_MD_CTX_new();
++    if (!*ctx) {
++        RTMP_Log(RTMP_LOGERROR, "%s: failed to allocate EVP message digest context",
++                 __FUNCTION__);
++        return FALSE;
++    }
++
++    if (EVP_DigestInit_ex(*ctx, EVP_md5(), NULL) != 1) {
++        RTMP_Log(RTMP_LOGERROR, "%s: failed to initialize MD5 context", __FUNCTION__);
++        EVP_MD_CTX_free(*ctx);
++        *ctx = NULL;
++        return FALSE;
++    }
++
++    return TRUE;
++}
 +#define MD5_Update(ctx,data,len)    EVP_DigestUpdate(*(ctx), data, len)
 +static inline void
 +MD5_Final_openssl(unsigned char *dig, MD5_CTX *ctx)
@@ -669,9 +683,108 @@ index 1898558f51927a..099b8a82fe36dc 100644
 +    *ctx = NULL;
 +}
 +#define MD5_Final(dig,ctx)  MD5_Final_openssl(dig,ctx)
++#endif
++
++static inline int
++MD5_Init_checked(MD5_CTX *ctx)
++{
++#if defined(USE_OPENSSL)
++    return MD5_Init_openssl(ctx);
+ #else
++    MD5_Init(ctx);
++    return TRUE;
  #endif
++}
  
  static const AVal av_authmod_adobe = AVC("authmod=adobe");
+ static const AVal av_authmod_llnw  = AVC("authmod=llnw");
+@@ -2672,6 +2760,7 @@ static int
+ PublisherAuth(RTMP *r, AVal *description)
+ {
+     char *token_in = NULL;
++    char *orig_ptr = NULL;
+     char *ptr;
+     unsigned char md5sum_val[MD5_DIGEST_LENGTH+1];
+     MD5_CTX md5ctx;
+@@ -2716,7 +2805,7 @@ PublisherAuth(RTMP *r, AVal *description)
+         }
+         else if((token_in = strstr(description->av_val, "?reason=needauth")) != NULL)
+         {
+-            char *par, *val = NULL, *orig_ptr;
++            char *par, *val = NULL;
+             AVal user, salt, opaque, challenge, *aptr = NULL;
+ 
+             opaque.av_len = challenge.av_len = salt.av_len = user.av_len = 0;
+@@ -2766,7 +2855,8 @@ PublisherAuth(RTMP *r, AVal *description)
+                 aptr->av_len = (int)strlen(aptr->av_val);
+ 
+             /* hash1 = base64enc(md5(user + _aodbeAuthSalt + password)) */
+-            MD5_Init(&md5ctx);
++            if (!MD5_Init_checked(&md5ctx))
++                goto md5_error;
+             MD5_Update(&md5ctx, user.av_val, user.av_len);
+             MD5_Update(&md5ctx, salt.av_val, salt.av_len);
+             MD5_Update(&md5ctx, r->Link.pubPasswd.av_val, r->Link.pubPasswd.av_len);
+@@ -2783,7 +2873,8 @@ PublisherAuth(RTMP *r, AVal *description)
+             b64enc((unsigned char *) &challenge2_data, sizeof(int), challenge2, CHALLENGE2_LEN);
+             RTMP_Log(RTMP_LOGDEBUG, "%s, b64(%d) = %s", __FUNCTION__, challenge2_data, challenge2);
+ 
+-            MD5_Init(&md5ctx);
++            if (!MD5_Init_checked(&md5ctx))
++                goto md5_error;
+             MD5_Update(&md5ctx, salted2, B64DIGEST_LEN);
+             /* response = base64enc(md5(hash1 + opaque + challenge2)) */
+             if (opaque.av_len)
+@@ -2887,7 +2978,6 @@ PublisherAuth(RTMP *r, AVal *description)
+         }
+         else if((token_in = strstr(description->av_val, "?reason=needauth")) != NULL)
+         {
+-            char *orig_ptr;
+             char *par, *val = NULL;
+             char hash1[HEXHASH_LEN+1], hash2[HEXHASH_LEN+1], hash3[HEXHASH_LEN+1];
+             AVal user, nonce, *aptr = NULL;
+@@ -2953,7 +3043,8 @@ PublisherAuth(RTMP *r, AVal *description)
+             snprintf(cnonce, sizeof(cnonce), "%08x", rand());
+ 
+             /* hash1 = hexenc(md5(user + ":" + realm + ":" + password)) */
+-            MD5_Init(&md5ctx);
++            if (!MD5_Init_checked(&md5ctx))
++                goto md5_error;
+             MD5_Update(&md5ctx, user.av_val, user.av_len);
+             MD5_Update(&md5ctx, ":", 1);
+             MD5_Update(&md5ctx, (void *)realm, sizeof(realm)-1);
+@@ -2972,7 +3063,8 @@ PublisherAuth(RTMP *r, AVal *description)
+             if (ptr)
+                 apptmp.av_len = ptr - apptmp.av_val;
+ 
+-            MD5_Init(&md5ctx);
++            if (!MD5_Init_checked(&md5ctx))
++                goto md5_error;
+             MD5_Update(&md5ctx, (void *)method, sizeof(method)-1);
+             MD5_Update(&md5ctx, ":/", 2);
+             MD5_Update(&md5ctx, apptmp.av_val, apptmp.av_len);
+@@ -2985,7 +3077,8 @@ PublisherAuth(RTMP *r, AVal *description)
+             hexenc(md5sum_val, MD5_DIGEST_LENGTH, hash2, sizeof(hash2));
+ 
+             /* hash3 = hexenc(md5(hash1 + ":" + nonce + ":" + nchex + ":" + cnonce + ":" + qop + ":" + hash2)) */
+-            MD5_Init(&md5ctx);
++            if (!MD5_Init_checked(&md5ctx))
++                goto md5_error;
+             MD5_Update(&md5ctx, hash1, HEXHASH_LEN);
+             MD5_Update(&md5ctx, ":", 1);
+             MD5_Update(&md5ctx, nonce.av_val, nonce.av_len);
+@@ -3066,6 +3159,11 @@ PublisherAuth(RTMP *r, AVal *description)
+         return 0;
+     }
+     return 1;
++
++md5_error:
++    free(orig_ptr);
++    r->Link.pFlags |= RTMP_PUB_CLEAN;
++    return 0;
+ }
+ #endif
+ 
 diff --git a/plugins/obs-outputs/librtmp/rtmp.h b/plugins/obs-outputs/librtmp/rtmp.h
 index c1b8d906175111..3b8791add8a51f 100644
 --- a/plugins/obs-outputs/librtmp/rtmp.h
