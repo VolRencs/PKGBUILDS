@@ -1,7 +1,7 @@
 # Maintainer: VolRen <VolRencs@proton.me>
 
 pkgname=obs-studio
-pkgver=32.2.1
+pkgver=33.0.1
 pkgrel=2
 epoch=1
 pkgdesc="Free and open source software for video recording and live streaming"
@@ -33,7 +33,7 @@ source=(
   "obs-openssl.patch"
 )
 sha256sums=(
-  '5b11ccf5468654d19537db108443812db12767084eba295ee532d81c4834492a'
+  '146e64de76ee79a8bc9155a7eb33886ab7b9b3a3de0f275a7ba3ff75ceb2ac74'
   'SKIP'
 )
 
